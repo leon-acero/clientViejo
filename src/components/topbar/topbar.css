@@ -1,0 +1,87 @@
+.topbar {
+  width: 100%;
+  height: 5rem;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.topbarWrapper {
+  height: 100%;
+  padding: 0rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoLink {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 3rem;
+  color: darkblue;
+  cursor: pointer;
+}
+
+.topRight{
+    display: flex;
+    align-items: center;
+}
+
+.topbarIconContainer {
+  position: relative;
+  cursor: pointer;
+  margin-right: 1rem;
+  color: #555;
+  font-size: 2rem;
+}
+
+.topbarIcon{
+  font-size: 2.4rem !important;
+}
+
+.topIconBadge{
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    top: -.5rem;
+    right: 0rem;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.topAvatar{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.logo {
+  font-size: 2rem;
+}
+
+.logoutButton,
+.loginButton {
+  border-radius: .5rem;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: darkblue;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.authStyle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}

@@ -1,0 +1,172 @@
+.client {
+  flex: 4;
+  padding: 2rem;
+}
+
+.clientTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.clientAddButton {
+  width: 8rem;
+  border: none;
+  padding: .5rem;
+  background-color: teal;
+  border-radius: .5rem;
+  cursor: pointer;
+  color: white;
+  font-size: 1.6rem;
+}
+
+.clientContainer {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.clientShow {
+  flex: 1;
+  padding: 2rem;
+  -webkit-box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
+  box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
+}
+
+.clientUpdate {
+  flex: 2;
+  padding: 2rem;
+  -webkit-box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
+  box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
+  margin-left: 2rem;
+}
+
+.clientShowTop {
+  display: flex;
+  align-items: center;
+}
+
+.clientShowImg {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.clientShowTopTitle {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+}
+
+.clientShowClientname {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.clientShowClientTitle {
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+.clientShowBottom{
+    margin-top: 2rem;
+}
+
+.clientShowTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgb(175, 170, 170);
+}
+
+.clientShowInfo{
+    display: flex;
+    align-items: center;
+    margin: 2rem 0rem;
+    color: #444;
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+.clientShowIcon{
+    font-size: 1.6rem !important;
+}
+
+.clientShowInfoTitle{
+    margin-left: 1rem;
+}
+
+.clientUpdateTitle{
+    font-size: 2.4rem;
+    font-weight: 600;
+}
+
+.clientUpdateForm{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.clientUpdateItem{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.clientUpdateItem>label{
+    margin-bottom: .5rem;
+    font-size: 1.4rem;
+}
+
+.clientUpdateInput{
+    border: none;
+    width: 25rem;
+    height: 3rem;
+    border-bottom: .1rem solid gray;
+    padding: 1rem;
+    font-size: 1.4rem;
+}
+
+.clientUpdateRight{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.clientUpdateUpload{
+    display: flex;
+    align-items: center;
+}
+
+.clientUpdateImg{
+    width: 30rem;
+    height: 30rem;
+    border-radius: 1rem;
+    object-fit: cover;
+    margin-right: 2rem;
+    margin-bottom: 1.5rem;
+
+}
+
+.clientUpdateIcon{
+    cursor: pointer;
+}
+
+.clientUpdateButton{
+    border-radius: .5rem;
+    border: none;
+    padding: 1.5rem;
+    cursor: pointer;
+    background-color: darkblue;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.clientUpdateButton:disabled,
+.clientUpdateButton[disabled] {
+  background-color: gray;
+}
+
+.clientTitle {
+  font-size: 2.8rem;
+}

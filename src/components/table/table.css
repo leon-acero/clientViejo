@@ -1,0 +1,33 @@
+table {
+  width: 100%;
+  margin: 5rem 0rem;
+  border-spacing: 1.5rem;
+  color: #444;
+}
+
+tr {
+  margin-bottom: 2rem;
+}
+
+th {
+  width: 25rem;
+  text-align: left;
+  font-size: 1.6rem;
+}
+
+td {
+  width: 25rem;
+  font-size: 1.6rem;
+}
+
+.abrirCliente__link{
+  border: none;
+  border-radius: 1rem;
+  padding: .5rem 1rem;
+  background-color: #3bb077;
+  color: white;
+  cursor: pointer;
+  margin-right: 2rem;
+  text-decoration: none;
+  font-size: 1.4rem;
+}

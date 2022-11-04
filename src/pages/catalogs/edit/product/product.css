@@ -1,0 +1,181 @@
+.product {
+  flex: 4;
+  padding: 2rem;
+}
+
+.productTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.productTitle {
+  font-size: 2.8rem;
+}
+
+
+.productAddButton {
+  width: 8rem;
+  border: none;
+  padding: .5rem;
+  background-color: teal;
+  border-radius: .5rem;
+  cursor: pointer;
+  color: white;
+  font-size: 1.6rem;
+}
+
+.productContainer {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.productShow {
+  flex: 1;
+  padding: 2rem;
+  -webkit-box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
+  box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
+}
+
+.productUpdate {
+  flex: 2;
+  padding: 2rem;
+  -webkit-box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
+  box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
+  margin-left: 2rem;
+}
+
+.productShowTop {
+  display: flex;
+  align-items: center;
+}
+
+.productShowImg {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.productShowTopTitle {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+}
+
+.productShowProductname {
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.productShowProductTitle {
+  font-weight: 300;
+  font-size: 1.4rem;
+
+}
+
+.productShowBottom{
+    margin-top: 2rem;
+}
+
+.productShowTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgb(175, 170, 170);
+  
+}
+
+.productShowInfo{
+    display: flex;
+    align-items: center;
+    margin: 2rem 0rem;
+    color: #444;
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+.productShowIcon{
+    font-size: 1.6rem !important;
+}
+
+.productShowInfoTitle{
+    margin-left: 1rem;
+}
+
+.productUpdateTitle{
+    font-size: 2.4rem;
+    font-weight: 600;
+}
+
+.productUpdateForm{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.productUpdateItem{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.8rem;
+    
+}
+
+.productUpdateItem>label{
+    margin-bottom: 0rem;
+    font-size: 1.4rem;
+}
+
+.productUpdateInput{
+    border: none;
+    width: 25rem;
+    height: 3rem;
+    border-bottom: .1rem solid gray;
+    padding: 1rem;
+    font-size: 1.4rem;
+}
+
+.productUpdateRight{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.productUpdateUpload{
+    display: flex;
+    align-items: center;
+}
+
+.productUpdateImg{
+    width: 35rem;
+    height: 35rem;
+    border-radius: 1rem;
+    object-fit: cover;
+    margin-right: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* .productUpdateIcon{
+    cursor: pointer;
+    font-size: 3rem !important;
+} */
+
+.snackBarStyle {
+  font-size: 3rem !important;
+  height: 4rem !important;
+}
+
+.productUpdateButton{
+    border-radius: .5rem;
+    border: none;
+    padding: 1.5rem;
+    cursor: pointer;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+}
+
+.productUpdateButton:disabled,
+.productUpdateButton[disabled] {
+  background-color: gray;
+}

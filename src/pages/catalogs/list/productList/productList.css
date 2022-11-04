@@ -1,0 +1,74 @@
+.productList{
+    flex: 4;
+}
+
+.productListItem{
+    display: flex;
+    align-items: center;
+}
+
+.productListImg {
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+  }
+
+.productListEdit{
+    border: none;
+    border-radius: 1rem;
+    padding: .5rem 1rem;
+    background-color: #3bb077;
+    color: white;
+    cursor: pointer;
+    margin-right: 2rem;
+
+    font-size: 1.4rem;
+}
+
+.productListDelete{
+    color: red;
+    cursor: pointer;
+    font-size: 2.4rem !important;
+}
+
+.productTitleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+    padding: 1rem 1rem;
+  }
+  
+  .productTitle {
+    font-size: 2.8rem;
+  }
+  
+  .productAddButton {
+    width: 8rem;
+    border: none;
+    padding: .5rem;
+    background-color: teal;
+    border-radius: .5rem;
+    cursor: pointer;
+    color: white;
+    font-size: 1.6rem;
+  }
+
+.dataGrid {
+    font-size: 1.4rem !important;
+}
+
+.MuiTablePagination-selectLabel,
+.MuiTablePagination-root,
+.MuiTablePagination-displayedRows,
+.MuiInputBase-root
+{
+  font-size: 1.6rem !important;
+}
+
+.inventarioActualNegativo {
+    background-color: red;
+    color: white;
+}
