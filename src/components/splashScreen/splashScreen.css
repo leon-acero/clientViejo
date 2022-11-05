@@ -12,3 +12,9 @@
   background-size: cover;
   overflow-y: hidden;
 }
+
+@media (max-width:28.125em) {
+  .splashScreen {
+    background-position: center;
+  }
+}

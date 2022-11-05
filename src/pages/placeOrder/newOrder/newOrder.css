@@ -246,7 +246,7 @@
 }
 
 
-@media (max-width:42.5em) {
+/* @media (max-width:42.5em) {
   html {
     font-size: 50%;
   }
@@ -263,4 +263,4 @@
   html {
     font-size: 35%;
   }
-}
+} */

@@ -85,3 +85,35 @@
   justify-content: center;
   gap: 1rem;
 }
+
+@media (max-width:42.5em) {
+  .logo {
+    font-size: 1.8rem;
+  }
+
+  .topbarWrapper {
+    padding: 0rem 1rem;
+  }
+}
+
+
+@media (max-width:36.25em) {
+  .logo {
+    font-size: 1.6rem;
+  }
+  
+}
+
+@media (max-width:30em) {
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .logoutButton,
+  .loginButton {
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+}
+
