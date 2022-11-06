@@ -37,7 +37,10 @@ export default function Topbar() {
             currentUser && (
             <div className="authStyle">
               <Link className='logoutButton' to="/logout">Cerrar sesión</Link>
-              <img src={`/img/users/${currentUser.photo}`} alt="{currentUser.name}" className="topAvatar"  />
+
+              <Link to="/search-client">
+                <img src={`/img/users/${currentUser.photo}`} alt="{currentUser.name}" className="topAvatar"  />
+              </Link>
             </div>)
           }
           { !currentUser && (
