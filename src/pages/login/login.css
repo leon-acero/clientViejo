@@ -1,9 +1,9 @@
 /* .login {
   flex: 4;
-  background: url("/public/img/website/gomitas.jpeg");
+  background: transparent;
 } */
 .login {
-  height: calc(100vh - 5rem);
+  /* height: calc(100vh - 5rem); */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,6 +14,7 @@
     ),
     url("/public/img/website/halloween.jpeg");
   background-size: cover;
+  background-position: center;
   overflow-y: hidden;
 }
 
@@ -29,7 +30,7 @@
 .login-form {
   margin: 0 auto;
   max-width: 55rem;
-  background-color: rgba(255, 255, 255, 0.791);
+  background-color: rgba(255, 255, 255, .8);
   -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
   box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
   padding: 5rem 7rem;
@@ -164,4 +165,32 @@
 }
 .btn--green::after {
   background-color: #55c57a;
+}
+
+/* 680px */
+@media (max-width:42.5em) {
+  
+}
+
+/*
+580px
+@media (max-width:36.25em) {
+  .logo {
+    font-size: 1.6rem;
+  }
+  
+}
+*/
+
+/* 480px */
+@media (max-width:30em) {
+  /* .btn,
+  .btn:link,
+  .btn:visited {
+    font-size: 1.2rem;
+    padding: .4rem 2rem;
+  } */
+  .login-form {
+    padding: 5rem 2rem;
+  }
 }

@@ -86,34 +86,36 @@
   gap: 1rem;
 }
 
+/* 680px */
 @media (max-width:42.5em) {
-  .logo {
+  /* .logo {
     font-size: 1.8rem;
-  }
+  } */
 
   .topbarWrapper {
     padding: 0rem 1rem;
   }
 }
 
-
+/* 580px */
 @media (max-width:36.25em) {
-  .logo {
+  /* .logo {
     font-size: 1.6rem;
-  }
+  } */
   
 }
 
+/* 480px */
 @media (max-width:30em) {
-  .logo {
+  /* .logo {
     font-size: 1.5rem;
-  }
+  } */
 
   .logoutButton,
   .loginButton {
     padding: 1rem;
-    font-size: 1.1rem;
-    font-weight: 600;
+    /* font-size: 1.1rem; */
+    /* font-weight: 600; */
   }
 }
 

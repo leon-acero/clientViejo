@@ -58,13 +58,20 @@ function App() {
       {/* Si no estas loggeado solo puedes ver el Topbar y el Login */}
       <Topbar />
       
-      <Route path="/login">
-        <Login />
-      </Route>
       
       {/* Muestro la SplashScreen si no hay usuario loggeado */}
       {
-        !currentUser && <SplashScreen />
+        !currentUser && (
+          <Switch>
+            <Route exact path="/">
+              <SplashScreen />
+            </Route>
+
+            <Route exact path="/login">
+              <Login />
+            </Route>
+          </Switch>
+        ) 
       }
 
       {/* Si estas loggeado y tienes rol de Vendedor solo puedes ver esto */}
