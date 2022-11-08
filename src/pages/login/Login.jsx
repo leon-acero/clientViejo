@@ -1,11 +1,22 @@
+import "./login.css"
+import axios from "axios";
+
 import { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { stateContext } from '../../context/StateProvider';
 
-import axios from "axios";
-import "./login.css"
+/**************************    Snackbar    **********************************/
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { Alert } from '@mui/material';
+/****************************************************************************/
+
 
 export default function Login() {
+
+  const [mensajeSnackBar, setMensajeSnackBar] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const history = useHistory();
 
@@ -84,13 +95,56 @@ export default function Login() {
     catch(err) {
       
       console.log(err);
-      // setMensajeSnackBar("Hubo un error al grabar el cliente")
-      // setOpenSnackbar(true);
+      // showAlert ('error', err.response.data.message);
+      setMensajeSnackBar(err.response.data.message)
+      setOpenSnackbar(true);
+
     }
   }
 
+  /************************     handleCloseSnackbar    **********************/
+  // Es el handle que se encarga cerrar el Snackbar
+  /**************************************************************************/
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
+
+  /*****************************     action    ******************************/
+  // Se encarga agregar un icono de X al SnackBar
+  /**************************************************************************/  
+  const action = (
+    <>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseSnackbar}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </>
+  );
+
+
   return (
     <div className='login'>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert 
+            severity= {"error"} 
+            action={action}
+            sx={{ fontSize: '1.4rem', backgroundColor:'#333', color: 'white', }}
+        >{mensajeSnackBar}
+        </Alert>
+      </Snackbar>   
+
       <main className="main">
         <div className="login-form">
           <h2 className="heading-secondary ma-bt-lg">Inicia sesión</h2>
