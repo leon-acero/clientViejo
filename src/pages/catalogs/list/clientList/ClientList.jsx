@@ -158,7 +158,26 @@ export default function ClientList() {
     //     );
     //   },
     // },
-    { field: "_id", headerName: "ID", width: 0, headerAlign: 'center', align: 'right', },
+    {
+      field: "action",
+      headerName: "Acción",
+      width: 120,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={"/client/" + params.row._id}>
+              <button className="clientListEdit" onClick={()=>handleEdit(params.row._id, params.row.slug)}>Editar</button>
+            </Link>
+            <DeleteOutline
+              className="clientListDelete"
+              onClick={() => openDeleteDialog(params.row._id, params.row.businessName)}
+            />
+          </>
+        );
+      },
+    },
     { field: "sku", headerName: "SKU", width: 30, headerAlign: 'center', align: 'right',},
     {
       field: "businessName",
@@ -189,31 +208,13 @@ export default function ClientList() {
       width: 200,
       headerAlign: 'center',
     },
+    { field: "_id", headerName: "ID", width: 30, headerAlign: 'center', align: 'right', },
     // {
     //   field: "slug",
     //   headerName: "slug",
     //   width: 0,
     // },
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      headerAlign: 'center',
-      align: 'center',
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={"/client/" + params.row._id}>
-              <button className="clientListEdit" onClick={()=>handleEdit(params.row._id, params.row.slug)}>Editar</button>
-            </Link>
-            <DeleteOutline
-              className="clientListDelete"
-              onClick={() => openDeleteDialog(params.row._id, params.row.businessName)}
-            />
-          </>
-        );
-      },
-    },
+
   ];
 
   return (

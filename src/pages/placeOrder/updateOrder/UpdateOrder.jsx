@@ -57,9 +57,14 @@ export default function UpdateOrder() {
   /**************************    useRef    **********************************/
   // avoidRerenderFetchClient evita que se mande llamar dos veces al
   // cliente y por lo mismo que se pinte dos veces
+
+  // inputRef lo uso para que al cargar la pagina ponga el focus en el nombre
+  // del cliente
+
   
   const avoidRerenderFetchClient = useRef(false);
   const avoidRerenderFetchProducts = useRef(false);
+  const inputRef = useRef(null);
   /*****************************************************************************/  
 
 
@@ -151,6 +156,13 @@ export default function UpdateOrder() {
   // <select> que es un element de HTML
   // const [estatusPedido, setEstatusPedido] = useState(options[0].value);
   /****************************************************************************/
+
+  /**************************    useEffect    **********************************/
+  // Al cargar la pagina pone el focus en el nombre del producto
+  useEffect(()=>{
+    inputRef.current.focus();
+  },[])
+  /*****************************************************************************/
 
 
   /************************     useEffect - fetchOrder   ********************/
@@ -733,6 +745,7 @@ export default function UpdateOrder() {
       <div className="salesHeader">
         <div className="searchBar">
             <input 
+                  ref={inputRef}
                   type="text" 
                   placeholder='Buscar Producto...'
                   className="searchInput" 

@@ -122,6 +122,7 @@ export default function SearchClient() {
         </Alert>
       </Snackbar>
 
+      {/* <h2><span>PASO 1: </span>BUSCAR Y ELEGIR UN NEGOCIO</h2> */}
       <form className='searchClientInput' onSubmit={handleSearch}>
         {/* <label>Buscar Cliente</label> */}
         <input

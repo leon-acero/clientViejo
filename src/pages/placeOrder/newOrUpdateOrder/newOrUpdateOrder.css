@@ -2,6 +2,12 @@
   flex: 4;
 }
 
+h2 {
+  font-size: 1rem;
+  margin-bottom: 1.6rem;
+  padding: 1rem 1rem;
+}
+
 .businessInfo {
   margin-bottom: 1.5rem;
   font-size: 1.6rem;
@@ -61,25 +67,47 @@
 }
 
 .linkNuevoPedido__button{
-  border: none;
+  /* border: none;
   border-radius: 1rem;
   padding: .5rem 1rem;
   background-color: #3bb077;
   color: white;
   cursor: pointer;
   margin-right: 0rem;
-  font-size: 2rem;
+  font-size: 2rem; */
+
+  background-color: #55c57a;
+  color: #fff;
+
+  font-size: 1.6rem;
+  padding: 1.4rem 3rem;
+  border-radius: 10rem;
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  font-weight: 400;
+
+  /* ANIMATION */
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  /*Add later when we use this for the button in form*/
+  border: none;
+  cursor: pointer;
 }
 
 .linkActualizarPedido__button {
   border: none;
-  border-radius: 1rem;
+  border-radius: 10rem;
   padding: 1rem 1rem;
   background-color: teal;
   color: white;
   cursor: pointer;
   margin-bottom: 1.2rem;
-  font-size: 1.4rem;
+  font-size: 1.4rem;  
 }
 
 .ultimosCincoPedidos_group {

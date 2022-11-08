@@ -50,3 +50,11 @@
     font-size: 1.5rem;
     color: gray;
 }
+
+/* 430px */
+@media (max-width:26.875em) {
+    .featured {
+        display: none;
+    }
+
+}

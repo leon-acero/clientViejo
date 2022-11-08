@@ -18,6 +18,16 @@ const Table = ({ data }) => {
         {data.map(client => (
           <tr key={client.id}>
             <td>
+              {/* <Link to={{
+                    pathname: `/new-order/${client.id}`,
+                    state: {
+                            businessName: client.businessName, 
+                            cellPhone: client.cellPhone, 
+                            esMayorista: client.esMayorista
+                    }
+                  }}>Crear Pedido
+              </Link> */}
+            
               <Link className="abrirCliente__link" to={{
                     pathname: `/new-or-update-order/${client.id}`,
                     state: {
@@ -30,6 +40,7 @@ const Table = ({ data }) => {
               </Link>
             </td>
             <td>{client.businessName}</td>
+            {/* <td><button onClick={()=>handleClick(client.id)}>ultimos 5 pedidos</button></td> */}
             <td>{client.ownerName}</td>
             <td>{client.cellPhone}</td>
           </tr>

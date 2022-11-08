@@ -4,3 +4,11 @@
   margin-bottom: 5px;
   font-size: 18px;
 }
+
+/* 430px */
+@media (max-width:26.875em) {
+  .reporte {
+      display: none;
+  }
+
+}

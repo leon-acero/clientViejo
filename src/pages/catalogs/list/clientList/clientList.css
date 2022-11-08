@@ -1,5 +1,6 @@
 .clientList {
   flex: 4;
+  height: calc(100vh - 5rem);
 }
 
 .clientListClient {

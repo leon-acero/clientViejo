@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { stateContext } from '../../context/StateProvider';
 
@@ -9,8 +9,24 @@ export default function Login() {
 
   const history = useHistory();
 
+    /**************************    useRef    **********************************/
+  // inputRef lo uso para que al cargar la pagina ponga el focus en el nombre
+  // del cliente
+
+  const inputRef = useRef(null);
+  /*****************************************************************************/
+
+
   const { setCurrentUser } = useContext(stateContext);
  
+  /**************************    useEffect    **********************************/
+  // Al cargar la pagina pone el focus en el nombre del producto
+  useEffect(()=>{
+    inputRef.current.focus();
+  },[])
+  /*****************************************************************************/
+
+
   const [data, setData] = useState(
     {
       email: "",
@@ -83,6 +99,7 @@ export default function Login() {
             <div className="form__group">
               <label htmlFor="email" className="form__label" >Correo Electrónico</label>
               <input 
+                    ref={inputRef}
                     type="email" 
                     id="email" 
                     className="form__input" 

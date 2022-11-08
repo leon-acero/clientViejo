@@ -79,7 +79,11 @@ export default function ProductOrdered({
           </div>
         </div>
 
-        <button className="botonRemoveProductFromBasket" onClick={()=>removeProductFromBasket(index)}>Borrar</button>     
+        <button className="botonRemoveProductFromBasket" onClick={()=>removeProductFromBasket(index)}>Borrar</button> 
+
+        <button className="botonRemoveProductFromBasket__icon" onClick={()=>removeProductFromBasket(index)}>
+          X 
+        </button>  
       </div>  
   )
 } 

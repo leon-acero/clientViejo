@@ -144,7 +144,26 @@ export default function ProductList() {
   }
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 0, headerAlign: 'center', },
+    {
+      field: "action",
+      headerName: "Acción",
+      width: 120,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={"/product/" + params.row._id}>
+              <button className="productListEdit">Editar</button>
+            </Link>
+            <DeleteOutline
+              className="productListDelete"
+              onClick={() => openDeleteDialog(params.row._id, params.row.productName)}
+            />
+          </>
+        );
+      },
+    },
     { field: "sku", headerName: "SKU", width: 30, headerAlign: 'center', align: 'right',},
     {
       field: "productName",
@@ -201,26 +220,8 @@ export default function ProductList() {
       valueFormatter: ({value}) => valueFormatter(value),
       align: 'right',
     },    
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      headerAlign: 'center',
-      align: 'center',
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={"/product/" + params.row._id}>
-              <button className="productListEdit">Editar</button>
-            </Link>
-            <DeleteOutline
-              className="productListDelete"
-              onClick={() => openDeleteDialog(params.row._id, params.row.productName)}
-            />
-          </>
-        );
-      },
-    },
+    { field: "_id", headerName: "ID", width: 0, headerAlign: 'center', },
+
   ];
 
   return (

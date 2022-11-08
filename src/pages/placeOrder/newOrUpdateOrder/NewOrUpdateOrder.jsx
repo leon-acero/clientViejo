@@ -48,7 +48,7 @@ export default function NewOrUpdateOrder() {
 
   return (
     <div className="newOrUpdateOrder">
-
+      {/* <h2><span>PASO 2: </span>CREA UN NUEVO PEDIDO O SELECCIONA UNO POR ENTREGAR</h2> */}
       <div className="businessInfo">
         <p className="businessInfo__businessName">{businessName}</p>
         <p className="businessInfo__cellPhone">{cellPhone}</p>

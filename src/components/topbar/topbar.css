@@ -66,24 +66,80 @@
   font-size: 2rem;
 }
 
-.logoutButton,
+/* .logoutButton, */
 .loginButton {
-  border-radius: .5rem;
+  /* border-radius: .5rem; */
   border: none;
   padding: 1rem;
   cursor: pointer;
-  background-color: darkblue;
+  /* background-color: darkblue; */
+  /* background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#f12711),
+    to(#f5af19)
+  ); */
+  /* background: linear-gradient(to right, #f12711, #f5af19); */
+  /* background: linear-gradient(to right, #8e2de2, #4a00e0); */
+  /* background: linear-gradient(to right, #0575e6, #021b79); */
+  /* background: linear-gradient(to right, #000428, #004e92); */
+  background: linear-gradient(to right, #6190e8, #a7bfe8);
+
   color: white;
   font-size: 1.2rem;
   font-weight: 600;
   text-decoration: none;
+
+  /* font-size: 1.6rem; */
+  /* padding: 1.4rem 3rem; */
+  border-radius: 10rem;
+  /* text-transform: uppercase; */
+  display: inline-block;
+  text-decoration: none;
+  /* position: relative; */
+  /* font-weight: 400; */
 }
+
+/* <Link to={"/client/" + params.row._id}>
+              <button className="clientListEdit" onClick={()=>handleEdit(params.row._id, params.row.slug)}>Editar</button>
+            </Link> */
 
 .authStyle {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+.menuItem {
+  font-size: 1.6rem;
+}
+
+.logoutButton {
+  border-radius: .5rem;
+  border: none;
+  padding: .5rem;
+  margin: .5rem;
+  cursor: pointer;
+  /* background-color: darkblue; */
+  color: black;
+  font-size: 1.2rem;
+  /* font-weight: 600; */
+  text-decoration: none;
+}
+
+.crearPedidoButton {
+  border-radius: .5rem;
+  border: none;
+  padding: .5rem;
+  margin: .5rem;
+  cursor: pointer;
+  /* background-color: darkblue; */
+  color: black;
+  font-size: 1.2rem;
+  /* font-weight: 600; */
+  text-decoration: none;
 }
 
 /* 680px */
@@ -112,7 +168,8 @@
   } */
 
   .logoutButton,
-  .loginButton {
+  .loginButton,
+  .crearPedidoButton {
     padding: 1rem;
     /* font-size: 1.1rem; */
     /* font-weight: 600; */

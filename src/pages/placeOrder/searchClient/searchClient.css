@@ -1,5 +1,13 @@
 .searchClient {
   flex: 4;
+  padding: 2rem 3rem;
+  overflow: hidden;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.6rem;
+  padding: 1rem 1rem;
 }
 
 .searchClientInput {
@@ -11,7 +19,7 @@
   width: 100%;
   font-size: 1.6rem;
   margin-top: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 .clientSearchInput {
@@ -26,7 +34,9 @@
   width: 20rem;
   height: 4rem;
   border: none;
-  background-color: darkblue;
+  /* background-color: darkblue; */
+  background: linear-gradient(to left, #0575e6, #021b79);
+
   color: white;
   padding: .7rem 1rem;
   font-weight: 600;
@@ -38,4 +48,74 @@
 .btnSearchClient:disabled,
 .btnSearchClient[disabled] {
   background-color: gray;
+}
+
+/* 780px */
+@media (max-width:48.75em) {
+  .clientSearchInput {
+    padding: 1rem;
+    font-size: 2rem;
+    width: 48rem;
+  }
+
+  .btnSearchClient {
+    width: 14rem;
+  }
+}
+
+/* 680px */
+@media (max-width:42.5em) {
+  .clientSearchInput {
+    padding: 1rem;
+    font-size: 1.8rem;
+    width: 41rem;
+  }
+
+  .btnSearchClient {
+    width: 12rem;
+  }
+}
+
+/* 580px */
+@media (max-width:36.25em) {
+  .clientSearchInput {
+    padding: 1rem;
+    font-size: 1.6rem;
+    width: 36rem;
+  }
+
+  .btnSearchClient {
+    width: 10rem;
+  }
+}
+
+/* 520px */
+@media (max-width:32.5em) {
+
+  .searchClientInput {
+    justify-content:space-evenly;
+  }
+
+  .searchClient {
+    padding: 2rem 1.5rem;
+  }
+
+}
+
+/* 480px */
+@media (max-width:30em) {
+  .clientSearchInput {
+    padding: 1rem;
+    font-size: 1.2rem;
+    width: 30rem;
+  }
+
+  .btnSearchClient {
+    width: 8rem;
+    font-size: 1.2rem;
+  }
+
+  .searchClient {
+    padding: 2rem .5rem;
+  }
 }

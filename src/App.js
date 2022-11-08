@@ -112,10 +112,10 @@ function App() {
         currentUser?.role === "admin" && (
           <div className="container">
 
-            {
+            {/* {
               isDesktopResolution && <Sidebar />
-            }
-            {/* <Sidebar /> */}
+            } */}
+            <Sidebar />
 
             <Switch>
 
