@@ -492,13 +492,18 @@ export default function UpdateOrder() {
           console.log("el estatus pedido", theBasket.estatusPedido);
 
           if (theBasket.estatusPedido === 1) {
-            setMensajeSnackBar("El pedido fue grabado. Por Entregar.");
+            setMensajeSnackBar("El pedido fue grabado. Por Entregar. Espera un momento...");
           }
           else if (theBasket.estatusPedido === 2) {
-            setMensajeSnackBar("El pedido fue grabado y Entregado. Inventario actualizado. ");
+            setMensajeSnackBar("El pedido fue grabado y Entregado. Inventario actualizado. Espera un momento...");
           }
           
           setOpenSnackbar(true);
+
+          // Redirecciono después de 5 segundos a SearchClient osea /search-client
+          setTimeout(()=>{
+            history.replace("/search-client");
+          }, 5000);
         } 
     }
     catch(err) {
