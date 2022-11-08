@@ -736,7 +736,7 @@ export default function UpdateOrder() {
                   type="text" 
                   placeholder='Buscar Producto...'
                   className="searchInput" 
-                  onChange={e=>setSearchBarQuery(e.target.value)}
+                  onChange={e=>setSearchBarQuery(e.target.value.toString().toLowerCase())}
             />
             <SearchIcon className="productSearch" />
             {/* <button className="productSearch">Buscar</button> */}
