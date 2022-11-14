@@ -8,7 +8,8 @@ import { useEffect, useRef, useState } from 'react';
 /**************************    Snackbar    **********************************/
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
+import {FaTimes} from "react-icons/fa";
 import { Alert } from '@mui/material';
 /****************************************************************************/
 
@@ -79,8 +80,8 @@ export default function NewProduct() {
       const res = await axios({
         withCredentials: true,
         method: 'POST',
-        // url: `http://127.0.0.1:8000/api/v1/products/`,
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/`,
+        url: `http://127.0.0.1:8000/api/v1/products/`,
+        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/`,
         data: {
               sku: data.sku,
               productName: data.productName, 
@@ -157,7 +158,8 @@ export default function NewProduct() {
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        <CloseIcon fontSize="small" />
+        {/* <CloseIcon fontSize="small" /> */}
+        <FaTimes />
       </IconButton>
     </>
   );

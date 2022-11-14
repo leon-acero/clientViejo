@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import axios from "axios";
+import { Skeleton } from '@mui/material';
 
 export default function NewOrUpdateOrder() {
 
@@ -35,8 +36,8 @@ export default function NewOrUpdateOrder() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        // url: `http://127.0.0.1:8000/api/v1/sales/ultimos-cinco-pedidos-por-entregar/${clientId}`
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/ultimos-cinco-pedidos-por-entregar/${clientId}`
+        url: `http://127.0.0.1:8000/api/v1/sales/ultimos-cinco-pedidos-por-entregar/${clientId}`
+        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/ultimos-cinco-pedidos-por-entregar/${clientId}`
       });
       // console.log("res",res.data.data.ultimosCincoPedidosPorEntregar);
       setUltimosCincoPedidos(res.data.data.ultimosCincoPedidosPorEntregar);   
@@ -102,7 +103,8 @@ export default function NewOrUpdateOrder() {
                     </Link>
                   
                 )
-              : <p className="pedidosPorEntregar__nohay">No hay Pedidos por Entregar</p> 
+              // : <p className="pedidosPorEntregar__nohay">No hay Pedidos por Entregar</p> 
+              : <Skeleton animation="wave" variant="rounded" width={300} height={30}  />
               }
             </div>              
 

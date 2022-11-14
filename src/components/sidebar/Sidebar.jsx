@@ -1,8 +1,11 @@
 import "./sidebar.css";
-import LineStyle from "@mui/icons-material/LineStyle";
-import AttachMoney from "@mui/icons-material/AttachMoney";
-import Storefront from "@mui/icons-material/Storefront";
-import TrendingUp from "@mui/icons-material/TrendingUp";
+// import LineStyle from "@mui/icons-material/LineStyle";
+// import AttachMoney from "@mui/icons-material/AttachMoney";
+// import Storefront from "@mui/icons-material/Storefront";
+// import TrendingUp from "@mui/icons-material/TrendingUp";
+
+import {FaHome, FaDollarSign, FaStore, FaCandyCane, FaChartLine, FaHandshake} from "react-icons/fa";
+
 // import Timeline from "@mui/icons-material/Timeline";
 // import PermIdentity from "@mui/icons-material/PermIdentity";
 // import BarChart from "@mui/icons-material/BarChart";
@@ -23,7 +26,7 @@ export default function Sidebar() {
           <ul className="sidebarList">
             <Link to="/" className="link">
             <li className="sidebarListItem active">
-              <LineStyle className="sidebarIcon" />
+              <FaHome className="sidebarIcon" />
               Home
             </li>
             </Link>
@@ -32,7 +35,7 @@ export default function Sidebar() {
               Analytics
             </li>
             <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
+              <FaChartLine className="sidebarIcon" />
               Sales
             </li> */}
           </ul>
@@ -42,12 +45,12 @@ export default function Sidebar() {
           <ul className="sidebarList">      
             <Link to="/search-client" className="link">     
               <li className="sidebarListItem">
-                <AttachMoney className="sidebarIcon" />
+                <FaHandshake className="sidebarIcon iconos__placeOrder" />
                 Ventas
               </li>
             </Link>
             <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
+              <FaDollarSign className="sidebarIcon" />
               Compras
             </li>
             {/* <li className="sidebarListItem">
@@ -61,18 +64,18 @@ export default function Sidebar() {
           <ul className="sidebarList">
             <Link to="/clients" className="link">
               <li className="sidebarListItem">
-                <Storefront className="sidebarIcon" />
+                <FaStore className="sidebarIcon" />
                 Clientes
               </li>
             </Link>
             <Link to="/products" className="link">
               <li className="sidebarListItem">
-                <Storefront className="sidebarIcon" />
+                <FaCandyCane className="sidebarIcon" />
                 Productos
               </li>
             </Link>
             {/* <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
+              <FaDollarSign className="sidebarIcon" />
               Transactions
             </li> */}
             {/* <li className="sidebarListItem">
@@ -86,28 +89,28 @@ export default function Sidebar() {
           <ul className="sidebarList">
             <Link to="/sales/whole-year-sales" className="link">
               <li className="sidebarListItem">
-                <TrendingUp className="sidebarIcon" />
+                <FaChartLine className="sidebarIcon" />
                 Ventas Anuales
               </li>
             </Link>
             <Link to="/sales/monthly-sales" className="link">
               <li className="sidebarListItem">
-                <TrendingUp className="sidebarIcon" />
+                <FaChartLine className="sidebarIcon" />
                 Venta Mensuales Por Año
               </li>
             </Link>
             <Link to="/sales/weekly-sales" className="link">
               <li className="sidebarListItem">
-                <TrendingUp className="sidebarIcon" />
+                <FaChartLine className="sidebarIcon" />
                 Venta Semanales Por Mes
               </li>
             </Link>
             <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
+              <FaChartLine className="sidebarIcon" />
               Venta por Cliente
             </li>
             <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
+              <FaChartLine className="sidebarIcon" />
               Venta por Producto
             </li>
           </ul>

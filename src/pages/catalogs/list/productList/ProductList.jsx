@@ -1,6 +1,8 @@
 import "./productList.css";
 import { DataGrid } from "@mui/x-data-grid";
-import DeleteOutline from "@mui/icons-material/DeleteOutline";
+// import DeleteOutline from "@mui/icons-material/DeleteOutline";
+import {FaTrashAlt} from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
@@ -14,7 +16,8 @@ import {clsx} from "clsx";
 // import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
+import {FaTimes} from "react-icons/fa";
 
 
 // HTTP
@@ -45,8 +48,8 @@ export default function ProductList() {
       const res = await axios({
         withCredentials: true,
         method: 'DELETE',
-        // url: `http://127.0.0.1:8000/api/v1/products/${currentProduct.id}`,
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${currentProduct.id}`,
+        url: `http://127.0.0.1:8000/api/v1/products/${currentProduct.id}`,
+        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${currentProduct.id}`,
         })
       
       if (res.status === 204) {
@@ -79,8 +82,8 @@ export default function ProductList() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        // url: 'http://127.0.0.1:8000/api/v1/products'
-        url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
+        url: 'http://127.0.0.1:8000/api/v1/products'
+        // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
       });
 
       // 2da OPCION PARA USAR AXIOS
@@ -126,7 +129,8 @@ export default function ProductList() {
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        <CloseIcon fontSize="small" />
+        {/* <CloseIcon fontSize="small" /> */}
+        <FaTimes />
       </IconButton>
     </>
   );
@@ -156,7 +160,11 @@ export default function ProductList() {
             <Link to={"/product/" + params.row._id}>
               <button className="productListEdit">Editar</button>
             </Link>
-            <DeleteOutline
+            {/* <DeleteOutline
+              className="productListDelete"
+              onClick={() => openDeleteDialog(params.row._id, params.row.productName)}
+            /> */}
+            <FaTrashAlt
               className="productListDelete"
               onClick={() => openDeleteDialog(params.row._id, params.row.productName)}
             />

@@ -8,7 +8,8 @@ import Table from '../../../components/table/Table';
 /**************************    Snackbar    **********************************/
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
+import {FaTimes} from "react-icons/fa";
 import { Alert } from '@mui/material';
 /****************************************************************************/
 
@@ -56,8 +57,8 @@ export default function SearchClient() {
           // url: `http://127.0.0.1:8000/api/v1/clients?q=${query}`
           // url: `http://127.0.0.1:8000/api/v1/clients?${regExOptions}`
 
-          // url: `http://127.0.0.1:8000/api/v1/clients/search-client/${query}`
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/search-client/${query}`
+          url: `http://127.0.0.1:8000/api/v1/clients/search-client/${query}`
+          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/search-client/${query}`
   
         });
         // console.log(res.data.data.data);
@@ -102,7 +103,8 @@ export default function SearchClient() {
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        <CloseIcon fontSize="small" />
+        {/* <CloseIcon fontSize="small" /> */}
+        <FaTimes />
       </IconButton>
     </>
   );
@@ -137,8 +139,11 @@ export default function SearchClient() {
           minLength="3"
           maxLength="80"
         />
-        <button className="btnSearchClient" disabled={isSearching}>{isSearching ? 'Buscando...' : 'Buscar'}</button>
+        <button className="btnSearchClient" disabled={isSearching}>
+          {isSearching ? 'Buscando...' : 'Buscar'}
+        </button>
       </form>
+      
       <Table data={data} />
       {/* <p>{data.id} {data.businessName} {data.cellPhone}</p> */}
 

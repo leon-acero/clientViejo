@@ -15,7 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 // import CloseIcon from '@mui/icons-material/Close';
 import {FaTimes} from "react-icons/fa";
-import { Alert, Skeleton } from '@mui/material';
+import { Alert } from '@mui/material';
 /****************************************************************************/
 
 // import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -752,7 +752,6 @@ export default function UpdateOrder() {
             {/* <button className="productSearch">Buscar</button> */}
         </div>
 
-        {/* 
         <div className="estatusPedidoPlaceOrder">
           {
             usarComponenteComo === "actualizarPedido" && 
@@ -765,13 +764,18 @@ export default function UpdateOrder() {
           }
 
           <div className="container-estatusPedido">
+            {/* <label htmlFor="estatusPedido">Estatus</label> */}
             <select 
                 className="container-estatusPedido__select"
                 id="estatusPedido" 
+                // value={estatusPedido}
                 value={theBasket.estatusPedido}
                 onChange={handleEstatusPedido}
                 name="estatusPedido"
             >
+                {/* <option value="porEntregar">Por entregar</option>
+                <option value="entregado">Entregado</option> */}
+                {/* 1 es Por Entregar y 2 es Entregado */}
                 <option value="1">Por entregar</option>
                 <option value="2">Entregado</option>
             </select>          
@@ -789,7 +793,7 @@ export default function UpdateOrder() {
             }
           </button>
           
-        </div> */}
+        </div>
       </div>
 
       <div className="makeOrder">
@@ -797,9 +801,6 @@ export default function UpdateOrder() {
           <p className="productListTitle">Catálogo de Productos</p>
           <div className="container">
             <div className="carousel">
-              {
-                productCatalog?.length === 0 && <Skeleton animation="wave" variant="rounded" width={980} height={320}  />
-              }
               {
                 productCatalog
                   .filter(product => product.sku.toString().includes(searchBarQuery) ||
@@ -887,7 +888,6 @@ export default function UpdateOrder() {
               </div>
             </div>
           </div>
-          
         </div>
 
         {/* REACT-SELECT
@@ -901,52 +901,7 @@ export default function UpdateOrder() {
             isSearchable={false}
           />
         </div> */}        
-      </div> 
-      <div className="salesFooter">
-        <div className="estatusPedidoPlaceOrder">
-          {
-            usarComponenteComo === "actualizarPedido" && 
-                  <button className="deleteOrderButton"
-                          disabled={isSaving}
-                          // onClick={handleDeleteOrder}
-                          onClick={openDeleteDialog}
-                  >{isDeleting ? 'Borrando...' : 'Borrar'}
-                  </button> 
-          }
-
-          <div className="container-estatusPedido">
-            {/* <label htmlFor="estatusPedido">Estatus</label> */}
-            <select 
-                className="container-estatusPedido__select"
-                id="estatusPedido" 
-                // value={estatusPedido}
-                value={theBasket.estatusPedido}
-                onChange={handleEstatusPedido}
-                name="estatusPedido"
-            >
-                {/* <option value="porEntregar">Por entregar</option>
-                <option value="entregado">Entregado</option> */}
-                {/* 1 es Por Entregar y 2 es Entregado */}
-                <option value="1">Por entregar</option>
-                <option value="2">Entregado</option>
-            </select>          
-          </div>
-
-          <button className="placeOrderButton"
-                  disabled={isSaving}
-                  onClick={handlePlaceOrder}
-          >
-            {usarComponenteComo === "nuevoPedido" &&
-              (isSaving ? 'Creando...' : 'Crear')
-            }
-            {usarComponenteComo === "actualizarPedido" &&
-              (isSaving ? 'Actualizando...' : 'Actualizar')
-            }
-          </button>
-          
-        </div>      
-      
-      </div>     
+      </div>      
     </div>
   )
 }

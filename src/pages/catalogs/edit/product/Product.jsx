@@ -1,9 +1,11 @@
 import "./product.css";
 
 /************************    Material UI    *********************************/
-import CalendarToday from "@mui/icons-material/CalendarToday";
-import PermIdentity from "@mui/icons-material/PermIdentity";
-import Publish from "@mui/icons-material/Publish";
+import {FaDollyFlatbed, FaDollarSign, FaCloudUploadAlt } from "react-icons/fa";
+
+// import CalendarToday from "@mui/icons-material/CalendarToday";
+// import PermIdentity from "@mui/icons-material/PermIdentity";
+// import Publish from "@mui/icons-material/Publish";
 // import LocationSearching from "@mui/icons-material/LocationSearching";
 // import MailOutline from "@mui/icons-material/MailOutline";
 // import PhoneAndroid from "@mui/icons-material/PhoneAndroid";
@@ -12,7 +14,8 @@ import Publish from "@mui/icons-material/Publish";
 /**************************    Snackbar    **********************************/
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
+import {FaTimes} from "react-icons/fa";
 import { Alert } from '@mui/material';
 /****************************************************************************/
 
@@ -107,8 +110,8 @@ export default function Product() {
         const res = await axios({
           withCredentials: true,
           method: 'PATCH',
-          // url: `http://127.0.0.1:8000/api/v1/products/${productId}`,
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`,
+          url: `http://127.0.0.1:8000/api/v1/products/${productId}`,
+          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`,
           data: formData
         })
         setIsSaving(false);
@@ -153,8 +156,8 @@ export default function Product() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        // url: `http://127.0.0.1:8000/api/v1/products/${productId}`
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`
+        url: `http://127.0.0.1:8000/api/v1/products/${productId}`
+        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`
       });
       // console.log(res.data.data.data);
       setData(res.data.data.data)
@@ -214,7 +217,8 @@ export default function Product() {
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        <CloseIcon fontSize="small" />
+        {/* <CloseIcon fontSize="small" /> */}
+        <FaTimes />
       </IconButton>
     </>
   );
@@ -275,23 +279,23 @@ export default function Product() {
           <div className="productShowBottom">
             <span className="productShowTitle">Detalle</span>
             <div className="productShowInfo">
-              <PermIdentity className="productShowIcon" />
+              <FaDollyFlatbed className="productShowIcon" />
               <span className="productShowInfoTitle">Inventario Actual: {data.inventarioActual}</span>
             </div>
             <div className="productShowInfo">
-              <CalendarToday className="productShowIcon" />
+              <FaDollyFlatbed className="productShowIcon" />
               <span className="productShowInfoTitle">Inventario Mínimo: {data.inventarioMinimo}</span>
             </div>
             <div className="productShowInfo">
-              <CalendarToday className="productShowIcon" />
+              <FaDollarSign className="productShowIcon" />
               <span className="productShowInfoTitle">Precio Menudeo: ${data.priceMenudeo}</span>
             </div>           
             <div className="productShowInfo">
-              <CalendarToday className="productShowIcon" />
+              <FaDollarSign className="productShowIcon" />
               <span className="productShowInfoTitle">Precio Mayoreo: ${data.priceMayoreo}</span>
             </div> 
             <div className="productShowInfo">
-              <CalendarToday className="productShowIcon" />
+              <FaDollarSign className="productShowIcon" />
               <span className="productShowInfoTitle">Costo: ${data.costo}</span>
             </div>             
 
@@ -449,7 +453,7 @@ export default function Product() {
                   alt=""
                 />
                 <label htmlFor="photo">
-                  <Publish style={{"fontSize": "3rem", "cursor": "pointer"}} />
+                  <FaCloudUploadAlt style={{"fontSize": "3rem", "cursor": "pointer"}} />
                 </label>
                 <input  type="file" 
                         accept="image/*" 

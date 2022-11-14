@@ -45,6 +45,8 @@ import ReportWholeBusinessSalesByYear from './pages/reports/reportWholeYearSales
 import { useMatchMedia } from "./hooks/useMatchMedia";
 import SplashScreen from './components/splashScreen/SplashScreen';
 
+import { AnimatePresence } from 'framer-motion';
+
 
 function App() {
 
@@ -62,15 +64,17 @@ function App() {
       {/* Muestro la SplashScreen si no hay usuario loggeado */}
       {
         !currentUser && (
-          <Switch>
-            <Route exact path="/">
-              <SplashScreen />
-            </Route>
+          <AnimatePresence wait >
+            <Switch>
+              <Route exact path="/">
+                <SplashScreen />
+              </Route>
 
-            <Route exact path="/login">
-              <Login />
-            </Route>
-          </Switch>
+              <Route exact path="/login">
+                <Login />
+              </Route>
+            </Switch>
+          </AnimatePresence>
         ) 
       }
 
@@ -117,113 +121,115 @@ function App() {
             } */}
             <Sidebar />
 
-            <Switch>
+            <AnimatePresence wait >
+              <Switch>
+                {/* HomePage */}
+                <Route exact path="/">
+                  <Home />
+                </Route>
 
-              {/* HomePage */}
-              <Route exact path="/">
-                <Home />
-              </Route>
+                {/***********************************************************/}
+                {/* Catálogo de Clientes */}
+                <Route path="/clients">
+                  <ClientList />
+                </Route>
 
-              {/***********************************************************/}
-              {/* Catálogo de Clientes */}
-              <Route path="/clients">
-                <ClientList />
-              </Route>
+                <Route path="/client/:clientId">
+                  <Client />
+                </Route>  
 
-              <Route path="/client/:clientId">
-                <Client />
-              </Route>  
-
-              <Route path="/new-client">
-                <NewClient />
-              </Route>
-
-
-              {/***********************************************************/}
-              {/* Catàlogo de Productos */}
-              <Route path="/products">
-                <ProductList />
-              </Route>
-
-              <Route path="/product/:productId">
-                <Product />
-              </Route>
-
-              <Route path="/new-product">
-                <NewProduct />
-              </Route>
+                <Route path="/new-client">
+                  <NewClient />
+                </Route>
 
 
-              {/***********************************************************/}
-              {/* Hacer un Nuevo Pedido */}
+                {/***********************************************************/}
+                {/* Catàlogo de Productos */}
+                <Route path="/products">
+                  <ProductList />
+                </Route>
 
-              <Route path="/search-client">
-                <SearchClient />
-              </Route>  
+                <Route path="/product/:productId">
+                  <Product />
+                </Route>
 
-              {/* Component Props ESTO SI me sirve si quiero pasar
-                  los Props de Route y mis Custom Props
-              */}
-              <Route path="/new-order/:clientId" component={NewOrder} />
-              <Route path="/new-or-update-order/:clientId" component={NewOrUpdateOrder} />
-              <Route path="/update-order/:clientId" component={UpdateOrder} />
+                <Route path="/new-product">
+                  <NewProduct />
+                </Route>
 
 
+                {/***********************************************************/}
+                {/* Hacer un Nuevo Pedido */}
 
-              {/* Render Props ESTO SI me sirve si quiero pasar
-                  los Props de Route y mis Custom Props
-              */}
-              {/* <Route 
-                  exact 
-                  path="/new-order/:clientId" 
-                  render={
-                      ({match, location, history}) => (
-                        <NewOrder match={match} location={location}/>
-                      ) }
-              /> */}
+                <Route path="/search-client">
+                  <SearchClient />
+                </Route>  
 
-              {/* <Route 
-                  exact 
-                  path="/new-order/:clientId" 
-                  render={
-                      (props) => (
-                        <NewOrder props={props}/>
-                      )}
-              /> */}
+                {/* Component Props ESTO SI me sirve si quiero pasar
+                    los Props de Route y mis Custom Props
+                */}
+                <Route path="/new-order/:clientId" component={NewOrder} />
+                <Route path="/new-or-update-order/:clientId" component={NewOrUpdateOrder} />
+                <Route path="/update-order/:clientId" component={UpdateOrder} />
 
-              {/* 
-                  Children Props ESTO NO me sirve si quiero pasar 
-                  los Props de Route y mis Custom Props
-              */}
-              {/* <Route path="/new-order/:clientId" >
-                <NewOrder />
-              </Route> */}
 
-              {/***********************************************************/}
-              {/* Reportes */}
-              <Route path="/sales/whole-year-sales">
-                <ReportWholeBusinessSalesByYear />
-              </Route>
 
-              <Route path="/sales/monthly-sales">
-                <ReportMonthlySalesByYear />
-              </Route> 
+                {/* Render Props ESTO SI me sirve si quiero pasar
+                    los Props de Route y mis Custom Props
+                */}
+                {/* <Route 
+                    exact 
+                    path="/new-order/:clientId" 
+                    render={
+                        ({match, location, history}) => (
+                          <NewOrder match={match} location={location}/>
+                        ) }
+                /> */}
 
-              <Route path="/sales/weekly-sales">
-                <ReportWeeklySalesByMonth />
-              </Route>    
+                {/* <Route 
+                    exact 
+                    path="/new-order/:clientId" 
+                    render={
+                        (props) => (
+                          <NewOrder props={props}/>
+                        )}
+                /> */}
 
-              {/***********************************************************/}
-              {/* Authentication */}
-              <Route path="/login">
-                <Login />
-              </Route>
+                {/* 
+                    Children Props ESTO NO me sirve si quiero pasar 
+                    los Props de Route y mis Custom Props
+                */}
+                {/* <Route path="/new-order/:clientId" >
+                  <NewOrder />
+                </Route> */}
 
-              <Route path="/logout">
-                <Logout />
-              </Route>
+                {/***********************************************************/}
+                {/* Reportes */}
+                <Route path="/sales/whole-year-sales">
+                  <ReportWholeBusinessSalesByYear />
+                </Route>
 
-            </Switch>
+                <Route path="/sales/monthly-sales">
+                  <ReportMonthlySalesByYear />
+                </Route> 
+
+                <Route path="/sales/weekly-sales">
+                  <ReportWeeklySalesByMonth />
+                </Route>    
+
+                {/***********************************************************/}
+                {/* Authentication */}
+                <Route path="/login">
+                  <Login />
+                </Route>
+
+                <Route path="/logout">
+                  <Logout />
+                </Route>
+
+              </Switch>
+
+            </AnimatePresence>
           </div>
         )
       }

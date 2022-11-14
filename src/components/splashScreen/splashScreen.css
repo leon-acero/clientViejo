@@ -1,20 +1,30 @@
 .splashScreen {
   height: calc(100vh - 5rem);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("/public/img/website/gomitasydulces.jpeg");
-  background-size: cover;
-  overflow-y: hidden;
+
+	display: flex;
+	/* padding: 40px; */
+	align-items: center;
+	justify-content: center;
+	
 }
 
-@media (max-width:28.125em) {
-  .splashScreen {
-    background-position: center;
-  }
+/* 680px */
+@media (max-width:42.5em) {
+  .candyShop-svg {
+		height: 40rem;
+	}
+}
+
+/* 580px */
+@media (max-width:36.25em) {
+  .candyShop-svg {
+		height: 35rem;
+	}
+}
+
+/* 480px */
+@media (max-width:30em) {
+	.candyShop-svg {
+		height: 30rem;
+	}
 }

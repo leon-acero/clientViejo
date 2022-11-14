@@ -8,9 +8,11 @@ import { useEffect, useRef, useState } from 'react';
 /**************************    Snackbar    **********************************/
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
+import {FaTimes} from "react-icons/fa";
 import { Alert } from '@mui/material';
 /****************************************************************************/
+
 
 
 const INITIAL_STATE = { 
@@ -81,8 +83,8 @@ export default function NewClient() {
       const res = await axios({
         withCredentials: true,
         method: 'POST',
-        // url: `http://127.0.0.1:8000/api/v1/clients/`,
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/`,
+        url: `http://127.0.0.1:8000/api/v1/clients/`,
+        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/`,
         data: {
               sku: data.sku, 
               ownerName: data.ownerName, 
@@ -160,7 +162,8 @@ export default function NewClient() {
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        <CloseIcon fontSize="small" />
+        {/* <CloseIcon fontSize="small" /> */}
+        <FaTimes />
       </IconButton>
     </>
   );

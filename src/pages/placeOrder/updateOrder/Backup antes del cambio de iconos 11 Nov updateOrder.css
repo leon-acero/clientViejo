@@ -6,20 +6,10 @@
 .salesHeader, .salesFooter {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  justify-content: center;
+  justify-content: space-between;
   margin-bottom: 1rem;
   padding: .5rem 2.4rem;
 
-}
-
-.salesFooter {
-  justify-content: center;
-  
-}
-
-.estatusPedidoPlaceOrder {
-  width: 100%
 }
 
 .businessInfo {
@@ -61,13 +51,12 @@
 .estatusPedidoPlaceOrder {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 2.4rem;
 }
 
 .searchInput {
   border: none;
-  width: 45rem;
+  width: 25rem;
   height: 3rem;
   border: .1rem solid black;
   padding: 1rem;
@@ -128,20 +117,14 @@
 .placeOrderButton {
   width: 12rem;
   border-radius: 10rem;
-  /* border: none; */
+  border: none;
   padding: 1rem 1.5rem;
   cursor: pointer;
   /* background-color: darkblue; */
-  /* background: linear-gradient(to right, #8e2de2, #4a00e0); */
-  /* color: white; */
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
+  color: white;
   font-size: 1.4rem;
-  /* font-weight: 600; */
-  font-weight: 400;
-
-  background: #f0c14b;
-  border: 1px solid;
-  border-color: #a88734 #9c7e31 #846a29;
-  color: #111;
+  font-weight: 600;
 }
 
 .deleteOrderButton {
@@ -155,8 +138,7 @@
 
   color: white;
   font-size: 1.4rem;
-  /* font-weight: 600; */
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .placeOrderButton:disabled,
@@ -282,12 +264,12 @@
 }
 
 /* 780px */
-/* @media (max-width:48.75em) {
+@media (max-width:48.75em) {
   .estatusPedidoPlaceOrder {
     flex-direction: column;
     align-items: end;
   }
-} */
+}
 
 /* 580px */
 @media (max-width:36.25em) {
@@ -297,14 +279,14 @@
   }
 
   .searchInput {
-    width: 35rem;
+    width: 20rem;
   }
 }
 
 /* 480px */
 @media (max-width:30em) {
   .searchInput {
-    width: 30rem;
+    width: 14rem;
   }
 
   .container-estatusPedido__select {
@@ -319,13 +301,4 @@
   .totalPedido__item{
     font-size: 1.6rem;
   }
-
-  .productListTitle {
-    margin-bottom: .8rem;
-  }
-  .carousel {
-    padding: .8rem 2rem;
-    margin: .5rem 1rem;
-  }
-  
 }

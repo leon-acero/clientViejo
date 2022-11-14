@@ -151,6 +151,10 @@
     cursor: pointer;
 }
 
+.clientUpdateIcon__upload {
+  font-size: 3rem;
+}
+
 .clientUpdateButton{
     border-radius: .5rem;
     border: none;

@@ -1,19 +1,21 @@
 import "./client.css";
 
 /************************    Material UI    *********************************/
-import CalendarToday from "@mui/icons-material/CalendarToday";
-import MailOutline from "@mui/icons-material/MailOutline";
-import PermIdentity from "@mui/icons-material/PermIdentity";
-import PhoneAndroid from "@mui/icons-material/PhoneAndroid";
-import Publish from "@mui/icons-material/Publish";
+// import CalendarToday from "@mui/icons-material/CalendarToday";
+// import MailOutline from "@mui/icons-material/MailOutline";
+// import PermIdentity from "@mui/icons-material/PermIdentity";
+// import PhoneAndroid from "@mui/icons-material/PhoneAndroid";
+// import Publish from "@mui/icons-material/Publish";
 // import LocationSearching from "@mui/icons-material/LocationSearching";
 /****************************************************************************/
 
+import {FaHouzz, FaEnvelope, FaBarcode, FaLocationArrow, FaChrome, FaMobileAlt, FaPhoneAlt, FaCloudUploadAlt} from "react-icons/fa";
 
 /**************************    Snackbar    **********************************/
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
+import {FaTimes} from "react-icons/fa";
 import { Alert } from '@mui/material';
 /****************************************************************************/
 
@@ -117,8 +119,8 @@ export default function Client() {
         const res = await axios({
           withCredentials: true,
           method: 'PATCH',
-          // url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`,
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`,
+          url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`,
+          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`,
           data: formData
         })
 
@@ -183,8 +185,8 @@ export default function Client() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        // url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`
+        url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`
+        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`
       });
       // console.log(res.data.data.data);
       setData(res.data.data.data)
@@ -235,7 +237,8 @@ export default function Client() {
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        <CloseIcon fontSize="small" />
+        {/* <CloseIcon fontSize="small" /> */}
+        <FaTimes />
       </IconButton>
     </>
   );
@@ -278,33 +281,33 @@ export default function Client() {
           <div className="clientShowBottom">
             <span className="clientShowTitle">Detalle</span>
             <div className="clientShowInfo">
-              <PermIdentity className="clientShowIcon" />
+              <FaBarcode className="clientShowIcon" />
               <span className="clientShowInfoTitle">SKU: {data.sku}</span>
             </div>
             <div className="clientShowInfo">
-              <PermIdentity className="clientShowIcon" />
+              <FaLocationArrow className="clientShowIcon" />
               <span className="clientShowInfoTitle">{data.businessAddress}</span>
             </div>
             <div className="clientShowInfo">
-              <CalendarToday className="clientShowIcon" />
+              <FaHouzz className="clientShowIcon" />
               <span className="clientShowInfoTitle">{data.esMayorista ? "Es Mayorista" : "Es Minorista"}</span>
             </div>
             <div className="clientShowInfo">
-              <CalendarToday className="clientShowIcon" />
+              <FaChrome className="clientShowIcon" />
               <span className="clientShowInfoTitle">{data.slug}</span>
             </div>           
 
             <span className="clientShowTitle">Contacto</span>
             <div className="clientShowInfo">
-              <PhoneAndroid className="clientShowIcon" />
+              <FaMobileAlt className="clientShowIcon" />
               <span className="clientShowInfoTitle">{data.cellPhone}</span>
             </div>
             <div className="clientShowInfo">
-              <PhoneAndroid className="clientShowIcon" />
+              <FaPhoneAlt className="clientShowIcon" />
               <span className="clientShowInfoTitle">{data.fixedPhone}</span>
             </div>
             <div className="clientShowInfo">
-              <MailOutline className="clientShowIcon" />
+              <FaEnvelope className="clientShowIcon" />
               <span className="clientShowInfoTitle">{data.email}</span>
             </div>
           </div>
@@ -451,7 +454,7 @@ export default function Client() {
                   alt=""
                 />
                 <label htmlFor="photo">
-                  <Publish className="clientUpdateIcon" />
+                  <FaCloudUploadAlt className="clientUpdateIcon__upload" />
                 </label>
                 <input  type="file" 
                         accept="image/*" 

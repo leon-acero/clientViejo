@@ -3,7 +3,7 @@
   background: transparent;
 } */
 .login {
-  /* height: calc(100vh - 5rem); */
+  height: calc(100vh - 5rem);
 
   /* FLEX */
   display: flex;
@@ -19,8 +19,11 @@
     url("/public/img/website/gomitasydulces.jpeg");
   background-size: cover;
   background-position: center;
+
+
   overflow-y: hidden;
 }
+
 
 .main {
   /* background-color: #f7f7f7; */
@@ -206,8 +209,17 @@
 
 /* 480px */
 @media (max-width:30em) {
-  
+
+  .main {
+    padding: 2rem 6rem;
+  }
+
+
   .login-form {
-    padding: 5rem 2rem;
+    padding: 2.3rem 2rem;
+  }
+
+  .ma-bt-lg {
+    margin-bottom: 1.5rem !important;
   }
 }

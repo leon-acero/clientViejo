@@ -41,7 +41,15 @@
 
 .sidebarIcon{
     margin-right: .5rem;
-    font-size: 2rem !important;
+    /* font-size: 1.6rem !important; */
+    font-size: 1.6rem;
+    color: rgb(117, 97, 97);
+    color: rgb(50, 52, 84);
+}
+
+.iconos__placeOrder {
+  color: #f0c14b;
+  font-size: 2rem !important;
 }
 
 /* 1000px */

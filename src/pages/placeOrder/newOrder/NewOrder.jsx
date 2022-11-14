@@ -21,12 +21,15 @@ import { stateContext } from '../../../context/StateProvider';
 /**************************    Snackbar    **********************************/
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
+import {FaTimes} from "react-icons/fa";
 import { Alert } from '@mui/material';
 /****************************************************************************/
 
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import SearchIcon from '@mui/icons-material/Search';
+// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+// import SearchIcon from '@mui/icons-material/Search';
+import {FaShoppingCart, FaSearch} from "react-icons/fa";
+
 
 // Este código Funciona para REACT-SELECT
 // Que viene siendo un component llamado <Select />
@@ -405,8 +408,8 @@ export default function NewOrder(props) {
           const res = await axios({
             withCredentials: true,
             method: 'POST',
-            // url: `http://127.0.0.1:8000/api/v1/sales/`,
-            url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/`,
+            url: `http://127.0.0.1:8000/api/v1/sales/`,
+            // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/`,
             data: theBasket
           })
   
@@ -517,7 +520,8 @@ export default function NewOrder(props) {
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        <CloseIcon fontSize="small" />
+        {/* <CloseIcon fontSize="small" /> */}
+        <FaTimes />
       </IconButton>
     </>
   );
@@ -552,7 +556,8 @@ export default function NewOrder(props) {
                   className="searchInput" 
                   onChange={e=>setSearchBarQuery(e.target.value)}
             />
-            <SearchIcon className="productSearch" />
+            {/* <SearchIcon className="productSearch" /> */}
+            <FaSearch className="productSearch" />
             {/* <button className="productSearch">Buscar</button> */}
         </div>
 
@@ -617,7 +622,7 @@ export default function NewOrder(props) {
             <div className="newOrder--ordersTitle">
               <p className="orderedProductsTitle">Productos Ordenados</p>
               <div className="newOrderIconContainer">
-                <ShoppingCartIcon className="newOrderIcon" />
+                <FaShoppingCart className="newOrderIcon" />
                 {
                   theBasket?.productOrdered?.length > 0 && <span className="newOrderIconBadge">{theBasket?.productOrdered?.length}</span>
                 }

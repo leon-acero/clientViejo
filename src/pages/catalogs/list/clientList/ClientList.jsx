@@ -8,7 +8,9 @@ import { useEffect, useRef, useState } from "react";
 
 // MATERIAL UI
 import { DataGrid } from "@mui/x-data-grid";
-import DeleteOutline from "@mui/icons-material/DeleteOutline";
+// import DeleteOutline from "@mui/icons-material/DeleteOutline";
+import {FaTrashAlt} from "react-icons/fa";
+
 // import { userRows } from "../../dummyData";
 
 import BasicDialog from '../../../../components/basicDialog/BasicDialog';
@@ -19,7 +21,8 @@ import BasicDialog from '../../../../components/basicDialog/BasicDialog';
 // import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
+import {FaTimes} from "react-icons/fa";
 
 // HTTP
 import axios from "axios";
@@ -50,8 +53,8 @@ export default function ClientList() {
       const res = await axios({
         withCredentials: true,
         method: 'DELETE',
-        // url: `http://127.0.0.1:8000/api/v1/clients/${currentClient.id}`,
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${currentClient.id}`,
+        url: `http://127.0.0.1:8000/api/v1/clients/${currentClient.id}`,
+        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${currentClient.id}`,
         })
       
       if (res.status === 204) {
@@ -84,8 +87,8 @@ export default function ClientList() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        // url: 'http://127.0.0.1:8000/api/v1/clients'
-        url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/clients'
+        url: 'http://127.0.0.1:8000/api/v1/clients'
+        // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/clients'
       });
 
       // 2da OPCION PARA USAR AXIOS
@@ -135,7 +138,8 @@ export default function ClientList() {
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        <CloseIcon fontSize="small" />
+        {/* <CloseIcon fontSize="small" /> */}
+        <FaTimes />
       </IconButton>
     </>
   );
@@ -170,7 +174,11 @@ export default function ClientList() {
             <Link to={"/client/" + params.row._id}>
               <button className="clientListEdit" onClick={()=>handleEdit(params.row._id, params.row.slug)}>Editar</button>
             </Link>
-            <DeleteOutline
+            {/* <DeleteOutline
+              className="clientListDelete"
+              onClick={() => openDeleteDialog(params.row._id, params.row.businessName)}
+            /> */}
+            <FaTrashAlt
               className="clientListDelete"
               onClick={() => openDeleteDialog(params.row._id, params.row.businessName)}
             />

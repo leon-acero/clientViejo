@@ -32,7 +32,8 @@
 .productListDelete{
     color: red;
     cursor: pointer;
-    font-size: 2.4rem !important;
+    /* font-size: 2.4rem !important; */
+    font-size: 1.9rem;
 }
 
 .productTitleContainer {
