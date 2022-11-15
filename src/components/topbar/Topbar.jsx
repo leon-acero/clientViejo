@@ -20,7 +20,7 @@ const loginVariants = {
   hidden: { y: -250 },
   visible: { 
     y: 0,
-    transition: { delay: 1.5, type: 'spring', stiffness: 380 }
+    transition: { delay: 1.5, type: 'spring', stiffness: 280 }
   },
   exit: {
     opacity: 0,

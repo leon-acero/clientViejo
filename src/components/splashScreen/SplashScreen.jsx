@@ -7,7 +7,7 @@ const svgVariants = {
   },
   visible: { 
     opacity: 1, 
-    transition: { delay: 1.5, duration: 2.5 }
+    transition: { delay: .5, duration: 2.5 }
   },
   exit: {
     opacity: 0,
