@@ -6,7 +6,7 @@ import { stateContext } from '../../context/StateProvider';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import {FaHandshake, FaSignOutAlt } from "react-icons/fa";
 
-import { domAnimation, LazyMotion, m } from 'framer-motion';
+import { domAnimation, LazyMotion, motion } from 'framer-motion';
 
 const logoVariants = {
   hidden: { y: -250 },
@@ -50,15 +50,13 @@ export default function Topbar() {
     <div className="topbar">
       <div className="topbarWrapper">
         <Link className="logoLink" to="/">
-          <LazyMotion features={domAnimation}>
-            <m.div className="topLeft"
+          <motion.div className="topLeft"
           initial={{ y: -250}}
           animate={{ y: -10 }}
           transition={{ delay: 0.2, type: 'spring', stiffness: 120 }}
-            >
+          >
               <span className="logo">El Juanjo | Dulcería</span>
-            </m.div>
-          </LazyMotion>
+          </motion.div>
         </Link>
         <div className="topRight">
           {
@@ -74,19 +72,19 @@ export default function Topbar() {
               />
             </div>)
           }
-          <LazyMotion features={domAnimation}>
+          {/* <LazyMotion features={domAnimation}> */}
             { !currentUser && (
-                <m.div className="authStyle"
+                <motion.div className="authStyle"
                   variants={loginVariants}
                   initial="hidden"
                   animate="visible"
                   exit="exit"
                 >
                   <Link className='loginButton' to="/login">Iniciar sesión</Link>
-                </m.div>                
+                </motion.div>                
               )
             }
-          </LazyMotion>
+          {/* </LazyMotion> */}
           <Menu
             anchorEl={anchorEl}
             id="account-menu"
