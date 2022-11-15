@@ -13,6 +13,24 @@ import {FaTimes} from "react-icons/fa";
 import { Alert } from '@mui/material';
 /****************************************************************************/
 
+import { domAnimation, LazyMotion, m } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { 
+    opacity: 0, 
+    x: '100vw' 
+  },
+  visible: { 
+    opacity: 1, 
+    x: 0,
+    transition: { type: 'spring', delay: 0.5 }
+  },
+  exit: {
+    // y: "-100vh",
+    opacity: 0,
+    transition: { duration: .4, ease: 'easeInOut' }
+  }
+};
 
 export default function Login() {
 
@@ -133,7 +151,13 @@ export default function Login() {
 
 
   return (
-    <div className='login'>
+    <LazyMotion features={domAnimation}>
+      <m.div className="login"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
       <Snackbar
         open={openSnackbar}
         autoHideDuration={5000}
@@ -194,6 +218,7 @@ export default function Login() {
           </form>
         </div>
       </main>
-    </div>
+    </m.div>
+    </LazyMotion>
   )
 }
