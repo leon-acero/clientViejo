@@ -11,7 +11,7 @@ const svgVariants = {
   },
   exit: {
     opacity: 0,
-    transition: { duration: .8, ease: 'easeInOut' }
+    transition: { delay: .25, duration: 2.8, ease: 'easeInOut' }
   }
 };
 

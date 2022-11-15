@@ -22,7 +22,7 @@ const loginVariants = {
   },
   visible: { 
     y: 0,
-    transition: { delay: 1.5, type: 'spring', stiffness: 160 }
+    transition: { delay: 1.5, type: 'spring', stiffness: 120 }
   },
   exit: {
     opacity: 0,
