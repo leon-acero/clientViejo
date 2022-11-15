@@ -11,7 +11,7 @@ const svgVariants = {
   },
   exit: {
     opacity: 0,
-    transition: { duration: .4, ease: 'easeInOut' }
+    transition: { duration: .8, ease: 'easeInOut' }
   }
 };
 
@@ -23,7 +23,8 @@ export default function SplashScreen() {
         <m.svg className="candyShop-svg" width="422" height="422" viewBox="0 0 422 422" fill="none" xmlns="http://www.w3.org/2000/svg"
         variants={svgVariants}
         initial="hidden"
-        animate="visible"    
+        animate="visible"  
+        exit="exit"  
         >
 
           <g id="candy-shopFrame">
