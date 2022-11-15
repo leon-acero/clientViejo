@@ -82,7 +82,7 @@ export default function Topbar() {
                   animate="visible"
                   exit="exit"
                 >
-                  <Link className='loginButton' to="/login">Iniciar sesión</Link>
+                  <Link className='loginButton' to="/login">Iniciar</Link>
                 </m.div>                
               )
             }
