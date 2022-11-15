@@ -22,7 +22,7 @@ const loginVariants = {
   },
   visible: { 
     y: 0,
-    transition: { delay: 1.5, type: 'spring', stiffness: 200 }
+    transition: { delay: 1.5, type: 'spring', stiffness: 160 }
   },
   exit: {
     opacity: 0,
@@ -82,7 +82,7 @@ export default function Topbar() {
                   animate="visible"
                   exit="exit"
                 >
-                  <Link className='loginButton' to="/login">Iniciar</Link>
+                  <Link className='loginButton' to="/login">Iniciar sesión</Link>
                 </m.div>                
               )
             }
