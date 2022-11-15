@@ -52,9 +52,9 @@ export default function Topbar() {
         <Link className="logoLink" to="/">
           <LazyMotion features={domAnimation}>
             <m.div className="topLeft"
-              variants={logoVariants}
-              initial="hidden"
-              animate="visible"
+          initial={{ y: -250}}
+          animate={{ y: -10 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 120 }}
             >
               <span className="logo">El Juanjo | Dulcería</span>
             </m.div>
