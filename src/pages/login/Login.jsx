@@ -18,12 +18,10 @@ import { domAnimation, LazyMotion, m } from 'framer-motion';
 const containerVariants = {
   hidden: { 
     opacity: 0, 
-    x: '100vw' 
   },
   visible: { 
     opacity: 1, 
-    x: 0,
-    transition: { type: 'spring', delay: 0.5 }
+    transition: { delay: .5, duration: 1.5 }
   },
   exit: {
     // y: "-100vh",
