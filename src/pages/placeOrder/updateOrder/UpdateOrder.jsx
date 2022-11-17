@@ -18,8 +18,6 @@ import {FaTimes} from "react-icons/fa";
 import { Alert, Skeleton } from '@mui/material';
 /****************************************************************************/
 
-// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-// import SearchIcon from '@mui/icons-material/Search';
 import {FaShoppingCart, FaSearch} from "react-icons/fa";
 
 import BasicDialog from '../../../components/basicDialog/BasicDialog';
@@ -130,6 +128,9 @@ export default function UpdateOrder() {
   // estatusPedido indica el estatus del Pedido: 
   //        value: 1 Por entregar y NO cobrado 
   //        value: 2 Entregado y Cobrado
+
+  // isLoading es para poner el Skeleton en caso de que se este cargando informacion
+
 
   const [openModal, setOpenModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
