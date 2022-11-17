@@ -26,6 +26,7 @@ import {FaTimes} from "react-icons/fa";
 
 // HTTP
 import axios from "axios";
+import SkeletonElement from '../../../../components/skeletons/SkeletonElement';
 
 
 export default function ClientList() {
@@ -44,17 +45,21 @@ export default function ClientList() {
   const [currentClient, setCurrentClient] = useState ({id: "", businessName: ""});
   const [clientList, setClientList] = useState([])
 
+  const [isLoading, setIsLoading] = useState(false);
+
+
   // const { setClient} = useContext(stateContext)
 
   const handleDelete = async () => {
     setOpenModal(false);
 
     try {
+
       const res = await axios({
         withCredentials: true,
         method: 'DELETE',
-        url: `http://127.0.0.1:8000/api/v1/clients/${currentClient.id}`,
-        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${currentClient.id}`,
+        // url: `http://127.0.0.1:8000/api/v1/clients/${currentClient.id}`,
+        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${currentClient.id}`,
         })
       
       if (res.status === 204) {
@@ -77,29 +82,43 @@ export default function ClientList() {
       return;
     }
 
+    if (isLoading)
+      return;
+
     const fetchPosts = async () => {
 
       // solo debe de cargar datos una vez, osea al cargar la pagina
       avoidRerenderFetchClient.current = true;
 
-      // console.log("cargar lista de clientes")
-      // 1era OPCION PARA USAR AXIOS
-      const res = await axios ({
-        withCredentials: true,
-        method: 'GET',
-        url: 'http://127.0.0.1:8000/api/v1/clients'
-        // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/clients'
-      });
+      try {
 
-      // 2da OPCION PARA USAR AXIOS
-      // const res = await axios.get('http://127.0.0.1:8000/api/v1/products')
-
-      // console.log(res)
-      // console.log(res.data.data.data);
-      setClientList(res.data.data.data)
+        setIsLoading(true);
+  
+        console.log("cargar lista de clientes")
+        // 1era OPCION PARA USAR AXIOS
+        const res = await axios ({
+          withCredentials: true,
+          method: 'GET',
+          // url: 'http://127.0.0.1:8000/api/v1/clients'
+          url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/clients'
+        });
+  
+        setIsLoading(false);
+  
+        // 2da OPCION PARA USAR AXIOS
+        // const res = await axios.get('http://127.0.0.1:8000/api/v1/products')
+  
+        // console.log(res)
+        // console.log(res.data.data.data);
+        setClientList(res.data.data.data)
+      }
+      catch(err) {
+        console.log("err", err);
+        setIsLoading(false);
+      }
     }
     fetchPosts();
-  }, []);
+  }, [isLoading]);
 
 
   const openDeleteDialog = (id, businessName) => {
@@ -261,15 +280,21 @@ export default function ClientList() {
           <button className="clientAddButton">Crear</button>
         </Link>
       </div>
-      <DataGrid
-        className="dataGrid"
-        rows={clientList}
-        disableSelectionOnClick
-        columns={columns}
-        rowsPerPageOptions={[8, 16]}
-        pageSize={8}
-        // checkboxSelection
-      />
+      {
+        clientList?.length > 0 &&
+          <DataGrid
+            className="dataGrid"
+            rows={clientList}
+            disableSelectionOnClick
+            columns={columns}
+            rowsPerPageOptions={[8, 16]}
+            pageSize={8}
+            // checkboxSelection
+          />
+      }
+      {
+        isLoading && <SkeletonElement type="rectangular" />
+      }
     </div>
   );
 }

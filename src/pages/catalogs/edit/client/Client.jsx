@@ -119,8 +119,8 @@ export default function Client() {
         const res = await axios({
           withCredentials: true,
           method: 'PATCH',
-          url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`,
-          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`,
+          // url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`,
+          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`,
           data: formData
         })
 
@@ -185,8 +185,8 @@ export default function Client() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`
-        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`
+        // url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`
+        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`
       });
       // console.log(res.data.data.data);
       setData(res.data.data.data)

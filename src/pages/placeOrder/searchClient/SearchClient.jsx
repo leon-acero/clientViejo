@@ -13,11 +13,25 @@ import {FaTimes} from "react-icons/fa";
 import { Alert } from '@mui/material';
 /****************************************************************************/
 
+import { domAnimation, LazyMotion, m } from 'framer-motion';
+import SkeletonElement from '../../../components/skeletons/SkeletonElement';
+
+
+const containerVariants = {
+  hidden: { 
+    opacity: 0, 
+  },
+  visible: { 
+    opacity: 1, 
+    transition: { duration: .4, delay: 0.5 }
+  }
+};
 
 export default function SearchClient() {
 
   const [query, setQuery] = useState("");
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
   const [mensajeSnackBar, setMensajeSnackBar] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -51,14 +65,16 @@ export default function SearchClient() {
       if (query.length > 2) {
         setIsSearching(true);
   
+        setData(null);
+        
         const res = await axios ({
           withCredentials: true,
           method: 'GET',
           // url: `http://127.0.0.1:8000/api/v1/clients?q=${query}`
           // url: `http://127.0.0.1:8000/api/v1/clients?${regExOptions}`
 
-          url: `http://127.0.0.1:8000/api/v1/clients/search-client/${query}`
-          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/search-client/${query}`
+          // url: `http://127.0.0.1:8000/api/v1/clients/search-client/${query}`
+          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/search-client/${query}`
   
         });
         // console.log(res.data.data.data);
@@ -110,58 +126,66 @@ export default function SearchClient() {
   );
 
   return (
-    <div className='searchClient'>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={5000}
-        onClose={handleCloseSnackbar}
+    <LazyMotion features={domAnimation}>
+      <m.div className='searchClient'
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
-        <Alert 
-            severity= {"success"} 
-            action={action}
-            sx={{ fontSize: '1.4rem', backgroundColor:'#333', color: 'white', }}
-        >{mensajeSnackBar}
-        </Alert>
-      </Snackbar>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={5000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert 
+              severity= {"success"} 
+              action={action}
+              sx={{ fontSize: '1.4rem', backgroundColor:'#333', color: 'white', }}
+          >{mensajeSnackBar}
+          </Alert>
+        </Snackbar>
 
-      {/* <h2><span>PASO 1: </span>BUSCAR Y ELEGIR UN NEGOCIO</h2> */}
-      <form className='searchClientInput' onSubmit={handleSearch}>
-        {/* <label>Buscar Cliente</label> */}
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Buscar Negocio, ejemplo: Abarrotes El Puerto"
-          className="clientSearchInput"                  
-          onChange={(e) => setQuery(e.target.value.toLowerCase())}
-          required
-          onInvalid={e=> e.target.setCustomValidity('El Nombre del Negocio debe tener entre 3 y 80 caracteres')} 
-          onInput={e=> e.target.setCustomValidity('')} 
-          minLength="3"
-          maxLength="80"
-        />
-        <button className="btnSearchClient" disabled={isSearching}>
-          {isSearching ? 'Buscando...' : 'Buscar'}
-        </button>
-      </form>
-      
-      <Table data={data} />
-      {/* <p>{data.id} {data.businessName} {data.cellPhone}</p> */}
+        {/* <h2><span>PASO 1: </span>BUSCAR Y ELEGIR UN NEGOCIO</h2> */}
+        <form className='searchClientInput' onSubmit={handleSearch}>
+          {/* <label>Buscar Cliente</label> */}
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Buscar Negocio, ejemplo: Abarrotes El Puerto"
+            className="clientSearchInput"                  
+            onChange={(e) => setQuery(e.target.value.toLowerCase())}
+            required
+            onInvalid={e=> e.target.setCustomValidity('El Nombre del Negocio debe tener entre 3 y 80 caracteres')} 
+            onInput={e=> e.target.setCustomValidity('')} 
+            minLength="3"
+            maxLength="80"
+          />
+          <button className="btnSearchClient" disabled={isSearching}>
+            {isSearching ? 'Buscando...' : 'Buscar'}
+          </button>
+        </form>
+        
+        {data && <Table data={data} />}
+        {isSearching && <SkeletonElement type="rectangular" width="100%" height="5.6rem" />}
+        {/* <p>{data.id} {data.businessName} {data.cellPhone}</p> */}
 
-      {/* <div className="container__ClientsFound">
-        {
-          data.map(client=> 
-            (
-              <ClientFound 
-                    key={client.id} 
-                    id={client.id} 
-                    businessName={client.businessName} 
-                    cellPhone={client.cellPhone} 
-                    esMayorista={client.esMayorista} />
-            ) 
-          )
-        }
-      </div> */}
-    </div>
+        {/* <div className="container__ClientsFound">
+          {
+            data.map(client=> 
+              (
+                <ClientFound 
+                      key={client.id} 
+                      id={client.id} 
+                      businessName={client.businessName} 
+                      cellPhone={client.cellPhone} 
+                      esMayorista={client.esMayorista} />
+              ) 
+            )
+          }
+        </div> */}
+      </m.div>
+
+    </LazyMotion>
   )
 }
 

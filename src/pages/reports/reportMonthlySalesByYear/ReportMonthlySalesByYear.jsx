@@ -69,8 +69,8 @@ export default function ReportMonthlySalesByYear() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        url: 'http://127.0.0.1:8000/api/v1/sales/list-of-years-sales'
-        // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/sales/list-of-years-sales'
+        // url: 'http://127.0.0.1:8000/api/v1/sales/list-of-years-sales'
+        url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/sales/list-of-years-sales'
       });
    
       // console.log("resultado carga de años",res)
@@ -113,8 +113,8 @@ export default function ReportMonthlySalesByYear() {
           const res = await axios ({
             withCredentials: true,
             method: 'GET',
-            url: `http://127.0.0.1:8000/api/v1/sales/monthly-sales/${year}`
-            // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/monthly-sales/${year}`
+            // url: `http://127.0.0.1:8000/api/v1/sales/monthly-sales/${year}`
+            url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/monthly-sales/${year}`
           });
   
           // console.log("res",res)
@@ -178,8 +178,8 @@ export default function ReportMonthlySalesByYear() {
         )
       }
       {
-        // !chartData && <SkeletonElement type="rectangular" />
-        !chartData && <Skeleton animation="wave" variant="rounded" width={980} height={320}  />
+        !chartData && <SkeletonElement type="rectangular" />
+        // !chartData && <Skeleton animation="wave" variant="rounded" width={980} height={320}  />
       }
     </div>
   )

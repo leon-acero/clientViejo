@@ -80,8 +80,8 @@ export default function NewProduct() {
       const res = await axios({
         withCredentials: true,
         method: 'POST',
-        url: `http://127.0.0.1:8000/api/v1/products/`,
-        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/`,
+        // url: `http://127.0.0.1:8000/api/v1/products/`,
+        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/`,
         data: {
               sku: data.sku,
               productName: data.productName, 

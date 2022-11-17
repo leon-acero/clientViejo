@@ -1,6 +1,8 @@
 .home{
+    height: calc(100vh - 5rem);
     flex: 4;
 }
+
 
 /* 430px */
 /* @media (max-width:26.875em) {

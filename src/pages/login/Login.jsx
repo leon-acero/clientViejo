@@ -21,14 +21,14 @@ const containerVariants = {
   },
   visible: { 
     opacity: 1, 
-    transition: { delay: .5, duration: 1.5 }
+    transition: { duration: .4, delay: 0.5 }
   },
   exit: {
-    // y: "-100vh",
     opacity: 0,
     transition: { duration: .4, ease: 'easeInOut' }
   }
 };
+
 
 export default function Login() {
 
@@ -77,8 +77,8 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      console.log("email", data.email)
-      console.log("password", data.password)
+      // console.log("email", data.email)
+      // console.log("password", data.password)
 
       const  res = await axios({
         withCredentials: true,
@@ -94,7 +94,7 @@ export default function Login() {
         }	
       });
 
-      console.log("res", res);
+      // console.log("res", res);
       // console.log("res", res.data.data);
 
       if (res.data.status === 'success') {
@@ -104,7 +104,7 @@ export default function Login() {
           // setMensajeSnackBar("Cliente loggedo")
           // setOpenSnackbar(true);
 
-          console.log(res.data.data.user);
+          // console.log(res.data.data.user);
           setCurrentUser(res.data.data.user)          
           history.replace("/");
       } 
@@ -150,73 +150,74 @@ export default function Login() {
 
   return (
     <LazyMotion features={domAnimation}>
+
       <m.div className="login"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
         exit="exit"
       >
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={5000}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert 
-            severity= {"error"} 
-            action={action}
-            sx={{ fontSize: '1.4rem', backgroundColor:'#333', color: 'white', }}
-        >{mensajeSnackBar}
-        </Alert>
-      </Snackbar>   
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={5000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert 
+              severity= {"error"} 
+              action={action}
+              sx={{ fontSize: '1.4rem', backgroundColor:'#333', color: 'white', }}
+          >{mensajeSnackBar}
+          </Alert>
+        </Snackbar>   
 
-      <main className="main">
-        <div className="login-form">
-          <h2 className="heading-secondary ma-bt-lg">Inicia sesión</h2>
+        <main className="main">
+          <div className="login-form">
+            <h2 className="heading-secondary ma-bt-lg">Inicia sesión</h2>
 
-          <form onSubmit={handleSubmit}>
-            <div className="form__group">
-              <label htmlFor="email" className="form__label" >Correo Electrónico</label>
-              <input 
-                    ref={inputRef}
-                    type="email" 
-                    id="email" 
-                    className="form__input" 
-                    placeholder='micorreo@ejemplo.com' 
-                    required 
-                    onChange={handleChange}
-                    name="email"
-                    value={data.email || ''}
-                    onInvalid={e=> e.target.setCustomValidity('El Email debe tener entre 5 y 20 caracteres')} 
-                    onInput={e=> e.target.setCustomValidity('')} 
-                    minLength="5"
-                    maxLength="20"
-              />
-            </div>
-            <div className="form__group">
-              <label htmlFor="password" className="form__label" >Password</label>
-              <input 
-                    type="password" 
-                    id="password" 
-                    className="form__input" 
-                    placeholder='••••••••' 
-                    required 
-                    minLength="8" 
-                    onChange={handleChange}
-                    name="password"
-                    value={data.password || ''}
-              />
-            </div>
-            <div className="form__group ma-bt-md">
-              <Link className="forgot-password" to="/forgotPassword">Olvidé mi Password?
-              </Link>
-            </div>
-            <div className="form__group">
-              <button className="btn btn--green">Iniciar mi sesión</button>
-            </div>
-          </form>
-        </div>
-      </main>
-    </m.div>
+            <form onSubmit={handleSubmit}>
+              <div className="form__group">
+                <label htmlFor="email" className="form__label" >Correo Electrónico</label>
+                <input 
+                      ref={inputRef}
+                      type="email" 
+                      id="email" 
+                      className="form__input" 
+                      placeholder='micorreo@ejemplo.com' 
+                      required 
+                      onChange={handleChange}
+                      name="email"
+                      value={data.email || ''}
+                      onInvalid={e=> e.target.setCustomValidity('El Email debe tener entre 5 y 20 caracteres')} 
+                      onInput={e=> e.target.setCustomValidity('')} 
+                      minLength="5"
+                      maxLength="20"
+                />
+              </div>
+              <div className="form__group">
+                <label htmlFor="password" className="form__label" >Password</label>
+                <input 
+                      type="password" 
+                      id="password" 
+                      className="form__input" 
+                      placeholder='••••••••' 
+                      required 
+                      minLength="8" 
+                      onChange={handleChange}
+                      name="password"
+                      value={data.password || ''}
+                />
+              </div>
+              <div className="form__group ma-bt-md">
+                <Link className="forgot-password" to="/forgotPassword">Olvidé mi Password?
+                </Link>
+              </div>
+              <div className="form__group">
+                <button className="btn btn--green">Iniciar mi sesión</button>
+              </div>
+            </form>
+          </div>
+        </main>
+      </m.div>
     </LazyMotion>
   )
 }

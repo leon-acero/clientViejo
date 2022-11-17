@@ -69,8 +69,8 @@ export default function ReportWeeklySalesByMonth() {
           // url: `http://127.0.0.1:8000/api/v1/sales/weekly-sales/${year}/${month}`
           // url: `http://127.0.0.1:8000/api/v1/sales/weekly-sales/2022/9`
 
-          url: `http://127.0.0.1:8000/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
-          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
+          // url: `http://127.0.0.1:8000/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
+          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
         });
 
         // console.log(res)

@@ -6,30 +6,24 @@ import { stateContext } from '../../context/StateProvider';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import {FaHandshake, FaSignOutAlt } from "react-icons/fa";
 
-import { domAnimation, LazyMotion, motion } from 'framer-motion';
+import { domAnimation, LazyMotion, m } from 'framer-motion';
+
 
 const logoVariants = {
   hidden: { y: -250 },
   visible: { 
     y: 0,
-    transition: { delay: 0.2, type: 'spring', stiffness: 120 }
+    transition: { delay: 0.2, type: 'spring', stiffness: 100 }
   },
 }
 
 const loginVariants = {
-  hidden: { 
-    y: -250 
-  },
+  hidden: { y: -250 },
   visible: { 
     y: 0,
-    transition: { delay: 1, type: 'spring', stiffness: 100 }
+    transition: { delay: 1.5, type: 'spring', stiffness: 120 }
   },
-  exit: {
-    opacity: 0,
-    transition: { delay: .25, duration: .8, ease: 'easeInOut' }
-  }
 }
-
 
 export default function Topbar() {
   
@@ -47,136 +41,139 @@ export default function Topbar() {
   const { currentUser } = useContext(stateContext);
 
   return (
-    <div className="topbar">
-      <div className="topbarWrapper">
-        <Link className="logoLink" to="/">
-          <motion.div className="topLeft"
-          initial={{ y: -250}}
-          animate={{ y: -10 }}
-          transition={{ delay: 0.2, type: 'spring', stiffness: 120 }}
-          >
-              <span className="logo">El Juanjo | Dulcería</span>
-          </motion.div>
-        </Link>
-        <div className="topRight">
-          {
-            
-            currentUser && (
-            <div className="authStyle">
-              <img 
-                  src={`/img/users/${currentUser.photo}`} 
-                  alt="{currentUser.name}" 
-                  className="topAvatar"  
-                  // onClick={(e)=>setOpen(true)}
-                  onClick={handleClick}
-              />
-            </div>)
-          }
-          {/* <LazyMotion features={domAnimation}> */}
+
+    <LazyMotion features={domAnimation}>
+
+      <div className="topbar">
+        <div className="topbarWrapper">
+          <Link className="logoLink" to="/">
+                <m.span className="logo"
+                  variants={logoVariants}
+                  initial="hidden"
+                  animate="visible"
+                >El Juanjo | Dulcería</m.span>
+          </Link>
+          <div className="topRight">
+            {
+              
+              currentUser && (
+              <m.div className="authStyle"
+                variants={logoVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <img 
+                    src={`/img/users/${currentUser.photo}`} 
+                    alt="{currentUser.name}" 
+                    className="topAvatar"  
+                    // onClick={(e)=>setOpen(true)}
+                    onClick={handleClick}
+                />
+              </m.div>)
+            }
             { !currentUser && (
-                <motion.div className="authStyle"
+                <m.div className="authStyle"
                   variants={loginVariants}
                   initial="hidden"
                   animate="visible"
-                  exit="exit"
                 >
                   <Link className='loginButton' to="/login">Iniciar sesión</Link>
-                </motion.div>                
+                </m.div>
               )
             }
-          {/* </LazyMotion> */}
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={openMenu}
-            onClose={handleClose}
-            onClick={handleClose}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                mt: 1.5,
-                '& .MuiAvatar-root': {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={openMenu}
+              onClose={handleClose}
+              onClick={handleClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  '&:before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                  },
                 },
-                '&:before': {
-                  content: '""',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: 'background.paper',
-                  transform: 'translateY(-50%) rotate(45deg)',
-                  zIndex: 0,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-            {/* <MenuItem>
-              <Avatar /> My account
-            </MenuItem> */}
-            <MenuItem className="menuItem tipografia" >
-              <Link className='liga__flex crearPedidoButton' to="/search-client">
+              }}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+              {/* <MenuItem>
+                <Avatar /> My account
+              </MenuItem> */}
+              <MenuItem className="menuItem tipografia" >
+                <Link className='liga__flex crearPedidoButton' to="/search-client">
+                  <ListItemIcon>
+                    <FaHandshake className="iconos__placeOrder" />
+                  </ListItemIcon>
+                  Crear Pedido</Link>
+              </MenuItem>
+
+              <MenuItem className="menuItem" >
+                <Link className='liga__flex logoutButton' to="/logout">
+                  <ListItemIcon>
+                    <FaSignOutAlt className="iconos__signOut" />
+                  </ListItemIcon>
+                  Cerrar Sesión</Link>
+              </MenuItem>
+
+              {/* <MenuItem className="tipografia">
                 <ListItemIcon>
                   <FaHandshake className="iconos__placeOrder" />
                 </ListItemIcon>
-                Crear Pedido</Link>
-            </MenuItem>
-
-            <MenuItem className="menuItem" >
-              <Link className='liga__flex logoutButton' to="/logout">
+                Crear Pedido
+              </MenuItem> */}
+              {/* <MenuItem className="tipografia">
                 <ListItemIcon>
-                  <FaSignOutAlt className="iconos__signOut" />
+                  <FaSignOutAlt className="iconos__sigOut" />
                 </ListItemIcon>
-                Cerrar Sesión</Link>
-            </MenuItem>
-
-            {/* <MenuItem className="tipografia">
-              <ListItemIcon>
-                <FaHandshake className="iconos__placeOrder" />
-              </ListItemIcon>
-              Crear Pedido
-            </MenuItem> */}
-            {/* <MenuItem className="tipografia">
-              <ListItemIcon>
-                <FaSignOutAlt className="iconos__sigOut" />
-              </ListItemIcon>
-              Cerrar Sesión
-            </MenuItem> */}
-          </Menu>          
-          {/* <Menu
-            id="demo-positioned-menu"
-            aria-labelledby="demo-positioned-button"
-            open={open}
-            onClose={(e)=>setOpen(false)}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-            <MenuItem className="menuItem" onClick={(e)=>setOpen(false)}>
-              <Link className='crearPedidoButton' to="/search-client">Crear Pedido</Link>
-            </MenuItem>
-            
-            <MenuItem className="menuItem" onClick={(e)=>setOpen(false)}>
-              <Link className='logoutButton' to="/logout">Cerrar Sesión</Link>
-            </MenuItem>
-            
-          </Menu> */}
+                Cerrar Sesión
+              </MenuItem> */}
+            </Menu>          
+            {/* <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              open={open}
+              onClose={(e)=>setOpen(false)}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <MenuItem className="menuItem" onClick={(e)=>setOpen(false)}>
+                <Link className='crearPedidoButton' to="/search-client">Crear Pedido</Link>
+              </MenuItem>
+              
+              <MenuItem className="menuItem" onClick={(e)=>setOpen(false)}>
+                <Link className='logoutButton' to="/logout">Cerrar Sesión</Link>
+              </MenuItem>
+              
+            </Menu> */}
+          </div>
         </div>
       </div>
-    </div>
+    </LazyMotion>
   );
 }

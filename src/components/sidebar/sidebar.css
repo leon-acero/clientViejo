@@ -1,6 +1,7 @@
 .sidebar {
-  flex: 1;
   height: calc(100vh - 5rem);
+  flex: 1;
+  align-self: flex-start;
   background-color: rgb(251, 251, 255);
   position: sticky;
   top: 1rem;
@@ -42,7 +43,7 @@
 .sidebarIcon{
     margin-right: .5rem;
     /* font-size: 1.6rem !important; */
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     color: rgb(117, 97, 97);
     color: rgb(50, 52, 84);
 }

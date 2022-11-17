@@ -196,8 +196,8 @@ export default function UpdateOrder() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        // url: `http://127.0.0.1:8000/api/v1/sales/update-order/client/${clientId}/fecha/${fecha}`
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/update-order/client/${clientId}/fecha/${fecha}`
+        url: `http://127.0.0.1:8000/api/v1/sales/update-order/client/${clientId}/fecha/${fecha}`
+        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/update-order/client/${clientId}/fecha/${fecha}`
       });
       // console.log("res", res);
       console.log("res.data.data.updateOrder", res.data.data.updateOrder);
@@ -482,8 +482,8 @@ export default function UpdateOrder() {
           res = await axios({
             withCredentials: true,
             method: 'POST',
-            // url: `http://127.0.0.1:8000/api/v1/sales/`,
-            url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/`,
+            url: `http://127.0.0.1:8000/api/v1/sales/`,
+            // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/`,
             data: theBasket
           })
         }
@@ -492,8 +492,8 @@ export default function UpdateOrder() {
           res = await axios({
             withCredentials: true,
             method: 'PUT',
-            // url: `http://127.0.0.1:8000/api/v1/sales/${theBasket.id}`,
-            url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/${theBasket.id}`,
+            url: `http://127.0.0.1:8000/api/v1/sales/${theBasket.id}`,
+            // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/${theBasket.id}`,
             data: theBasket
           })
         }
@@ -607,8 +607,8 @@ export default function UpdateOrder() {
         const res = await axios ({
           withCredentials: true,
           method: 'GET',
-          // url: 'http://127.0.0.1:8000/api/v1/products'
-          url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
+          url: 'http://127.0.0.1:8000/api/v1/products'
+          // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
         });
   
         setIsLoading(false);  
@@ -681,8 +681,8 @@ export default function UpdateOrder() {
         const res = await axios({
           withCredentials: true,
           method: 'DELETE',
-          // url: `http://127.0.0.1:8000/api/v1/sales/${theBasket.id}`,
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/${theBasket.id}`,
+          url: `http://127.0.0.1:8000/api/v1/sales/${theBasket.id}`,
+          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/${theBasket.id}`,
         })
 
         console.log(res)

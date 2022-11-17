@@ -4,6 +4,7 @@ import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
 import ReportMonthlySalesByYear from '../reports/reportMonthlySalesByYear/ReportMonthlySalesByYear';
 
 import { useMatchMedia } from "../../hooks/useMatchMedia";
+import SplashScreen from '../../components/splashScreen/SplashScreen';
 
 export default function Home() {
   
@@ -16,6 +17,13 @@ export default function Home() {
           <>
             <FeaturedInfo />
             <ReportMonthlySalesByYear />
+          </>
+          )
+        }
+        {
+        !isDesktopResolution && (
+          <>
+            <SplashScreen />
           </>
           )
         }

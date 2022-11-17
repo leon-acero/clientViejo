@@ -21,24 +21,7 @@
   font-size: 3rem;
   color: darkblue;
   cursor: pointer;
-  animation: logoEffect 2.7s;
 }
-
-@keyframes logoEffect {
-
-  0% {
-     transform: translateY(-250px);
-   }
-   50% {
-    transform: translateY(-10px);
-     transition-duration: 2500ms;
-     transition-delay: 200ms;
-     transition-property: all;
-   }
-   100% {
-    transform: translateY(0px);
-   }
- }
 
 .topRight{
     display: flex;

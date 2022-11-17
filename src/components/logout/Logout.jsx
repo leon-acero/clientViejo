@@ -40,8 +40,8 @@ export default function Logout() {
         const res = await axios ({
           withCredentials: true,
           method: 'GET',
-          url: `http://127.0.0.1:8000/api/v1/users/logout`
-          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/users/logout`
+          // url: `http://127.0.0.1:8000/api/v1/users/logout`
+          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/users/logout`
         });
         console.log("Usuario desloggeado")
         // console.log("res", res);

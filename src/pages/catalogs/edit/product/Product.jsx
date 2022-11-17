@@ -110,8 +110,8 @@ export default function Product() {
         const res = await axios({
           withCredentials: true,
           method: 'PATCH',
-          url: `http://127.0.0.1:8000/api/v1/products/${productId}`,
-          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`,
+          // url: `http://127.0.0.1:8000/api/v1/products/${productId}`,
+          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`,
           data: formData
         })
         setIsSaving(false);
@@ -156,8 +156,8 @@ export default function Product() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        url: `http://127.0.0.1:8000/api/v1/products/${productId}`
-        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`
+        // url: `http://127.0.0.1:8000/api/v1/products/${productId}`
+        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`
       });
       // console.log(res.data.data.data);
       setData(res.data.data.data)

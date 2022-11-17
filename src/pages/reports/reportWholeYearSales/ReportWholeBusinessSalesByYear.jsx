@@ -53,8 +53,8 @@ export default function ReportWholeBusinessSalesByYear() {
       const res = await axios ({
         withCredentials: true,
         method: 'GET',
-        url: `http://127.0.0.1:8000/api/v1/sales/whole-business-sales-by-year`
-        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/whole-business-sales-by-year`
+        // url: `http://127.0.0.1:8000/api/v1/sales/whole-business-sales-by-year`
+        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/whole-business-sales-by-year`
       });
 
       // console.log(res)

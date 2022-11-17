@@ -22,6 +22,7 @@ import {FaTimes} from "react-icons/fa";
 
 // HTTP
 import axios from "axios";
+import SkeletonElement from '../../../../components/skeletons/SkeletonElement';
 
 export default function ProductList() {
 
@@ -40,17 +41,22 @@ export default function ProductList() {
   const [currentProduct, setCurrentProduct] = useState ({id: "", productName: ""});
   const [productList, setProductList] = useState([])
 
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const handleDelete = async () => {
     setOpenModal(false);
 
+ 
     try {
+      
       const res = await axios({
         withCredentials: true,
         method: 'DELETE',
-        url: `http://127.0.0.1:8000/api/v1/products/${currentProduct.id}`,
-        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${currentProduct.id}`,
+        // url: `http://127.0.0.1:8000/api/v1/products/${currentProduct.id}`,
+        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${currentProduct.id}`,
         })
+
       
       if (res.status === 204) {
         console.log ('El producto fue borrado con éxito!');
@@ -72,29 +78,44 @@ export default function ProductList() {
       return;
     }
 
+    if (isLoading)
+      return;
+
+
     const fetchPosts = async () => {
 
       // solo debe de cargar datos una vez, osea al cargar la pagina
       avoidRerenderFetchProduct.current = true;
 
-      // console.log("carga de lista de productos")
-      // 1era OPCION PARA USAR AXIOS
-      const res = await axios ({
-        withCredentials: true,
-        method: 'GET',
-        url: 'http://127.0.0.1:8000/api/v1/products'
-        // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
-      });
+      try {
+        setIsLoading(true);      
+        console.log("carga de lista de productos")
+        // 1era OPCION PARA USAR AXIOS
+        const res = await axios ({
+          withCredentials: true,
+          method: 'GET',
+          // url: 'http://127.0.0.1:8000/api/v1/products'
+          url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
+        });
 
-      // 2da OPCION PARA USAR AXIOS
-      // const res = await axios.get('http://127.0.0.1:8000/api/v1/products')
+        setIsLoading(false);
 
-      // console.log(res)
-      // console.log(res.data.data.data);
-      setProductList(res.data.data.data)
+
+        // 2da OPCION PARA USAR AXIOS
+        // const res = await axios.get('http://127.0.0.1:8000/api/v1/products')
+
+        // console.log(res)
+        // console.log(res.data.data.data);
+        setProductList(res.data.data.data)
+      }
+      catch (err) {
+        console.log("err", err);
+        setIsLoading(false);
+      }
+
     }
     fetchPosts();
-  }, []);
+  }, [isLoading]);
 
 
   const openDeleteDialog = (id, productName) => {
@@ -268,14 +289,19 @@ export default function ProductList() {
           <button className="productAddButton">Crear</button>
         </Link>
       </div>
-      <DataGrid className="dataGrid"
-        rows={productList}
-        disableSelectionOnClick
-        columns={columns}
-        rowsPerPageOptions={[8, 16]}
-        pageSize={8}
-        // checkboxSelection
-      />
+      { productList?.length > 0 &&
+        <DataGrid className="dataGrid"
+          rows={productList}
+          disableSelectionOnClick
+          columns={columns}
+          rowsPerPageOptions={[8, 16]}
+          pageSize={8}
+          // checkboxSelection
+        />
+      }
+      {
+        isLoading && <SkeletonElement type="rectangular" />
+      }
     </div>
   );
 }

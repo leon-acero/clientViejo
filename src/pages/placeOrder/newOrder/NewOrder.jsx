@@ -408,8 +408,8 @@ export default function NewOrder(props) {
           const res = await axios({
             withCredentials: true,
             method: 'POST',
-            url: `http://127.0.0.1:8000/api/v1/sales/`,
-            // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/`,
+            // url: `http://127.0.0.1:8000/api/v1/sales/`,
+            url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/`,
             data: theBasket
           })
   

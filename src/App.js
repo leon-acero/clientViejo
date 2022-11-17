@@ -32,7 +32,7 @@ import ClientList from "./pages/catalogs/list/clientList/ClientList";
 import ProductList from "./pages/catalogs/list/productList/ProductList";
 
 import SearchClient from './pages/placeOrder/searchClient/SearchClient';
-import NewOrder from './pages/placeOrder/newOrder/NewOrder';
+// import NewOrder from './pages/placeOrder/newOrder/NewOrder';
 import NewOrUpdateOrder from './pages/placeOrder/newOrUpdateOrder/NewOrUpdateOrder';
 import UpdateOrder from './pages/placeOrder/updateOrder/UpdateOrder';
 
@@ -44,8 +44,6 @@ import ReportWholeBusinessSalesByYear from './pages/reports/reportWholeYearSales
 
 import { useMatchMedia } from "./hooks/useMatchMedia";
 import SplashScreen from './components/splashScreen/SplashScreen';
-
-import { AnimatePresence } from 'framer-motion';
 
 
 function App() {
@@ -64,7 +62,6 @@ function App() {
       {/* Muestro la SplashScreen si no hay usuario loggeado */}
       {
         !currentUser && (
-          <AnimatePresence wait >
             <Switch>
               <Route exact path="/">
                 <SplashScreen />
@@ -74,7 +71,6 @@ function App() {
                 <Login />
               </Route>
             </Switch>
-          </AnimatePresence>
         ) 
       }
 
@@ -95,7 +91,7 @@ function App() {
                 <SearchClient />
               </Route>
 
-              <Route path="/new-order/:clientId" component={NewOrder} />
+              {/* <Route path="/new-order/:clientId" component={NewOrder} /> */}
 
               {/***********************************************************/}
               {/* Authentication */}
@@ -121,7 +117,6 @@ function App() {
             } */}
             <Sidebar />
 
-            <AnimatePresence wait >
               <Switch>
                 {/* HomePage */}
                 <Route exact path="/">
@@ -168,7 +163,7 @@ function App() {
                 {/* Component Props ESTO SI me sirve si quiero pasar
                     los Props de Route y mis Custom Props
                 */}
-                <Route path="/new-order/:clientId" component={NewOrder} />
+                {/* <Route path="/new-order/:clientId" component={NewOrder} /> */}
                 <Route path="/new-or-update-order/:clientId" component={NewOrUpdateOrder} />
                 <Route path="/update-order/:clientId" component={UpdateOrder} />
 
@@ -229,7 +224,6 @@ function App() {
 
               </Switch>
 
-            </AnimatePresence>
           </div>
         )
       }

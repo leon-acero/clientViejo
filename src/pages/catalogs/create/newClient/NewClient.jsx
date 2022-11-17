@@ -83,8 +83,8 @@ export default function NewClient() {
       const res = await axios({
         withCredentials: true,
         method: 'POST',
-        url: `http://127.0.0.1:8000/api/v1/clients/`,
-        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/`,
+        // url: `http://127.0.0.1:8000/api/v1/clients/`,
+        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/`,
         data: {
               sku: data.sku, 
               ownerName: data.ownerName, 

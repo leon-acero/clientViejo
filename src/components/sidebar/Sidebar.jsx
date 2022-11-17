@@ -96,13 +96,13 @@ export default function Sidebar() {
             <Link to="/sales/monthly-sales" className="link">
               <li className="sidebarListItem">
                 <FaChartLine className="sidebarIcon" />
-                Venta Mensuales Por Año
+                Venta Mensual Por Año
               </li>
             </Link>
             <Link to="/sales/weekly-sales" className="link">
               <li className="sidebarListItem">
                 <FaChartLine className="sidebarIcon" />
-                Venta Semanales Por Mes
+                Venta Semanal Por Mes
               </li>
             </Link>
             <li className="sidebarListItem">
