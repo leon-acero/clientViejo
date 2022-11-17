@@ -835,7 +835,7 @@ export default function UpdateOrder() {
         <div className="makeOrder">
           <div className="topPanel">
             <p className="productListTitle">Catálogo de Productos</p>
-            <div className="container">
+            <div className="makeOrder__container">
               <div className="carousel">
                 {
                   // productCatalog?.length === 0 && <Skeleton animation="wave" variant="rounded" width={980} height={320}  />
