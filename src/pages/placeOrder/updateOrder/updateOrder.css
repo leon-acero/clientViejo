@@ -60,7 +60,7 @@
 
 .estatusPedidoPlaceOrder {
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: center;
   gap: 2.4rem;
 }
@@ -145,13 +145,13 @@
 }
 
 .deleteOrderButton {
-  width: 10rem;
+  width: 12rem;
   border-radius: 10rem;
   border: none;
   padding: 1rem 1.5rem;
   cursor: pointer;
-  /* background-color: rgba(159, 9, 9, 0.844); */
-  background: linear-gradient(to right, #f00000, #dc281e);
+  background-color: rgb(244, 64, 64);
+  /* background: linear-gradient(to right, #f00000, #dc281e); */
 
   color: white;
   font-size: 1.4rem;
@@ -173,6 +173,10 @@
   font-size: 2.4rem;
 }
 
+.container-estatusPedido {
+  display: flex;
+  flex-direction: column;
+}
 
 .container-estatusPedido > label {
   margin-bottom: 1rem;
@@ -184,7 +188,7 @@
 .container-estatusPedido__select{
   font-size: 1.4rem;
   font-weight: 400;
-  height: 4rem;
+  height: 3.5rem;
   width: 20rem;
   border-radius: .5rem;
 }
@@ -296,7 +300,6 @@
 /* 580px */
 @media (max-width:36.25em) {
   .container-estatusPedido__select {
-    height: 4rem;
     width: 12rem;
   }
 
@@ -312,7 +315,6 @@
   }
 
   .container-estatusPedido__select {
-    height: 4rem;
     width: 10rem;
   }
 
@@ -327,9 +329,40 @@
   .productListTitle {
     margin-bottom: .8rem;
   }
+
   .carousel {
     padding: .8rem 2rem;
     margin: .5rem 1rem;
   }
   
+}
+
+/* 430px */
+@media (max-width:30em) {
+  .estatusPedidoPlaceOrder {
+    gap: 1.2rem;
+  }
+
+  .container-estatusPedido > label {
+    font-size: 1.3rem;
+    font-weight: 400;
+  }
+  
+
+  .deleteOrderButton {
+    width: 16rem;
+    padding: 1rem 1rem;
+    font-size: 1.1rem;
+  }
+
+  .placeOrderButton {
+    width: 16rem;
+    padding: 1rem 1rem;
+    font-size: 1.1rem;
+  }
+
+  .container-estatusPedido__select{
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
 }

@@ -113,7 +113,40 @@ export default function Login() {
       
       console.log(err);
       // showAlert ('error', err.response.data.message);
-      setMensajeSnackBar(err.response.data.message)
+      let mensajeSnackBar = ""
+
+      if (err.name) 
+        mensajeSnackBar += `Name: ${err.name}. `
+
+      if (err.code)
+        mensajeSnackBar += `Code: ${err.code}. `;
+
+      if (err.statusCode) 
+        mensajeSnackBar += `Status Code: ${err.statusCode}. `;
+
+      if (err.status) 
+        mensajeSnackBar += `Status: ${err.status}. `;
+
+      if (err.message) 
+        mensajeSnackBar += `Mensaje: ${err.message}. `;
+
+        console.log("mensajeSnackBar", mensajeSnackBar);
+      // if (err.code === "ERR_NETWORK") {
+      //   setMensajeDeError ("Error al conectarse a la Red. Si estas usando Wi-Fi checa tu conexión. Si estas usando datos checa si tienes saldo. O bien checa si estas en un lugar con mala recepción de red y vuelve a intentar.")
+      // }
+      // if (mensajeSnackBar !== "") {
+      //   setMensajeDeError (mensajeSnackBar)
+      // }
+      // else {
+      //   setMensajeDeError (`Error al hacer el pedido: ${err}`)
+      // }
+      if (err.response.data.message)
+        setMensajeSnackBar(err.response.data.message)
+      else if (err.code === "ERR_NETWORK")
+        setMensajeSnackBar ("Error al conectarse a la Red. Si estas usando Wi-Fi checa tu conexión. Si estas usando datos checa si tienes saldo. O bien checa si estas en un lugar con mala recepción de red y vuelve a intentar.");
+      else
+        setMensajeSnackBar(`Error: ${err}`)
+
       setOpenSnackbar(true);
 
     }

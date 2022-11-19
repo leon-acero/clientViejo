@@ -83,6 +83,9 @@ export default function UpdateOrder() {
   /**************************    useState    **********************************/
 
   // openModal abre una ventana Modal para preguntar si desea borrar el Pedido
+  
+  // openModalEstatusPedido abre una ventana para preguntar si desea actualizar
+  // el Estatus del Pedido antes de grabarlo
 
   // isSaving es un boolean para saber si esta grabando la informacion en la BD
   // lo uso para deshabilitar el boton de Grabar y que el usuario no le de click
@@ -133,6 +136,7 @@ export default function UpdateOrder() {
 
 
   const [openModal, setOpenModal] = useState(false);
+  // const [openModalEstatusPedido, setOpenModalEstatusPedido] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [mensajeSnackBar, setMensajeSnackBar] = useState("");
@@ -148,7 +152,7 @@ export default function UpdateOrder() {
         clientId: clientId,
         businessName: businessName,
         // estatusPedido donde 1 es Por Entregar y 2 es Entregado
-        estatusPedido: 1, 
+        estatusPedido: 0, 
         esMayorista: esMayorista,
         seAplicaDescuento: false,
         productOrdered: []
@@ -450,6 +454,16 @@ export default function UpdateOrder() {
       }
     }
 
+    if (theBasket.estatusPedido === 0) {
+      continuarConElPedido = false;
+      setMensajeSnackBar("Selecciona el Estatus del pedido para poder grabarlo")
+      setOpenSnackbar(true);
+    }
+
+    // if (usarComponenteComo === "actualizarPedido" && theBasket.estatusPedido === 1) {
+    //   setOpenModalEstatusPedido (true);
+    // }
+
     if (!continuarConElPedido)
       return;
 
@@ -458,6 +472,7 @@ export default function UpdateOrder() {
       setOpenSnackbar(true);
       return;
     }
+
   
     // SI estoy grabando el pedido NO se puede volver a dar click al boton de Grabar
     if (isSaving)
@@ -534,7 +549,42 @@ export default function UpdateOrder() {
 
         console.log(err);
         setUpdateSuccess(false);
-        setMensajeSnackBar("Hubo un error al realizar el pedido. Intente más tarde.")
+        // setMensajeSnackBar("Hubo un error al realizar el pedido. Intente más tarde.")
+        let mensajeSnackBar = ""
+
+        if (err.name) 
+          mensajeSnackBar += `Name: ${err.name}. `
+  
+        if (err.code)
+          mensajeSnackBar += `Code: ${err.code}. `;
+  
+        if (err.statusCode) 
+          mensajeSnackBar += `Status Code: ${err.statusCode}. `;
+  
+        if (err.status) 
+          mensajeSnackBar += `Status: ${err.status}. `;
+  
+        if (err.message) 
+          mensajeSnackBar += `Mensaje: ${err.message}. `;
+  
+          console.log("mensajeSnackBar", mensajeSnackBar);
+        // if (err.code === "ERR_NETWORK") {
+        //   setMensajeDeError ("Error al conectarse a la Red. Si estas usando Wi-Fi checa tu conexión. Si estas usando datos checa si tienes saldo. O bien checa si estas en un lugar con mala recepción de red y vuelve a intentar.")
+        // }
+        // if (mensajeSnackBar !== "") {
+        //   setMensajeDeError (mensajeSnackBar)
+        // }
+        // else {
+        //   setMensajeDeError (`Error al hacer el pedido: ${err}`)
+        // }
+        if (err.response.data.message)
+          setMensajeSnackBar(err.response.data.message)
+        else if (err.code === "ERR_NETWORK")
+          setMensajeSnackBar ("Error al conectarse a la Red. Si estas usando Wi-Fi checa tu conexión. Si estas usando datos checa si tienes saldo. O bien checa si estas en un lugar con mala recepción de red y vuelve a intentar.");
+        else
+          setMensajeSnackBar(`Error: ${err}`)
+        
+
         setOpenSnackbar(true);
     }
   }
@@ -759,6 +809,15 @@ export default function UpdateOrder() {
             captionAceptar={"Borrar"}
             captionCancelar={"Cancelar"}
           />
+
+          {/* <BasicDialog
+            open={openModalEstatusPedido}
+            onClose={() => setOpenModalEstatusPedido(false)}
+            message= {`El Pedido aun tiene estatus: Por Entregar, si deseas cerrar el pedido selecciona Cancelar, cambia el estatus a Entregado y vuelve a Grabar. Si deseas que el Pedido siga abierto selecciona Aceptar para grabar.`}
+            onSubmit={handlePlaceOrder}
+            captionAceptar={"Aceptar"}
+            captionCancelar={"Cancelar"}
+          /> */}
               
         <Snackbar
           open={openSnackbar}
@@ -948,15 +1007,15 @@ export default function UpdateOrder() {
             {
               usarComponenteComo === "actualizarPedido" && 
                     <button className="deleteOrderButton"
-                            disabled={isSaving}
+                            disabled={isDeleting}
                             // onClick={handleDeleteOrder}
                             onClick={openDeleteDialog}
-                    >{isDeleting ? 'Borrando...' : 'Borrar'}
+                    >{isDeleting ? 'Borrando...' : 'Borrar Pedido'}
                     </button> 
             }
 
             <div className="container-estatusPedido">
-              {/* <label htmlFor="estatusPedido">Estatus</label> */}
+              <label htmlFor="estatusPedido">Estatus Pedido</label>
               <select 
                   className="container-estatusPedido__select"
                   id="estatusPedido" 
@@ -968,6 +1027,7 @@ export default function UpdateOrder() {
                   {/* <option value="porEntregar">Por entregar</option>
                   <option value="entregado">Entregado</option> */}
                   {/* 1 es Por Entregar y 2 es Entregado */}
+                  <option value="0">Seleciona el Estatus</option>
                   <option value="1">Por entregar</option>
                   <option value="2">Entregado</option>
               </select>          
@@ -981,7 +1041,7 @@ export default function UpdateOrder() {
                 (isSaving ? 'Creando...' : 'Crear')
               }
               {usarComponenteComo === "actualizarPedido" &&
-                (isSaving ? 'Actualizando...' : 'Actualizar')
+                (isSaving ? 'Grabando...' : 'Grabar')
               }
             </button>
             
