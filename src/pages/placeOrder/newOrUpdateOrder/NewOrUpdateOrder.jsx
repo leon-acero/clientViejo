@@ -1,9 +1,11 @@
 import "./newOrUpdateOrder.css"
+import axios from '../../../utils/axios';
+
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import axios from "axios";
-import { Skeleton } from '@mui/material';
+// import axios from "axios";
+// import { Skeleton } from '@mui/material';
 
 import { domAnimation, LazyMotion, m } from 'framer-motion';
 import SkeletonElement from '../../../components/skeletons/SkeletonElement';
@@ -39,7 +41,7 @@ export default function NewOrUpdateOrder() {
   // Estos datos del Cliente los obtengo con useLocation los cuales los mandé
   // desde clientFound.jsx
 
-  const {clientId, businessName, cellPhone, esMayorista} = useLocation().state;
+  const {clientId, businessName, cellPhone, esMayorista, businessImageCover} = useLocation().state;
   /****************************************************************************/
 
   useEffect (()=>{
@@ -56,12 +58,16 @@ export default function NewOrUpdateOrder() {
       try {
         setUltimosCincoPedidos(null);
 
-        const res = await axios ({
-          withCredentials: true,
-          method: 'GET',
-          // url: `http://127.0.0.1:8000/api/v1/sales/ultimos-cinco-pedidos-por-entregar/${clientId}`
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/ultimos-cinco-pedidos-por-entregar/${clientId}`
-        });
+        // const res = await axios ({
+        //   withCredentials: true,
+        //   method: 'GET',
+        //   // url: `http://127.0.0.1:8000/api/v1/sales/ultimos-cinco-pedidos-por-entregar/${clientId}`
+        //   url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/ultimos-cinco-pedidos-por-entregar/${clientId}`
+        // });
+
+        const res = await axios.get (`/api/v1/sales/ultimos-cinco-pedidos-por-entregar/${clientId}`);
+
+
         // console.log("res",res.data.data.ultimosCincoPedidosPorEntregar);
         setUltimosCincoPedidos(res.data.data.ultimosCincoPedidosPorEntregar);   
       }
@@ -99,6 +105,7 @@ export default function NewOrUpdateOrder() {
                         cellPhone, 
                         esMayorista,
                         usarComponenteComo: "nuevoPedido",
+                        businessImageCover,
                         // en un nuevo pedido NO uso fecha, solo en actualizar
                         // le paso de todos modos una fecha para que no haya undefined
                         fecha: new Date()
@@ -150,6 +157,7 @@ export default function NewOrUpdateOrder() {
                                 businessName: businessName, 
                                 cellPhone: cellPhone, 
                                 esMayorista: esMayorista,
+                                businessImageCover: businessImageCover,
                                 fecha: current._id.Fecha,
                                 usarComponenteComo: "actualizarPedido"
                         }

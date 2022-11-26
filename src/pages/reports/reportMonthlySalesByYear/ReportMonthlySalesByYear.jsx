@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
-import axios from "axios"
-import Chart from '../../../components/chart/Chart';
-
 import "./reportMonthlySalesByYear.css"
+import React, { useEffect, useRef, useState } from 'react'
+import axios from '../../../utils/axios';
+// import axios from "axios"
+import Chart from '../../../components/chart/Chart';
+import { NumericFormat } from 'react-number-format';
+
 import SkeletonElement from '../../../components/skeletons/SkeletonElement';
 import { Skeleton } from '@mui/material';
 
@@ -66,12 +68,15 @@ export default function ReportMonthlySalesByYear() {
 
       // console.log("axios carga de años");
 
-      const res = await axios ({
-        withCredentials: true,
-        method: 'GET',
-        // url: 'http://127.0.0.1:8000/api/v1/sales/list-of-years-sales'
-        url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/sales/list-of-years-sales'
-      });
+      // const res = await axios ({
+      //   withCredentials: true,
+      //   method: 'GET',
+      //   url: 'http://127.0.0.1:8000/api/v1/sales/list-of-years-sales'
+      //   // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/sales/list-of-years-sales'
+      // });
+
+      const res = await axios.get ('/api/v1/sales/list-of-years-sales');
+
    
       // console.log("resultado carga de años",res)
       // console.log("res: ",res.data.data.listOfYearsSales);
@@ -110,12 +115,15 @@ export default function ReportMonthlySalesByYear() {
         console.log("axios carga de ventas del negocio");
 
         try {
-          const res = await axios ({
-            withCredentials: true,
-            method: 'GET',
-            // url: `http://127.0.0.1:8000/api/v1/sales/monthly-sales/${year}`
-            url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/monthly-sales/${year}`
-          });
+
+          // const res = await axios ({
+          //   withCredentials: true,
+          //   method: 'GET',
+          //   url: `http://127.0.0.1:8000/api/v1/sales/monthly-sales/${year}`
+          //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/monthly-sales/${year}`
+          // });
+
+          const res = await axios.get (`/api/v1/sales/monthly-sales/${year}`);
   
           // console.log("res",res)
           // console.log(res.data.data);
@@ -157,7 +165,7 @@ export default function ReportMonthlySalesByYear() {
 
   const out = (
     <div className='reporte'>
-      
+     
       {
         anios && (
                 <select className="yearsList"
@@ -174,7 +182,14 @@ export default function ReportMonthlySalesByYear() {
       }
       {
         chartData && (
-          <Chart data={chartData} title={`Venta Anual ${year} de $${Total}`} grid dataKey="SubTotal"/>
+          <Chart 
+                data={chartData} 
+                // title={`Venta Anual ${year} de $${Total}`} 
+      
+                title={<NumericFormat value={Total} decimalScale={2} thousandSeparator="," prefix={'$'} decimalSeparator="." displayType="text" renderText={(value) => <span>Venta Anual {year} de {value}</span>}
+                />} 
+                grid dataKey="SubTotal"
+          />
         )
       }
       {

@@ -1,4 +1,6 @@
 import "./productOrdered.css"
+import { BASE_URL } from '../../utils/axios';
+import { NumericFormat } from 'react-number-format';
 
 export default function ProductOrdered({ 
   index, 
@@ -34,7 +36,12 @@ export default function ProductOrdered({
           autoComplete="off"
         />
 
-        <img src={`/img/products/${product.imageCover}`} className="productOrdered--image" alt={product.productName} />
+        {/* <img src={`/img/products/${product.imageCover}`} className="productOrdered--image" alt={product.productName} /> */}
+        <img 
+            // src={`http://127.0.0.1:8000/img/products/${product.imageCover}`} 
+            src={`${BASE_URL}/img/products/${product.imageCover}`} 
+            className="productOrdered--image" 
+            alt={product.productName} />
 
         <div className="productOrdered__info">
           <p className="itemOrdered">SKU: {product.sku}</p>
@@ -43,7 +50,19 @@ export default function ProductOrdered({
           {/* Precio Unitario */}
           <div className="itemContainer">
             <span className="itemOrdered">Precio Unitario: </span>
-            <span className="itemOrdered__currency">${product.priceDeVenta}</span>
+            {/* <span className="itemOrdered__currency">${product.priceDeVenta}</span> */}
+            <span className="itemOrdered__currency">
+              {/* ${product.priceDeVenta} */}
+              <NumericFormat 
+                  value={product.priceDeVenta} 
+                  decimalScale={2} 
+                  thousandSeparator="," 
+                  prefix={'$'} 
+                  decimalSeparator="." 
+                  displayType="text" 
+                  renderText={(value) => <span>{value}</span>}
+                />
+            </span>
           </div>
 
           {/* sub Total = Precio Unitario X Cantidad */}
@@ -52,8 +71,23 @@ export default function ProductOrdered({
               theBasket.productOrdered[index]?.quantity === undefined || 
               theBasket.productOrdered[index]?.quantity === "" || 
               theBasket.productOrdered[index]?.quantity === null 
+              // ? "" 
+              // : <span className="itemOrdered__currency"> {`$${theBasket.productOrdered[index]?.quantity  * product.priceDeVenta}`} </span>}           
               ? "" 
-              : <span className="itemOrdered__currency"> {`$${theBasket.productOrdered[index]?.quantity  * product.priceDeVenta}`} </span>}           
+              : <span className="itemOrdered__currency"> 
+              {
+              // `$${theBasket.productOrdered[index]?.quantity  * product.priceDeVenta}`
+                <NumericFormat 
+                  value={theBasket.productOrdered[index]?.quantity  * product.priceDeVenta} 
+                  decimalScale={2} 
+                  thousandSeparator="," 
+                  prefix={'$'} 
+                  decimalSeparator="." 
+                  displayType="text" 
+                  renderText={(value) => <span>{value}</span>}
+                />
+              } 
+              </span>}           
           </div>
 
           {/* Descuento */}
@@ -61,7 +95,21 @@ export default function ProductOrdered({
             <span className="itemOrdered">Descuento (-):</span>  
               {/* {seAplicaDescuento  */}
               {theBasket.seAplicaDescuento 
-                    ? <span className="itemOrdered__currency"> {`- $${theBasket.productOrdered[index]?.descuento}`}</span>
+                    // ? <span className="itemOrdered__currency"> {`- $${theBasket.productOrdered[index]?.descuento}`}</span>
+                    // : ""
+                    ? <span className="itemOrdered__currency"> 
+                    {
+                      <NumericFormat 
+                        value={theBasket.productOrdered[index]?.descuento} 
+                        decimalScale={2} 
+                        thousandSeparator="," 
+                        prefix={'$'} 
+                        decimalSeparator="." 
+                        displayType="text" 
+                        renderText={(value) => <span>{value}</span>}
+                      />
+                    }
+                    </span>
                     : ""
               }
           </div>
@@ -73,8 +121,36 @@ export default function ProductOrdered({
                 theBasket.productOrdered[index]?.quantity !== "" && 
                 // theBasket.productOrdered[index]?.quantity !== null ) && seAplicaDescuento
                 theBasket.productOrdered[index]?.quantity !== null ) && theBasket.seAplicaDescuento
-                ? <span className="itemOrdered__currency productTotal">{`$${theBasket.productOrdered[index]?.quantity  * product.priceDeVenta - theBasket.productOrdered[index]?.descuento}`}</span>
-                : <span className="itemOrdered__currency productTotal">{`$${theBasket.productOrdered[index]?.quantity  * product.priceDeVenta}`}</span>
+                ? <span className="itemOrdered__currency productTotal">
+                  {
+                    // `$${theBasket.productOrdered[index]?.quantity  * product.priceDeVenta - theBasket.productOrdered[index]?.descuento}`
+                    <NumericFormat 
+                      value={theBasket.productOrdered[index]?.quantity  * product.priceDeVenta - theBasket.productOrdered[index]?.descuento} 
+                      decimalScale={2} 
+                      thousandSeparator="," 
+                      prefix={'$'} 
+                      decimalSeparator="." 
+                      displayType="text" 
+                      renderText={(value) => <span>{value}</span>}
+                      />
+                    // `$${theBasket.productOrdered[index]?.quantity  * product.priceDeVenta - theBasket.productOrdered[index]?.descuento}`
+                  }
+                  </span>
+                // : <span className="itemOrdered__currency productTotal">{`$${theBasket.productOrdered[index]?.quantity  * product.priceDeVenta}`}</span>
+                : <span className="itemOrdered__currency productTotal">
+                  {
+                  // `$${theBasket.productOrdered[index]?.quantity  * product.priceDeVenta}`
+                    <NumericFormat 
+                      value={theBasket.productOrdered[index]?.quantity  * product.priceDeVenta} 
+                      decimalScale={2} 
+                      thousandSeparator="," 
+                      prefix={'$'} 
+                      decimalSeparator="." 
+                      displayType="text" 
+                      renderText={(value) => <span>{value}</span>}
+                    />
+                  }
+                </span>
               }                     
           </div>
         </div>

@@ -1,31 +1,23 @@
 import "./product.css";
-
-/************************    Material UI    *********************************/
-import {FaDollyFlatbed, FaDollarSign, FaCloudUploadAlt } from "react-icons/fa";
-
-// import CalendarToday from "@mui/icons-material/CalendarToday";
-// import PermIdentity from "@mui/icons-material/PermIdentity";
-// import Publish from "@mui/icons-material/Publish";
-// import LocationSearching from "@mui/icons-material/LocationSearching";
-// import MailOutline from "@mui/icons-material/MailOutline";
-// import PhoneAndroid from "@mui/icons-material/PhoneAndroid";
-/****************************************************************************/
-
-/**************************    Snackbar    **********************************/
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
-import {FaTimes} from "react-icons/fa";
-import { Alert } from '@mui/material';
-/****************************************************************************/
+// import axios from "axios";
+import axios, { BASE_URL } from '../../../../utils/axios';
 
 /**************************    React    **********************************/
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 /****************************************************************************/
 
-import axios from "axios";
-// import { stateContext } from '../../context/StateProvider';
+/************************    React Icons    *********************************/
+import {FaDollyFlatbed, FaDollarSign, FaCloudUploadAlt, FaChrome } from "react-icons/fa";
+/****************************************************************************/
+
+/**************************    Snackbar    **********************************/
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import {FaTimes} from "react-icons/fa";
+import { Alert } from '@mui/material';
+/****************************************************************************/
+
 
 
 export default function Product() {
@@ -38,40 +30,56 @@ export default function Product() {
   /**************************************************************************/
 
   /**************************    useState    **********************************/
-  // file es la imagen del Producto que se va a guardar en la BD (el nombre) y el
-  // archivo fisico se guarda en el file system
+  // fileBlob es la imagen del Producto que muestro en pantalla cuando recien
+  // escojo una foto y antes de que actualice en la base de datos. Esto es con
+  // el fin de que el usuario vea la imagen que escogió
 
   // mensajeSnackBar es el mensaje que se mostrara en el SnackBar, puede ser 
   // de exito o de error segun si se grabó la informacion en la BD
 
   // updateSuccess es boolean que indica si tuvo exito o no el grabado en la BD
   
-  // data es un Object con toda la informacion a grabar en la BD
+  // productData es un Object con toda la informacion a grabar en la BD
 
   // openSnackbar es boolean que manda abrir y cerrar el Snackbar
 
   // isSaving es un boolean para saber si esta grabando la informacion en la BD
   // lo uso para deshabilitar el boton de Grabar y que el usuario no le de click
   // mientras se esta guardando en la BD
-  const [file, setFile] = useState(null);
+
+  const [fileBlob, setFileBlob] = useState(null);
+  
   const [isSaving, setIsSaving] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState (true);
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [mensajeSnackBar, setMensajeSnackBar] = useState("");
   
-  const [data, setData] = useState(
+  // imageCover sirve un DOBLE proposito, como String y como Archivo
+  // es decir al cargar el Component o Pagina es un String: "camera.webp"
+  // el cual muestra una imagen default antes de que se cargue la foto SI es que
+  // existe una foto en el File System para el Producto
+
+  // El segundo propósito es como File, es decir, el usuario al seleccionar
+  // una imagen, ahora imageCover contiene toda la informacion de la imagen
+  // no solo el nombre de la imagen, ahora cuando se actualice la informacion
+  // imageCover sera usado para separar el nombre de la imagen que se guardara
+  // en MongoDB, y el archivo fisico que se guardara en el Web Server (File System)
+  const [productData, setProductData] = useState(
     {
+      _id: 0,
       productName: "",
       inventarioActual: 0,
       inventarioMinimo: 0,
       priceMenudeo: 0,
       priceMayoreo: 0,
       costo: 0,
-      sku: 0
+      sku: 0,
+      imageCover: "camera.webp"
     }
   )
   /*****************************************************************************/
+
 
   /**************************    useParams    **********************************/
   // productId es la clave de producto que viene en el URL, me sirve para
@@ -80,7 +88,6 @@ export default function Product() {
   const {productId } = useParams();
   /****************************************************************************/
 
-  // const { client } = useContext(stateContext);
 
   /************************     handleSubmit    *******************************/
   // Aqui guardo la informacion en la BD, puede ser exitoso o haber error
@@ -88,7 +95,7 @@ export default function Product() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(data.priceMayoreo)
+    // console.log(productData.priceMayoreo)
 
     if (isSaving)
       return;
@@ -98,27 +105,41 @@ export default function Product() {
 
         const formData = new FormData();
         
-        formData.append("sku", data.sku);
-        formData.append("productName", data.productName);
-        formData.append("inventarioActual", data.inventarioActual);
-        formData.append("inventarioMinimo", data.inventarioMinimo);
-        formData.append("priceMenudeo", data.priceMenudeo);
-        formData.append("priceMayoreo", data.priceMayoreo === null || data.priceMayoreo === "" || data.priceMayoreo === undefined ? 0 : data.priceMayoreo);
-        formData.append("costo", data.costo);
-        formData.append("photo", file);
+        formData.append("_id", productData._id);
+        formData.append("sku", productData.sku);
+        formData.append("productName", productData.productName);
+        formData.append("inventarioActual", productData.inventarioActual);
+        formData.append("inventarioMinimo", productData.inventarioMinimo);
+        formData.append("priceMenudeo", productData.priceMenudeo);
+        formData.append("priceMayoreo", productData.priceMayoreo === null || productData.priceMayoreo === "" || productData.priceMayoreo === undefined ? 0 : productData.priceMayoreo);
+        formData.append("costo", productData.costo);
+        // formData.append("photo", fileBlob);
+        // console.log("productData.imageCover", productData.imageCover);
 
-        const res = await axios({
-          withCredentials: true,
-          method: 'PATCH',
-          // url: `http://127.0.0.1:8000/api/v1/products/${productId}`,
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`,
-          data: formData
-        })
+        // Aqui como mencione al inicio imageCover tiene toda la informacion
+        // de la foto, y para actualizar la foto, en el productController
+        // primero subo la foto en memoria en el Web Server, luego le cambio
+        // el formato a webp y le hago un resize, y ajusta la calidad de la foto
+        // y ahora si la guardo en el Web Server, por ultimo le asigno un nombre
+        // a la imageCOver y la guardo en la BD
+        // es por esto que aqui guardo la imageCover en "photo" porque NO es
+        // el field final, se tiene que hacer todo el proceso anterior
+        formData.append("photo", productData.imageCover);
+
+        // const res = await axios({
+        //   withCredentials: true,
+        //   method: 'PATCH',
+        //   url: `http://127.0.0.1:8000/api/v1/products/${productId}`,
+        //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`,
+        //   data: formData
+        // })
+
+        const res = await axios.patch (`/api/v1/products/${productId}`, formData );
+
         setIsSaving(false);
         // console.log("res", res);
 
         if (res.data.status === 'success') {
-          // alert ('Logged in succesfully!');
           // console.log(res.data.data.data);
           console.log ('El producto fue actualizado con éxito!');
           setUpdateSuccess(true);
@@ -136,7 +157,7 @@ export default function Product() {
   }
 
   /************************     useEffect    *******************************/
-  // fetchProduct mandao cargar desde la BD el Producto que me ineteresa
+  // fetchProduct mando cargar desde la BD el Producto que me interesa
   // actualizar
   /**************************************************************************/
 
@@ -151,16 +172,20 @@ export default function Product() {
       // solo debe de cargar datos una vez, osea al cargar la pagina
       avoidRerenderFetchProduct.current = true;
 
-      // console.log("carga lista de productos")
+      // console.log("carga de producto")
 
-      const res = await axios ({
-        withCredentials: true,
-        method: 'GET',
-        // url: `http://127.0.0.1:8000/api/v1/products/${productId}`
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`
-      });
+      // const res = await axios ({
+      //   withCredentials: true,
+      //   method: 'GET',
+      //   url: `http://127.0.0.1:8000/api/v1/products/${productId}`
+      //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${productId}`
+      // });
+
+      const res = await axios.get (`/api/v1/products/${productId}`);
+
       // console.log(res.data.data.data);
-      setData(res.data.data.data)
+      setProductData(res.data.data.data);
+
     }
 
     fetchProduct();
@@ -168,14 +193,34 @@ export default function Product() {
   }, [productId]);
 
 
+  /************************     handleImageCoverChange    ********************/
+  // Se encarga de manejar la actualizacion de la foto del Producto y 
+  // que se muestre en pantalla
+  /**************************************************************************/
+  function handleImageCoverChange (e) {
+
+    setFileBlob(URL.createObjectURL(e.target.files[0]));
+
+    // console.log("fileImageCover", URL.createObjectURL(e.target.files[0]))
+    // Actualizo el imageCover
+    setProductData(prevFormData => {
+        return {
+            ...prevFormData,
+            imageCover: e.target.files[0]
+        }
+    })
+  }
+
+
   /************************     handleChange    *****************************/
-  // Se encarga de guardar en setData, la informacion de cada input
+  // Se encarga de guardar en setProductData, la informacion de cada input, excepto
+  // del imageCover
   /**************************************************************************/
 
   function handleChange(event) {
     // console.log(event)
     const {name, value, type, checked} = event.target
-    setData(prevFormData => {
+    setProductData(prevFormData => {
         return {
             ...prevFormData,
             [name]: type === "checkbox" ? checked : value
@@ -208,42 +253,21 @@ export default function Product() {
   /**************************************************************************/
   const action = (
     <>
-      {/* <Button color="secondary" size="small" onClick={handleCloseSnackbar}>
-        UNDO
-      </Button> */}
       <IconButton
         size="small"
         aria-label="close"
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        {/* <CloseIcon fontSize="small" /> */}
         <FaTimes />
       </IconButton>
     </>
   );
 
-  // useEffect(()=>{
-  //   const elemUpload = document.querySelector('.form__upload');
-  //   const elemUserPhoto = document.querySelector('.form__user-photo');
-  
-  //   // Este código es para Actualizar la foto del User despues de que la seleccionó
-  //   // Pero ANTES de darle Save Settings
-  //   elemUpload.addEventListener('change', e => {
-  //       const file = document.getElementById('photo').files[0];
-  //       const reader = new FileReader();
-  
-  //       reader.onload = e => {
-  //           elemUserPhoto.src = e.target.result;
-  //       };
-  
-  //       reader.readAsDataURL(file);
-  //   });
-  // }, [])
-
  
   return (
     <div className="product">
+      
       <Snackbar
         open={openSnackbar}
         autoHideDuration={5000}
@@ -267,51 +291,45 @@ export default function Product() {
         <div className="productShow">
           <div className="productShowTop">
             <img
-              src={`/img/products/${data.imageCover}`}
-              alt=""
               className="productShowImg"
-            />
+              src= {
+                      // fileBlob ? fileBlob : `http://127.0.0.1:8000/img/products/${productData.imageCover}`
+                      fileBlob ? fileBlob : `${BASE_URL}/img/products/${productData.imageCover}`
+                    }
+              alt=""
+            />            
+
             <div className="productShowTopTitle">
-              <span className="productShowProductname">{data.productName}</span>
-              <span className="productShowProductTitle">SKU: {data.sku}</span>
+              <span className="productShowProductname">{productData.productName}</span>
+              <span className="productShowProductTitle">SKU: {productData.sku}</span>
             </div>
           </div>
           <div className="productShowBottom">
             <span className="productShowTitle">Detalle</span>
             <div className="productShowInfo">
               <FaDollyFlatbed className="productShowIcon" />
-              <span className="productShowInfoTitle">Inventario Actual: {data.inventarioActual}</span>
+              <span className="productShowInfoTitle">Inventario Actual: {productData.inventarioActual}</span>
             </div>
             <div className="productShowInfo">
               <FaDollyFlatbed className="productShowIcon" />
-              <span className="productShowInfoTitle">Inventario Mínimo: {data.inventarioMinimo}</span>
+              <span className="productShowInfoTitle">Inventario Mínimo: {productData.inventarioMinimo}</span>
             </div>
             <div className="productShowInfo">
               <FaDollarSign className="productShowIcon" />
-              <span className="productShowInfoTitle">Precio Menudeo: ${data.priceMenudeo}</span>
+              <span className="productShowInfoTitle">Precio Menudeo: ${productData.priceMenudeo}</span>
             </div>           
             <div className="productShowInfo">
               <FaDollarSign className="productShowIcon" />
-              <span className="productShowInfoTitle">Precio Mayoreo: ${data.priceMayoreo}</span>
+              <span className="productShowInfoTitle">Precio Mayoreo: ${productData.priceMayoreo}</span>
             </div> 
             <div className="productShowInfo">
               <FaDollarSign className="productShowIcon" />
-              <span className="productShowInfoTitle">Costo: ${data.costo}</span>
+              <span className="productShowInfoTitle">Costo: ${productData.costo}</span>
             </div>             
-
-            {/* <span className="productShowTitle">Contacto</span>
             <div className="productShowInfo">
-              <PhoneAndroid className="productShowIcon" />
-              <span className="productShowInfoTitle">{data.cellPhone}</span>
-            </div>
-            <div className="productShowInfo">
-              <PhoneAndroid className="productShowIcon" />
-              <span className="productShowInfoTitle">{data.fixedPhone}</span>
-            </div>
-            <div className="productShowInfo">
-              <MailOutline className="productShowIcon" />
-              <span className="productShowInfoTitle">{data.email}</span>
-            </div> */}
+              <FaChrome className="productShowIcon" />
+              <span className="productShowInfoTitle">{productData.slug}</span>
+            </div>              
           </div>
         </div>
         <div className="productUpdate">
@@ -319,15 +337,15 @@ export default function Product() {
 
           <form className="productUpdateForm" onSubmit={handleSubmit}>
             <div className="productUpdateLeft">
-            <div className="productUpdateItem">
+              <div className="productUpdateItem">
                 <label>SKU *</label>
                 <input
                   type="text"
-                  placeholder={data.sku}
+                  placeholder={productData.sku}
                   className="productUpdateInput"                  
                   onChange={handleChange}
                   name="sku"
-                  value={data.sku || ''}
+                  value={productData.sku || ''}
                   required
                   onInvalid={e=> e.target.setCustomValidity('El SKU debe tener por lo menos 1 caracter')} 
                   onInput={e=> e.target.setCustomValidity('')} 
@@ -339,11 +357,11 @@ export default function Product() {
                 <label>Producto *</label>
                 <input
                   type="text"
-                  placeholder={data.productName}
+                  placeholder={productData.productName}
                   className="productUpdateInput"                  
                   onChange={handleChange}
                   name="productName"
-                  value={data.productName || ''}
+                  value={productData.productName || ''}
                   required
                   onInvalid={e=> e.target.setCustomValidity('El Nombre del Producto debe tener entre 5 y 40 caracteres')} 
                   onInput={e=> e.target.setCustomValidity('')} 
@@ -359,12 +377,12 @@ export default function Product() {
                   step="1" 
                   min="1"
                   max="999999"
-                  placeholder={data.inventarioActual}
+                  placeholder={productData.inventarioActual}
                   className="productUpdateInput"
                   onChange={handleChange}
                   onKeyPress={(e)=>handleNumbers(e)}
                   name="inventarioActual"
-                  value={data.inventarioActual || ''}
+                  value={productData.inventarioActual || ''}
                   required
                   onInvalid={e=> e.target.setCustomValidity('Escribe el Inventario Actual')} 
                   onInput={e=> e.target.setCustomValidity('')} 
@@ -378,12 +396,12 @@ export default function Product() {
                   step="1" 
                   min="1"
                   max="999999"
-                  placeholder={data.inventarioMinimo}
+                  placeholder={productData.inventarioMinimo}
                   className="productUpdateInput"
                   onChange={handleChange}
                   onKeyPress={(e)=>handleNumbers(e)}
                   name="inventarioMinimo"
-                  value={data.inventarioMinimo || ''}  
+                  value={productData.inventarioMinimo || ''}  
                   required         
                   onInvalid={e=> e.target.setCustomValidity('Escribe el Inventario Mínimo')} 
                   onInput={e=> e.target.setCustomValidity('')}                 
@@ -397,12 +415,12 @@ export default function Product() {
                   step="0.01" 
                   min="1"
                   max="999999"
-                  placeholder={data.priceMenudeo}
+                  placeholder={productData.priceMenudeo}
                   className="productUpdateInput"
                   onChange={handleChange}
                   onKeyPress={(e)=>handleNumbers(e)}
                   name="priceMenudeo"
-                  value={data.priceMenudeo || ''}
+                  value={productData.priceMenudeo || ''}
                   required 
                   onInvalid={e=> e.target.setCustomValidity('Escribe el Precio al Menudeo')} 
                   onInput={e=> e.target.setCustomValidity('')}                
@@ -416,12 +434,12 @@ export default function Product() {
                   step="0.01" 
                   min="1"
                   max="999999"
-                  placeholder={data.priceMayoreo}
+                  placeholder={productData.priceMayoreo}
                   className="productUpdateInput"
                   onChange={handleChange}
                   onKeyPress={(e)=>handleNumbers(e)}
                   name="priceMayoreo"
-                  value={data.priceMayoreo || ''}                  
+                  value={productData.priceMayoreo || ''}                  
                 />
               </div>              
               <div className="productUpdateItem">
@@ -432,12 +450,12 @@ export default function Product() {
                   step="0.01" 
                   min="1"
                   max="999999"
-                  placeholder={data.costo}
+                  placeholder={productData.costo}
                   className="productUpdateInput"
                   onChange={handleChange}
                   onKeyPress={(e)=>handleNumbers(e)}
                   name="costo"
-                  value={data.costo || ''}
+                  value={productData.costo || ''}
                   required 
                   onInvalid={e=> e.target.setCustomValidity('Escribe el Costo del Producto')} 
                   onInput={e=> e.target.setCustomValidity('')}                 
@@ -449,9 +467,12 @@ export default function Product() {
               <div className="productUpdateUpload">
                 <img
                   className="productUpdateImg"
-                  src={`/img/products/${data.imageCover}`}
+                  src= {
+                          // fileBlob ? fileBlob : `http://127.0.0.1:8000/img/products/${productData.imageCover}`
+                          fileBlob ? fileBlob : `${BASE_URL}/img/products/${productData.imageCover}`
+                       }
                   alt=""
-                />
+                />                
                 <label htmlFor="photo">
                   <FaCloudUploadAlt style={{"fontSize": "3rem", "cursor": "pointer"}} />
                 </label>
@@ -460,7 +481,7 @@ export default function Product() {
                         id="photo" 
                         name="photo" 
                         style={{ display: "none" }} 
-                        onChange={(e) => setFile(e.target.files[0])}
+                        onChange={(e)=>handleImageCoverChange(e)}
                 />
               </div>
               <button className="productUpdateButton" disabled={isSaving}>{isSaving ? 'Actualizando...' : 'Actualizar'}</button>

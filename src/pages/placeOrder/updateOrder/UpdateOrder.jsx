@@ -1,30 +1,37 @@
 import "./updateOrder.css"
-import axios from "axios";
+// import axios from "axios";
 
 /****************************    React    ***********************************/
 import { useState, useEffect, useRef, useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom'
 /****************************************************************************/
 
+/**************************    Components    *********************************/
 import ProductInput from '../../../components/productInput/ProductInput';
 import ProductOrdered from '../../../components/productOrdered/ProductOrdered';
+import BasicDialog from '../../../components/basicDialog/BasicDialog';
+import SkeletonElement from '../../../components/skeletons/SkeletonElement';
+/****************************************************************************/
+
+/**************************    Context API    *******************************/
 import { stateContext } from '../../../context/StateProvider';
+/****************************************************************************/
 
 /**************************    Snackbar    **********************************/
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
 import {FaTimes} from "react-icons/fa";
-import { Alert, Skeleton } from '@mui/material';
+import { Alert } from '@mui/material';
 /****************************************************************************/
 
+/**************************    React-Icons    **********************************/
 import {FaShoppingCart, FaSearch} from "react-icons/fa";
+/****************************************************************************/
 
-import BasicDialog from '../../../components/basicDialog/BasicDialog';
-import SkeletonElement from '../../../components/skeletons/SkeletonElement';
-
+/**************************    Framer-Motion    **********************************/
 import { domAnimation, LazyMotion, m } from 'framer-motion';
-
+import axios from '../../../utils/axios';
+import { NumericFormat } from 'react-number-format';
 
 const containerVariants = {
   hidden: { 
@@ -39,6 +46,8 @@ const containerVariants = {
     transition: { duration: .4, ease: 'easeInOut' }
   }
 };
+/****************************************************************************/
+
 
 
 export default function UpdateOrder() {
@@ -66,7 +75,8 @@ export default function UpdateOrder() {
           cellPhone, 
           esMayorista, 
           fecha,
-          usarComponenteComo } = useLocation().state;
+          usarComponenteComo,
+          businessImageCover } = useLocation().state;
 
   /****************************************************************************/
 
@@ -136,7 +146,7 @@ export default function UpdateOrder() {
 
 
   const [openModal, setOpenModal] = useState(false);
-  // const [openModalEstatusPedido, setOpenModalEstatusPedido] = useState(false);
+  const [openModalEstatusPedido, setOpenModalEstatusPedido] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [mensajeSnackBar, setMensajeSnackBar] = useState("");
@@ -155,6 +165,7 @@ export default function UpdateOrder() {
         estatusPedido: 0, 
         esMayorista: esMayorista,
         seAplicaDescuento: false,
+        businessImageCover: businessImageCover,
         productOrdered: []
       });
   // const [theBasket, setTheBasket] = useState({});
@@ -198,12 +209,15 @@ export default function UpdateOrder() {
 
       console.log("cargar Pedido del Server");
 
-      const res = await axios ({
-        withCredentials: true,
-        method: 'GET',
-        // url: `http://127.0.0.1:8000/api/v1/sales/update-order/client/${clientId}/fecha/${fecha}`
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/update-order/client/${clientId}/fecha/${fecha}`
-      });
+      // const res = await axios ({
+      //   withCredentials: true,
+      //   method: 'GET',
+      //   url: `http://127.0.0.1:8000/api/v1/sales/update-order/client/${clientId}/fecha/${fecha}`
+      //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/update-order/client/${clientId}/fecha/${fecha}`
+      // });
+
+      const res = await axios.get (`/api/v1/sales/update-order/client/${clientId}/fecha/${fecha}`);
+
       // console.log("res", res);
       console.log("res.data.data.updateOrder", res.data.data.updateOrder);
 
@@ -220,6 +234,7 @@ export default function UpdateOrder() {
           estatusPedido:  updateOrder.estatusPedido,
           esMayorista:    updateOrder.esMayorista,
           seAplicaDescuento: updateOrder.seAplicaDescuento,
+          businessImageCover: updateOrder.businessImageCover,
           productOrdered: updateOrder.productOrdered,
         }
       );
@@ -324,7 +339,7 @@ export default function UpdateOrder() {
     // console.log(theBasket);
 
 
-    /********************    removeProductFromBasket    *************************/
+  /********************    removeProductFromBasket    *************************/
   const removeProductFromBasket = (index) => {
     // Hago una copia de theBasket para poder hacer cambios
     const updatedBasket = {...theBasket};
@@ -336,6 +351,7 @@ export default function UpdateOrder() {
     setTheBasket(updatedBasket);
   }
   /****************************************************************************/
+
 
   /**************************    useEffect    **********************************/
   // Cada vez que haya un cambio en el Pedido: 
@@ -427,6 +443,9 @@ export default function UpdateOrder() {
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
+
+    setOpenModalEstatusPedido (false);
+
     console.log(theBasket);
 
     console.log("theBasket.estatusPedido", theBasket.estatusPedido);
@@ -495,23 +514,30 @@ export default function UpdateOrder() {
 
         if (usarComponenteComo === "nuevoPedido") {
           console.log("nuevoPedido")
-          res = await axios({
-            withCredentials: true,
-            method: 'POST',
-            // url: `http://127.0.0.1:8000/api/v1/sales/`,
-            url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/`,
-            data: theBasket
-          })
+
+          // res = await axios({
+          //   withCredentials: true,
+          //   method: 'POST',
+          //   url: `http://127.0.0.1:8000/api/v1/sales/`,
+          //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/`,
+          //   data: theBasket
+          // })
+
+          res = await axios.post ('/api/v1/sales/', theBasket );
+
         }
         else if (usarComponenteComo === "actualizarPedido") {
           console.log("actualizarPedido")
-          res = await axios({
-            withCredentials: true,
-            method: 'PUT',
-            // url: `http://127.0.0.1:8000/api/v1/sales/${theBasket.id}`,
-            url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/${theBasket.id}`,
-            data: theBasket
-          })
+
+          // res = await axios({
+          //   withCredentials: true,
+          //   method: 'PUT',
+          //   url: `http://127.0.0.1:8000/api/v1/sales/${theBasket.id}`,
+          //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/${theBasket.id}`,
+          //   data: theBasket
+          // })
+
+          res = await axios.put (`/api/v1/sales/${theBasket.id}`, theBasket );
         }
 
 
@@ -629,6 +655,7 @@ export default function UpdateOrder() {
   }
   /****************************************************************************/
 
+
   /**************************    useEffect    **********************************/
   // Carga el Catálogo de Productos al cargar la Página
   useEffect (() => {
@@ -655,12 +682,15 @@ export default function UpdateOrder() {
         // const res = await axios.get('http://127.0.0.1:8000/api/v1/products')
   
         // 1era. OPCION PARA USAR AXIOS
-        const res = await axios ({
-          withCredentials: true,
-          method: 'GET',
-          // url: 'http://127.0.0.1:8000/api/v1/products'
-          url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
-        });
+        // const res = await axios ({
+        //   withCredentials: true,
+        //   method: 'GET',
+        //   url: 'http://127.0.0.1:8000/api/v1/products'
+        //   // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
+        // });
+
+        const res = await axios.get (`/api/v1/products`);
+
   
         setIsLoading(false);  
   
@@ -707,7 +737,9 @@ export default function UpdateOrder() {
   );
 
 
-
+  /************************     handleDeleteOrder    ************************/
+  // Este es el método que se encarga de Borrar un Pedido
+  /**************************************************************************/  
   const handleDeleteOrder = async (e) => {
 
     e.preventDefault();
@@ -729,12 +761,15 @@ export default function UpdateOrder() {
 
         setIsDeleting(true);
 
-        const res = await axios({
-          withCredentials: true,
-          method: 'DELETE',
-          // url: `http://127.0.0.1:8000/api/v1/sales/${theBasket.id}`,
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/${theBasket.id}`,
-        })
+        // const res = await axios({
+        //   withCredentials: true,
+        //   method: 'DELETE',
+        //   url: `http://127.0.0.1:8000/api/v1/sales/${theBasket.id}`,
+        //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/${theBasket.id}`,
+        // })
+
+        const res = await axios.delete (`/api/v1/sales/${theBasket.id}`);
+
 
         console.log(res)
 
@@ -782,14 +817,23 @@ export default function UpdateOrder() {
     }
   }
 
-
   
-
+  /************************     openDeleteDialog    *************************/
+  // Se encarga de abrir una ventana para preguntar si desea Borrar el Pedido o Cancelar
+  /**************************************************************************/  
   const openDeleteDialog = () => {
        
     setOpenModal(true);
 
   };
+
+  /************************     openUpdateEstatusPedido    ******************/
+  // Se encarga de abrir una ventana para preguntar si desea cambiar el Estatus del Pedido Antes
+  // de Grabar
+  /**************************************************************************/  
+  const openUpdateEstatusPedido = () => {
+    setOpenModalEstatusPedido(true); 
+  }
 
 
   return (
@@ -810,14 +854,14 @@ export default function UpdateOrder() {
             captionCancelar={"Cancelar"}
           />
 
-          {/* <BasicDialog
+          <BasicDialog
             open={openModalEstatusPedido}
             onClose={() => setOpenModalEstatusPedido(false)}
             message= {`El Pedido aun tiene estatus: Por Entregar, si deseas cerrar el pedido selecciona Cancelar, cambia el estatus a Entregado y vuelve a Grabar. Si deseas que el Pedido siga abierto selecciona Aceptar para grabar.`}
             onSubmit={handlePlaceOrder}
             captionAceptar={"Aceptar"}
             captionCancelar={"Cancelar"}
-          /> */}
+          />
               
         <Snackbar
           open={openSnackbar}
@@ -969,21 +1013,60 @@ export default function UpdateOrder() {
                 <div className="totalPedido__container">
                   <span className="totalPedido__item">Total Venta: </span>
                   
-                  <span className="totalPedido__currency">{`$${totalBasket}`}</span>
+                  {/* <span className="totalPedido__currency">{`$${totalBasket}`}</span> */}
+                  <span className="totalPedido__currency">
+                    {
+                      // `$${totalBasket}`
+                      <NumericFormat 
+                              value={totalBasket} 
+                              decimalScale={2} 
+                              thousandSeparator="," 
+                              prefix={'$'} 
+                              decimalSeparator="." 
+                              displayType="text" 
+                              renderText={(value) => <span>{value}</span>}
+                      />
+                    }
+                  </span>
                 </div>
 
                 {/* Total Descuento */}
                 <div className="totalPedido__container">
                   <span className="totalPedido__item">Total Descuento (-): </span>
                   
-                  <span className="totalPedido__currency">{`- $${totalDescuento}`}</span>
+                  <span className="totalPedido__currency">
+                    {
+                      // `- $${totalDescuento}`
+                      <NumericFormat 
+                              value={totalDescuento} 
+                              decimalScale={2} 
+                              thousandSeparator="," 
+                              prefix={'$'} 
+                              decimalSeparator="." 
+                              displayType="text" 
+                              renderText={(value) => <span>{value}</span>}
+                      />
+                    }
+                  </span>
                 </div>
 
                 {/* Total Pedido = Total Venta - Total Descuento */}
                 <div className="totalPedido__container">
                   <span className="totalPedido__item pedidoTotal">Total Pedido: </span>
                   
-                  <span className="totalPedido__currency pedidoTotal">{`$${totalBasket - totalDescuento}`}</span>         
+                  {/* <span className="totalPedido__currency pedidoTotal">{`$${totalBasket - totalDescuento}`}</span>          */}
+                  <span className="totalPedido__currency pedidoTotal">
+                    {/* {`$${totalBasket - totalDescuento}`} */}
+                    <NumericFormat 
+                              value={totalBasket - totalDescuento} 
+                              decimalScale={2} 
+                              thousandSeparator="," 
+                              prefix={'$'} 
+                              decimalSeparator="." 
+                              displayType="text" 
+                              renderText={(value) => <span>{value}</span>}
+                    />
+                  </span>         
                 </div>
               </div>
             </div>
@@ -1010,7 +1093,7 @@ export default function UpdateOrder() {
                             disabled={isDeleting}
                             // onClick={handleDeleteOrder}
                             onClick={openDeleteDialog}
-                    >{isDeleting ? 'Borrando...' : 'Borrar Pedido'}
+                    >{isDeleting ? 'Borrando...' : 'Borrar'}
                     </button> 
             }
 
@@ -1035,7 +1118,18 @@ export default function UpdateOrder() {
 
             <button className="placeOrderButton"
                     disabled={isSaving}
-                    onClick={handlePlaceOrder}
+                    // onClick={handlePlaceOrder}
+                    onClick={
+                        usarComponenteComo === "actualizarPedido" && theBasket.estatusPedido === 1 
+                        ? openUpdateEstatusPedido 
+                        : usarComponenteComo === "actualizarPedido" && theBasket.estatusPedido === 2 
+                        ? handlePlaceOrder 
+                        : usarComponenteComo === "nuevoPedido" 
+                        ? handlePlaceOrder 
+                        : handlePlaceOrder
+                        // usarComponenteComo === "nuevoPedido" ? handlePlaceOrder : openUpdateEstatusPedido
+                      
+                    }
             >
               {usarComponenteComo === "nuevoPedido" &&
                 (isSaving ? 'Creando...' : 'Crear')

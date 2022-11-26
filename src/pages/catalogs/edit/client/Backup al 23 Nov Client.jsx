@@ -1,27 +1,36 @@
 import "./client.css";
-// import axios from "axios";
+
+/************************    Material UI    *********************************/
+// import CalendarToday from "@mui/icons-material/CalendarToday";
+// import MailOutline from "@mui/icons-material/MailOutline";
+// import PermIdentity from "@mui/icons-material/PermIdentity";
+// import PhoneAndroid from "@mui/icons-material/PhoneAndroid";
+// import Publish from "@mui/icons-material/Publish";
+// import LocationSearching from "@mui/icons-material/LocationSearching";
+/****************************************************************************/
+
+import {FaHouzz, FaEnvelope, FaBarcode, FaLocationArrow, FaChrome, FaMobileAlt, FaPhoneAlt, FaCloudUploadAlt} from "react-icons/fa";
+
+/**************************    Snackbar    **********************************/
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+// import CloseIcon from '@mui/icons-material/Close';
+import {FaTimes} from "react-icons/fa";
+import { Alert } from '@mui/material';
+/****************************************************************************/
 
 /**************************    React    **********************************/
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 /****************************************************************************/
 
-/************************    React Icons    *********************************/
-import {FaHouzz, FaEnvelope, FaBarcode, FaLocationArrow, FaChrome, FaMobileAlt, FaPhoneAlt, FaCloudUploadAlt} from "react-icons/fa";
-/****************************************************************************/
-
-/**************************    Snackbar    **********************************/
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import {FaTimes} from "react-icons/fa";
-import { Alert } from '@mui/material';
-import axios, { BASE_URL } from '../../../../utils/axios';
-/****************************************************************************/
-
+import axios from "axios";
+// import { stateContext } from '../../context/StateProvider';
 
 
 export default function Client() {
 
+  // const { client } = useContext(stateContext);
 
   /**************************    useRef    **********************************/
   // avoidRerenderFetchClient evita que se mande llamar dos veces al
@@ -30,17 +39,17 @@ export default function Client() {
   const avoidRerenderFetchClient = useRef(false);
   /*****************************************************************************/
 
+  
   /**************************    useState    **********************************/
-  // fileBlob es la imagen del Producto que muestro en pantalla cuando recien
-  // escojo una foto y antes de que actualice en la base de datos. Esto es con
-  // el fin de que el usuario vea la imagen que escogió
+  // file es la imagen del Producto que se va a guardar en la BD (el nombre) y el
+  // archivo fisico se guarda en el file system
 
   // mensajeSnackBar es el mensaje que se mostrara en el SnackBar, puede ser 
   // de exito o de error segun si se grabó la informacion en la BD
 
   // updateSuccess es boolean que indica si tuvo exito o no el grabado en la BD
   
-  // clientData es un Object con toda la informacion a grabar en la BD
+  // data es un Object con toda la informacion a grabar en la BD
 
   // openSnackbar es boolean que manda abrir y cerrar el Snackbar
 
@@ -48,36 +57,24 @@ export default function Client() {
   // lo uso para deshabilitar el boton de Grabar y que el usuario no le de click
   // mientras se esta guardando en la BD  const [file, setFile] = useState(null);
  
-  const [fileBlob, setFileBlob] = useState(null);
-
+  const [file, setFile] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState (true);
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [mensajeSnackBar, setMensajeSnackBar] = useState("");
 
-  // imageCover sirve un DOBLE proposito, como String y como Archivo
-  // es decir al cargar el Component o Pagina es un String: "camera.webp"
-  // el cual muestra una imagen default antes de que se cargue la foto SI es que
-  // existe una foto en el File System para el Producto
-
-  // El segundo propósito es como File, es decir, el usuario al seleccionar
-  // una imagen, ahora imageCover contiene toda la informacion de la imagen
-  // no solo el nombre de la imagen, ahora cuando se actualice la informacion
-  // imageCover sera usado para separar el nombre de la imagen que se guardara
-  // en MongoDB, y el archivo fisico que se guardara en el Web Server (File System)  
-  const [clientData, setClientData] = useState(
+  const [data, setData] = useState(
     {
-      _id: 0,
-      sku: 0,
-      ownerName: "", 
-      businessName: "", 
-      businessAddress: "",
-      cellPhone: "", 
-      fixedPhone: "",
-      email: "", 
-      esMayorista: false,
-      imageCover: "camera.webp"
+        sku: 0,
+        ownerName: "", 
+        businessName: "", 
+        businessAddress: "",
+        cellPhone: "", 
+        fixedPhone: "",
+        email: "", 
+        esMayorista: false,
+        // imageCover: ""
     }
   )
   /*****************************************************************************/
@@ -106,47 +103,56 @@ export default function Client() {
         setIsSaving(true);
 
         const formData = new FormData();
+        
+        formData.append("sku", data.sku);
+        formData.append("ownerName", data.ownerName);
+        formData.append("businessName", data.businessName);
+        formData.append("businessAddress", data.businessAddress);
+        formData.append("cellPhone", data.cellPhone);
+        formData.append("fixedPhone", data.fixedPhone);
+        formData.append("email", data.email);
+        formData.append("esMayorista", data.esMayorista);
+        formData.append("photo", file);
+        // formData.append("imageCover", file.name);
 
-        formData.append("_id", clientData._id);        
-        formData.append("sku", clientData.sku);
-        formData.append("ownerName", clientData.ownerName);
-        formData.append("businessName", clientData.businessName);
-        formData.append("businessAddress", clientData.businessAddress);
-        formData.append("cellPhone", clientData.cellPhone);
-        formData.append("fixedPhone", clientData.fixedPhone);
-        formData.append("email", clientData.email);
-        formData.append("esMayorista", clientData.esMayorista);
 
-        // Aqui como mencione al inicio imageCover tiene toda la informacion
-        // de la foto, y para actualizar la foto, en el productController
-        // primero subo la foto en memoria en el Web Server, luego le cambio
-        // el formato a webp y le hago un resize, y ajusta la calidad de la foto
-        // y ahora si la guardo en el Web Server, por ultimo le asigno un nombre
-        // a la imageCOver y la guardo en la BD
-        // es por esto que aqui guardo la imageCover en "photo" porque NO es
-        // el field final, se tiene que hacer todo el proceso anterior
-        formData.append("photo", clientData.imageCover);
+        const res = await axios({
+          withCredentials: true,
+          method: 'PATCH',
+          url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`,
+          // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`,
+          data: formData
+        })
+
+        // const res = await axios.patch(`http://127.0.0.1:8000/api/v1/clients/${clientId}`, formData, {
+        //   headers: {
+        //     "content-type": "multipart/form-data",
+        //   },
+        // });
 
         // const res = await axios({
-        //   withCredentials: true,
         //   method: 'PATCH',
         //   url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`,
-        //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`,
-        //   data: formData
-        // })
-
-        const res = await axios.patch (`/api/v1/clients/${clientId}`, formData );
-
-
+        //   data: {
+        //         ownerName: data.ownerName, 
+        //         businessName: data.businessName, 
+        //         businessAddress: data.businessAddress,
+        //         cellPhone: data.cellPhone, 
+        //         fixedPhone: data.fixedPhone,
+        //         email: data.email, 
+        //         esMayorista: data.esMayorista,
+        //         imageCover: "" ,
+        //   }})
 
         setIsSaving(false);
 
         if (res.data.status === 'success') {
-          // console.log(res.data.data.data);
-          console.log ('El cliente fue actualizado con éxito!');
-          setUpdateSuccess(true);
-          setMensajeSnackBar("Cliente actualizado")
-          setOpenSnackbar(true);
+          // alert ('Logged in succesfully!');
+            // console.log(res.data.data.data);
+            console.log ('El cliente fue actualizado con éxito!');
+            setUpdateSuccess(true);
+            setMensajeSnackBar("Cliente actualizado")
+            setOpenSnackbar(true);
         } 
       }
       catch(err) {
@@ -176,18 +182,14 @@ export default function Client() {
       avoidRerenderFetchClient.current = true;
 
       // console.log("cargar cliente")
-      // const res = await axios ({
-      //   withCredentials: true,
-      //   method: 'GET',
-      //   url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`
-      //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`
-      // });
-
-      const res = await axios.get (`/api/v1/clients/${clientId}`);
-
-
+      const res = await axios ({
+        withCredentials: true,
+        method: 'GET',
+        url: `http://127.0.0.1:8000/api/v1/clients/${clientId}`
+        // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${clientId}`
+      });
       // console.log(res.data.data.data);
-      setClientData(res.data.data.data)
+      setData(res.data.data.data)
     }
 
     fetchClient();
@@ -195,32 +197,14 @@ export default function Client() {
   }, [clientId]);
 
 
-  /************************     handleImageCoverChange    ********************/
-  // Se encarga de manejar la actualizacion de la foto del Producto y 
-  // que se muestre en pantalla
-  /**************************************************************************/
-  function handleImageCoverChange (e) {
-
-    setFileBlob(URL.createObjectURL(e.target.files[0]));
-
-    // console.log("fileImageCover", URL.createObjectURL(e.target.files[0]))
-    // Actualizo el imageCover
-    setClientData(prevFormData => {
-        return {
-            ...prevFormData,
-            imageCover: e.target.files[0]
-        }
-    })
-  }
-
   /************************     handleChange    *****************************/
-  // Se encarga de guardar en setClientData, la informacion de cada input
+  // Se encarga de guardar en setData, la informacion de cada input
   /**************************************************************************/
 
   function handleChange(event) {
     // console.log(event)
     const {name, value, type, checked} = event.target
-    setClientData(prevFormData => {
+    setData(prevFormData => {
         return {
             ...prevFormData,
             [name]: type === "checkbox" ? checked : value
@@ -244,15 +228,19 @@ export default function Client() {
   /**************************************************************************/
   const action = (
     <>
+      {/* <Button color="secondary" size="small" onClick={handleCloseSnackbar}>
+        UNDO
+      </Button> */}
       <IconButton
         size="small"
         aria-label="close"
         color="inherit"
         onClick={handleCloseSnackbar}
       >
+        {/* <CloseIcon fontSize="small" /> */}
         <FaTimes />
       </IconButton>
-  </>
+    </>
   );
 
   return (
@@ -281,50 +269,46 @@ export default function Client() {
         <div className="clientShow">
           <div className="clientShowTop">
             <img
-              className="clientShowImg"
-              src= {
-                      // fileBlob ? fileBlob : `http://127.0.0.1:8000/img/clients/${clientData.imageCover}`
-                      fileBlob ? fileBlob : `${BASE_URL}/img/clients/${clientData.imageCover}`
-                   }
+              src={`/img/clients/${data.imageCover}`}
               alt=""
-            /> 
-
+              className="clientShowImg"
+            />
             <div className="clientShowTopTitle">
-              <span className="clientShowClientname">{clientData.businessName}</span>
-              <span className="clientShowClientTitle">{clientData.ownerName}</span>
+              <span className="clientShowClientname">{data.businessName}</span>
+              <span className="clientShowClientTitle">{data.ownerName}</span>
             </div>
           </div>
           <div className="clientShowBottom">
             <span className="clientShowTitle">Detalle</span>
             <div className="clientShowInfo">
               <FaBarcode className="clientShowIcon" />
-              <span className="clientShowInfoTitle">SKU: {clientData.sku}</span>
+              <span className="clientShowInfoTitle">SKU: {data.sku}</span>
             </div>
             <div className="clientShowInfo">
               <FaLocationArrow className="clientShowIcon" />
-              <span className="clientShowInfoTitle">{clientData.businessAddress}</span>
+              <span className="clientShowInfoTitle">{data.businessAddress}</span>
             </div>
             <div className="clientShowInfo">
               <FaHouzz className="clientShowIcon" />
-              <span className="clientShowInfoTitle">{clientData.esMayorista ? "Es Mayorista" : "Es Minorista"}</span>
+              <span className="clientShowInfoTitle">{data.esMayorista ? "Es Mayorista" : "Es Minorista"}</span>
             </div>
             <div className="clientShowInfo">
               <FaChrome className="clientShowIcon" />
-              <span className="clientShowInfoTitle">{clientData.slug}</span>
+              <span className="clientShowInfoTitle">{data.slug}</span>
             </div>           
 
             <span className="clientShowTitle">Contacto</span>
             <div className="clientShowInfo">
               <FaMobileAlt className="clientShowIcon" />
-              <span className="clientShowInfoTitle">{clientData.cellPhone}</span>
+              <span className="clientShowInfoTitle">{data.cellPhone}</span>
             </div>
             <div className="clientShowInfo">
               <FaPhoneAlt className="clientShowIcon" />
-              <span className="clientShowInfoTitle">{clientData.fixedPhone}</span>
+              <span className="clientShowInfoTitle">{data.fixedPhone}</span>
             </div>
             <div className="clientShowInfo">
               <FaEnvelope className="clientShowIcon" />
-              <span className="clientShowInfoTitle">{clientData.email}</span>
+              <span className="clientShowInfoTitle">{data.email}</span>
             </div>
           </div>
         </div>
@@ -337,11 +321,11 @@ export default function Client() {
                 <label>SKU *</label>
                 <input
                   type="text"
-                  placeholder={clientData.sku}
+                  placeholder={data.sku}
                   className="clientUpdateInput"                  
                   onChange={handleChange}
                   name="sku"
-                  value={clientData.sku || ''}
+                  value={data.sku || ''}
                   required
                   onInvalid={e=> e.target.setCustomValidity('El SKU debe tener por lo menos 1 caracter')} 
                   onInput={e=> e.target.setCustomValidity('')} 
@@ -353,11 +337,11 @@ export default function Client() {
                 <label>Negocio *</label>
                 <input
                   type="text"
-                  placeholder={clientData.businessName}
+                  placeholder={data.businessName}
                   className="clientUpdateInput"                  
                   onChange={handleChange}
                   name="businessName"
-                  value={clientData.businessName || ''}
+                  value={data.businessName || ''}
                   required
                   onInvalid={e=> e.target.setCustomValidity('El Nombre del Negocio debe tener entre 5 y 80 caracteres')} 
                   onInput={e=> e.target.setCustomValidity('')} 
@@ -369,11 +353,11 @@ export default function Client() {
                 <label>Contacto *</label>
                 <input
                   type="text"
-                  placeholder={clientData.ownerName}
+                  placeholder={data.ownerName}
                   className="clientUpdateInput"
                   onChange={handleChange}
                   name="ownerName"
-                  value={clientData.ownerName || ''}
+                  value={data.ownerName || ''}
                   required
                   onInvalid={e=> e.target.setCustomValidity('El Nombre del Contacto debe tener entre 5 y 80 caracteres')} 
                   onInput={e=> e.target.setCustomValidity('')} 
@@ -385,22 +369,22 @@ export default function Client() {
                 <label>Email</label>
                 <input
                   type="email"
-                  placeholder={clientData.email}
+                  placeholder={data.email}
                   className="clientUpdateInput"
                   onChange={handleChange}
                   name="email"
-                  value={clientData.email || ''}                  
+                  value={data.email || ''}                  
                 />
               </div>
               <div className="clientUpdateItem">
                 <label>Celular</label>
                 <input
                   type="text"
-                  placeholder={clientData.cellPhone}
+                  placeholder={data.cellPhone}
                   className="clientUpdateInput"
                   onChange={handleChange}
                   name="cellPhone"
-                  value={clientData.cellPhone || ''}  
+                  value={data.cellPhone || ''}  
                   onInvalid={e=> e.target.setCustomValidity('El Número de Celular debe ser menor a 20 caracteres')} 
                   onInput={e=> e.target.setCustomValidity('')} 
                   maxLength="20"                
@@ -410,11 +394,11 @@ export default function Client() {
                 <label>Teléfono Fijo</label>
                 <input
                   type="text"
-                  placeholder={clientData.fixedPhone}
+                  placeholder={data.fixedPhone}
                   className="clientUpdateInput"
                   onChange={handleChange}
                   name="fixedPhone"
-                  value={clientData.fixedPhone || ''} 
+                  value={data.fixedPhone || ''} 
                   onInvalid={e=> e.target.setCustomValidity('El Número de Teléfono debe ser menor a 20 caracteres')} 
                   onInput={e=> e.target.setCustomValidity('')} 
                   maxLength="20"                                   
@@ -424,11 +408,11 @@ export default function Client() {
                 <label>Dirección</label>
                 <input
                   type="text"
-                  placeholder={clientData.businessAddress}
+                  placeholder={data.businessAddress}
                   className="clientUpdateInput"
                   onChange={handleChange}
                   name="businessAddress"
-                  value={clientData.businessAddress || ''}   
+                  value={data.businessAddress || ''}   
                   onInvalid={e=> e.target.setCustomValidity('La Dirección debe tener menos de 100 caracteres')} 
                   onInput={e=> e.target.setCustomValidity('')} 
                   maxLength="100"               
@@ -440,10 +424,10 @@ export default function Client() {
                 <input 
                     type="checkbox" 
                     id="esMayorista" 
-                    checked={clientData.esMayorista}
+                    checked={data.esMayorista}
                     onChange={handleChange}
                     name="esMayorista"
-                    value={clientData.esMayorista}
+                    value={data.esMayorista}
                 />
               </div>
               {/* <div className="clientUpdateItem">
@@ -466,13 +450,9 @@ export default function Client() {
               <div className="clientUpdateUpload">
                 <img
                   className="clientUpdateImg"
-                  src= {
-                          // fileBlob ? fileBlob : `http://127.0.0.1:8000/img/clients/${clientData.imageCover}`
-                          fileBlob ? fileBlob : `${BASE_URL}/img/clients/${clientData.imageCover}`
-                       }
+                  src={`/img/clients/${data.imageCover}`}
                   alt=""
-                /> 
-
+                />
                 <label htmlFor="photo">
                   <FaCloudUploadAlt className="clientUpdateIcon__upload" />
                 </label>
@@ -481,7 +461,7 @@ export default function Client() {
                         id="photo" 
                         name="photo" 
                         style={{ display: "none" }} 
-                        onChange={(e)=>handleImageCoverChange(e)}
+                        onChange={(e) => setFile(e.target.files[0])}
                 />
               </div>
               <button className="clientUpdateButton" disabled={isSaving}>{isSaving ? 'Grabando...' : 'Actualizar'}</button>

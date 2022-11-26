@@ -1,5 +1,7 @@
 import "./newClient.css";
-import axios from "axios";
+// import axios from "axios";
+import axios, { BASE_URL } from '../../../../utils/axios';
+
 
 /**************************    React    **********************************/
 import { useEffect, useRef, useState } from 'react';
@@ -9,10 +11,9 @@ import { useEffect, useRef, useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 // import CloseIcon from '@mui/icons-material/Close';
-import {FaTimes} from "react-icons/fa";
+import {FaCloudUploadAlt, FaTimes} from "react-icons/fa";
 import { Alert } from '@mui/material';
 /****************************************************************************/
-
 
 
 const INITIAL_STATE = { 
@@ -24,7 +25,7 @@ const INITIAL_STATE = {
   email: "", 
   esMayorista: false,
   sku: 0,
-  // imageCover: ""
+  imageCover: "camera.webp"
 }
 
 export default function NewClient() {
@@ -44,19 +45,22 @@ export default function NewClient() {
 
   // updateSuccess es boolean que indica si tuvo exito o no el grabado en la BD
   
-  // data es un Object con toda la informacion a grabar en la BD
+  // itemData es un Object con toda la informacion a grabar en la BD
 
   // openSnackbar es boolean que manda abrir y cerrar el Snackbar
 
   // isSaving es un boolean para saber si esta grabando la informacion en la BD
   // lo uso para deshabilitar el boton de Grabar y que el usuario no le de click
   // mientras se esta guardando en la BD
-  const [data, setData] = useState (INITIAL_STATE);
+
+  const [itemData, setItemData] = useState (INITIAL_STATE);
   const [isSaving, setIsSaving] = useState(false);
 
   const [updateSuccess, setUpdateSuccess] = useState (true);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [mensajeSnackBar, setMensajeSnackBar] = useState("");
+  const [fileBlob, setFileBlob] = useState(null);
+
   /*****************************************************************************/
  
 
@@ -80,22 +84,28 @@ export default function NewClient() {
     try {
       setIsSaving(true);
 
-      const res = await axios({
-        withCredentials: true,
-        method: 'POST',
-        // url: `http://127.0.0.1:8000/api/v1/clients/`,
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/`,
-        data: {
-              sku: data.sku, 
-              ownerName: data.ownerName, 
-              businessName: data.businessName, 
-              businessAddress: data.businessAddress,
-              cellPhone: data.cellPhone, 
-              fixedPhone: data.fixedPhone,
-              email: data.email, 
-              esMayorista: data.esMayorista,
-              imageCover: "" ,
-      }})
+      const formData = new FormData();
+
+      formData.append("sku", itemData.sku);
+      formData.append("ownerName", itemData.ownerName);
+      formData.append("businessName", itemData.businessName);
+      formData.append("businessAddress", itemData.businessAddress);
+      formData.append("cellPhone", itemData.cellPhone);
+      formData.append("fixedPhone", itemData.fixedPhone);
+      formData.append("email", itemData.email);
+      formData.append("esMayorista", itemData.esMayorista);
+      formData.append("photo", itemData.imageCover);
+
+      // const res = await axios({
+      //   withCredentials: true,
+      //   method: 'POST',
+      //   url: `http://127.0.0.1:8000/api/v1/clients/`,
+      //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/`,
+      //   data: formData
+      // })
+
+      const res = await axios.post ('/api/v1/clients/', formData );
+
 
       setIsSaving(false);
 
@@ -107,31 +117,86 @@ export default function NewClient() {
         setMensajeSnackBar("El Cliente fue creado")
         setOpenSnackbar(true);
 
-        setData(INITIAL_STATE);
+        setItemData(INITIAL_STATE);
         inputRef.current.focus();
       } 
     }
     catch(err) {
+      console.log(err);
+
       setIsSaving(false);
       setUpdateSuccess(false);
-      setMensajeSnackBar("Hubo un error al grabar el cliente. Revisa que estes en línea.");
-      setOpenSnackbar(true);
-      console.log(err);
+      // setMensajeSnackBar("Hubo un error al grabar el cliente. Revisa que estes en línea.");
+
+      let mensajeSnackBar = "";
+
+      if (err.name) 
+        mensajeSnackBar += `Name: ${err.name}. `
+
+      if (err.code)
+        mensajeSnackBar += `Code: ${err.code}. `;
+
+      if (err.statusCode) 
+        mensajeSnackBar += `Status Code: ${err.statusCode}. `;
+
+      if (err.status) 
+        mensajeSnackBar += `Status: ${err.status}. `;
+
+      if (err.message) 
+        mensajeSnackBar += `Mensaje: ${err.message}. `;
+
+      // console.log("mensajeSnackBar", mensajeSnackBar);
+      
+      // Error de MongoDB dato duplicado
+      if (err.response?.data?.error?.code === 11000 || 
+          err.response.data.message.includes('E11000')) {
+            mensajeSnackBar = 'El Sku ya existe, elije otro Sku.';
+      
+            setMensajeSnackBar(mensajeSnackBar);
+      }
+      else if (err.response.data.message){
+        setMensajeSnackBar(err.response.data.message)
+      }
+      else if (err.code === "ERR_NETWORK")
+        setMensajeSnackBar ("Error al conectarse a la Red. Si estas usando Wi-Fi checa tu conexión. Si estas usando datos checa si tienes saldo. O bien checa si estas en un lugar con mala recepción de red y vuelve a intentar.");
+      else
+        setMensajeSnackBar(`Error: ${err}`)      
+
+
+      setOpenSnackbar(true);      
     }
   }
 
 
   /************************     handleChange    *****************************/
-  // Se encarga de guardar en setData, la informacion de cada input
+  // Se encarga de guardar en setItemData, la informacion de cada input
   /**************************************************************************/  
 
   function handleChange(event) {
     // console.log(event)
     const {name, value, type, checked} = event.target
-    setData(prevFormData => {
+    setItemData(prevFormData => {
         return {
             ...prevFormData,
             [name]: type === "checkbox" ? checked : value
+        }
+    })
+  }
+
+  /************************     handleImageCoverChange    ********************/
+  // Se encarga de manejar la actualizacion de la foto del Producto y 
+  // que se muestre en pantalla
+  /**************************************************************************/
+  function handleImageCoverChange (e) {
+
+    setFileBlob(URL.createObjectURL(e.target.files[0]));
+
+    // console.log("fileImageCover", URL.createObjectURL(e.target.files[0]))
+    // Actualizo el imageCover
+    setItemData(prevFormData => {
+        return {
+            ...prevFormData,
+            imageCover: e.target.files[0]
         }
     })
   }
@@ -153,16 +218,12 @@ export default function NewClient() {
   /**************************************************************************/
   const action = (
     <>
-      {/* <Button color="secondary" size="small" onClick={handleCloseSnackbar}>
-        UNDO
-      </Button> */}
       <IconButton
         size="small"
         aria-label="close"
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        {/* <CloseIcon fontSize="small" /> */}
         <FaTimes />
       </IconButton>
     </>
@@ -171,6 +232,7 @@ export default function NewClient() {
 
   return (
     <div className="newClient">
+
       <Snackbar
         open={openSnackbar}
         autoHideDuration={5000}
@@ -187,124 +249,139 @@ export default function NewClient() {
       <h1 className="newClientTitle">Nuevo Cliente</h1>
 
       <form className="newClientForm" onSubmit={handleSubmit}>
-        <div className="newClientItem">
-          <label>SKU *</label>
-          <input 
-              ref={inputRef}
-              type="text" 
-              placeholder="12345" 
-              onChange={handleChange}
-              name="sku"
-              value={data.sku || ''}  
-              required
-              onInvalid={e=> e.target.setCustomValidity('Escribe el SKU')} 
-              onInput={e=> e.target.setCustomValidity('')}   
-          />
-        </div>
-        <div className="newClientItem">
-          <label>Negocio *</label>
-          <input 
-              type="text" 
-              placeholder="Mi Tiendita" 
-              onChange={handleChange}
-              name="businessName"
-              value={data.businessName || ''}  
-              required
-              onInvalid={e=> e.target.setCustomValidity('Escribe el Nombre del Negocio')} 
-              onInput={e=> e.target.setCustomValidity('')}   
-          />
-        </div>
-        <div className="newClientItem">
-          <label>Contacto *</label>
-          <input 
-              type="text" 
-              placeholder="Carlos Treviño" 
-              onChange={handleChange}
-              name="ownerName"
-              value={data.ownerName || ''}  
-              required
-              onInvalid={e=> e.target.setCustomValidity('El Nombre del Contacto debe tener entre 5 y 80 caracteres')} 
-              onInput={e=> e.target.setCustomValidity('')} 
-              minLength="5"
-              maxLength="80"
-          />
-        </div>
-        <div className="newClientItem">
-          <label>Dirección</label>
-          <input 
-              type="text" 
-              placeholder="Av. Juárez 2222 Col. Centro, Monterrey, N.L." 
-              onChange={handleChange}
-              name="businessAddress"
-              value={data.businessAddress || ''}  
-              onInvalid={e=> e.target.setCustomValidity('La Dirección debe tener menos de 100 caracteres')} 
-              onInput={e=> e.target.setCustomValidity('')} 
-              maxLength="100"                 
-          />
-        </div>
-        <div className="newClientItem">
-          <label>Celular</label>
-          <input 
-              type="text" 
-              placeholder="81 80 118990" 
-              onChange={handleChange}
-              name="cellPhone"
-              value={data.cellPhone || ''}  
-              onInvalid={e=> e.target.setCustomValidity('El Número de Celular debe ser menor a 20 caracteres')} 
-              onInput={e=> e.target.setCustomValidity('')} 
-              maxLength="20"    
-          />
-        </div>
-        <div className="newClientItem">
-          <label>Teléfono</label>
-          <input 
-              type="text" 
-              placeholder="81 12 345678" 
-              onChange={handleChange}
-              name="fixedPhone"
-              value={data.fixedPhone || ''}   
-              onInvalid={e=> e.target.setCustomValidity('El Número de Teléfono debe ser menor a 20 caracteres')} 
-              onInput={e=> e.target.setCustomValidity('')} 
-              maxLength="20"             
-          />
-        </div>
-        <div className="newClientItem">
-          <label>Email</label>
-          <input 
-              className="inputClientItem"
-              type="email" 
-              placeholder="carlos.trevino@gmail.com" 
-              onChange={handleChange}
-              name="email"
-              value={data.email || ''}                
-          />
+        <div className="newClientLeft">
+          <div className="newClientItem">
+            <label>SKU *</label>
+            <input 
+                ref={inputRef}
+                type="text" 
+                placeholder="12345" 
+                onChange={handleChange}
+                name="sku"
+                value={itemData.sku || ''}  
+                required
+                onInvalid={e=> e.target.setCustomValidity('Escribe el SKU')} 
+                onInput={e=> e.target.setCustomValidity('')}   
+            />
+          </div>
+          <div className="newClientItem">
+            <label>Negocio *</label>
+            <input 
+                type="text" 
+                placeholder="Mi Tiendita" 
+                onChange={handleChange}
+                name="businessName"
+                value={itemData.businessName || ''}  
+                required
+                onInvalid={e=> e.target.setCustomValidity('Escribe el Nombre del Negocio')} 
+                onInput={e=> e.target.setCustomValidity('')}   
+                minLength="5"
+                maxLength="80"
+            />
+          </div>
+          <div className="newClientItem">
+            <label>Contacto *</label>
+            <input 
+                type="text" 
+                placeholder="Carlos Treviño" 
+                onChange={handleChange}
+                name="ownerName"
+                value={itemData.ownerName || ''}  
+                required
+                onInvalid={e=> e.target.setCustomValidity('El Nombre del Contacto debe tener entre 5 y 80 caracteres')} 
+                onInput={e=> e.target.setCustomValidity('')} 
+                minLength="5"
+                maxLength="80"
+            />
+          </div>
+          <div className="newClientItem">
+            <label>Dirección</label>
+            <input 
+                type="text" 
+                placeholder="Av. Juárez 2222 Col. Centro, Monterrey, N.L." 
+                onChange={handleChange}
+                name="businessAddress"
+                value={itemData.businessAddress || ''}  
+                onInvalid={e=> e.target.setCustomValidity('La Dirección debe tener menos de 100 caracteres')} 
+                onInput={e=> e.target.setCustomValidity('')} 
+                maxLength="100"                 
+            />
+          </div>
+          <div className="newClientItem">
+            <label>Celular</label>
+            <input 
+                type="text" 
+                placeholder="81 80 118990" 
+                onChange={handleChange}
+                name="cellPhone"
+                value={itemData.cellPhone || ''}  
+                onInvalid={e=> e.target.setCustomValidity('El Número de Celular debe ser menor a 20 caracteres')} 
+                onInput={e=> e.target.setCustomValidity('')} 
+                maxLength="20"    
+            />
+          </div>
+          <div className="newClientItem">
+            <label>Teléfono</label>
+            <input 
+                type="text" 
+                placeholder="81 12 345678" 
+                onChange={handleChange}
+                name="fixedPhone"
+                value={itemData.fixedPhone || ''}   
+                onInvalid={e=> e.target.setCustomValidity('El Número de Teléfono debe ser menor a 20 caracteres')} 
+                onInput={e=> e.target.setCustomValidity('')} 
+                maxLength="20"             
+            />
+          </div>
+          <div className="newClientItem">
+            <label>Email</label>
+            <input 
+                className="inputClientItem"
+                type="email" 
+                placeholder="carlos.trevino@gmail.com" 
+                onChange={handleChange}
+                name="email"
+                value={itemData.email || ''}                
+            />
+          </div>
+
+          <div className="newClientItem">
+              <label htmlFor="esMayorista">¿Es Mayorista?</label>
+              <input 
+                  type="checkbox" 
+                  id="esMayorista" 
+                  checked={itemData.esMayorista}
+                  onChange={handleChange}
+                  name="esMayorista"
+                  value={itemData.esMayorista}
+              />
+          </div>
         </div>
 
-        <div className="newClientItem">
-            <label htmlFor="esMayorista">¿Es Mayorista?</label>
-            <input 
-                type="checkbox" 
-                id="esMayorista" 
-                checked={data.esMayorista}
-                onChange={handleChange}
-                name="esMayorista"
-                value={data.esMayorista}
+        <div className="newClientRight">
+          <div className="clientUpdateUpload">
+            <img
+              className="clientUpdateImg"
+              src= {
+                      // fileBlob ? fileBlob : `http://127.0.0.1:8000/img/clients/${itemData.imageCover}`
+                      fileBlob ? fileBlob : `${BASE_URL}/img/clients/${itemData.imageCover}`
+                    }
+              alt=""
+            />                
+            <label htmlFor="photo">
+              <FaCloudUploadAlt style={{"fontSize": "3rem", "cursor": "pointer"}} />
+            </label>
+            <input  type="file" 
+                    accept="image/*" 
+                    id="photo" 
+                    name="photo" 
+                    style={{ display: "none" }} 
+                    onChange={(e)=>handleImageCoverChange(e)}
             />
+          </div>   
+
+          <button className="newClientButton" disabled={isSaving}>{isSaving ? 'Grabando...' : 'Crear'}</button>
         </div>
-        {/* <div className="newClientItem">
-          <label htmlFor="esmayorista">¿Es Mayorista?</label>
-              <select 
-                  className="newClientSelect"
-                  id="esmayorista" 
-                  value={data.esMayorista}
-                  onChange={handleChange}
-                  name="esmayorista"
-              >
-                  <option value="no">No</option>
-                  <option value="yes">Yes</option>
-              </select>          
-        </div> */}
-        <button className="newClientButton" disabled={isSaving}>{isSaving ? 'Grabando...' : 'Crear'}</button>
       </form>
     </div>
   );

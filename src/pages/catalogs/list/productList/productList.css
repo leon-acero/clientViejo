@@ -1,67 +1,68 @@
 .productList{
-    flex: 4;
-    height: calc(100vh - 5rem);
-
+  flex: 4;
+  height: calc(100vh - 5rem);
 }
 
 .productListItem{
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .productListImg {
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 1rem;
-  }
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
 
 .productListEdit{
-    border: none;
-    border-radius: 1rem;
-    padding: .5rem 1rem;
-    background-color: #3bb077;
-    color: white;
-    cursor: pointer;
-    margin-right: 2rem;
+  border: none;
+  border-radius: 1rem;
+  padding: .5rem 1rem;
+  background-color: #3bb077;
+  color: white;
+  cursor: pointer;
+  margin-right: 2rem;
 
-    font-size: 1.4rem;
+  font-size: 1.4rem;
 }
 
 .productListDelete{
-    color: red;
-    cursor: pointer;
-    /* font-size: 2.4rem !important; */
-    font-size: 1.9rem;
+  color: red;
+  cursor: pointer;
+  /* font-size: 2.4rem !important; */
+  font-size: 1.9rem;
 }
 
 .productTitleContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.2rem;
-    padding: 1rem 1rem;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  padding: 1rem 1rem;
+}
   
-  .productTitle {
-    font-size: 2.8rem;
-  }
+.productTitle {
+  font-size: 2.8rem;
+}
   
-  .productAddButton {
-    width: 8rem;
-    border: none;
-    padding: .5rem;
-    background-color: teal;
-    border-radius: .5rem;
-    cursor: pointer;
-    color: white;
-    font-size: 1.6rem;
-  }
+.productAddButton {
+  width: 8rem;
+  border: none;
+  padding: .5rem;
+  background-color: teal;
+  border-radius: .5rem;
+  cursor: pointer;
+  color: white;
+  font-size: 1.6rem;
+}
 
 .dataGrid {
-    font-size: 1.4rem !important;
+  font-size: 1.4rem !important;
+  margin: 1rem 1rem;
 }
+
 
 .MuiTablePagination-selectLabel,
 .MuiTablePagination-root,

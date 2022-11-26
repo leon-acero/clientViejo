@@ -1,81 +1,115 @@
 import "./clientList.css";
+import axios, { BASE_URL } from '../../../../utils/axios';
+// import axios from "axios";
 
-// REACT
-import { Link } from "react-router-dom";
+/*******************************    React     *******************************/
 import { useEffect, useRef, useState } from "react";
-// import { useContext} from "react";
-// import { stateContext } from '../../context/StateProvider';
+import { Link } from "react-router-dom";
+/****************************************************************************/
 
-// MATERIAL UI
-import { DataGrid } from "@mui/x-data-grid";
-// import DeleteOutline from "@mui/icons-material/DeleteOutline";
+
+/**************************    React Icons    *******************************/
 import {FaTrashAlt} from "react-icons/fa";
+/****************************************************************************/
 
-// import { userRows } from "../../dummyData";
-
-import BasicDialog from '../../../../components/basicDialog/BasicDialog';
-
-////////////////////////////////////////////////////////////////
-// -Snackbar
-////////////////////////////////////////////////////////////////
-// import Button from '@mui/material/Button';
+/**************************    Snackbar    **********************************/
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
 import {FaTimes} from "react-icons/fa";
+import { Alert } from '@mui/material';
+/****************************************************************************/
 
-// HTTP
-import axios from "axios";
+import { DataGrid } from "@mui/x-data-grid";
+
+/**************************    Components    ********************************/
+import BasicDialog from '../../../../components/basicDialog/BasicDialog';
 import SkeletonElement from '../../../../components/skeletons/SkeletonElement';
+/****************************************************************************/
+
 
 
 export default function ClientList() {
 
+  /**************************    useRef    **********************************/
+  // avoidRerenderFetchClient evita que se mande llamar dos veces al
+  // cliente y por lo mismo que se pinte dos veces
+  
   const avoidRerenderFetchClient = useRef(false);
+  /**************************************************************************/
 
-  ////////////////////////////////////////////////////////////////
-  // -Snackbar
-  ////////////////////////////////////////////////////////////////
+
+  /**************************    useState    **********************************/
+  
+  // mensajeSnackBar es el mensaje que se mostrara en el SnackBar, puede ser 
+  // de exito o de error segun si se grabó la informacion en la BD
+
+  // updateSuccess es boolean que indica si tuvo exito o no el grabado en la BD
+  
+  // openSnackbar es boolean que manda abrir y cerrar el Snackbar
+
+  // openModal lo uso para mostrar la ventana para preguntar al usuario
+  // si quiere borrar un producto
+
+  // currentProduct tiene la informacion del producto actualmente seleccionado
+
+  // productList es la lista de Productos que cargue de la BD
+
+  // isLoading es un boolean para saber si esta cargando la informacion de la BD
+  // lo uso para dos cosas: que no vuelva a cargar la informacion de la BD ya que
+  // en React18 lo hace dos veces, y para mostrar los dulces bailando (Skeleton)
+  // si es necesario
+
+  const [updateSuccess, setUpdateSuccess] = useState (true);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  ////////////////////////////////////////////////////////////////
-  // -Dialog
-  ////////////////////////////////////////////////////////////////
+  const [mensajeSnackBar, setMensajeSnackBar] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [currentClient, setCurrentClient] = useState ({id: "", businessName: ""});
-  const [clientList, setClientList] = useState([])
-
+  const [clientList, setClientList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  /****************************************************************************/
 
 
-  // const { setClient} = useContext(stateContext)
-
+  /**************************    handleDelete    ******************************/
+  // aqui manejo el borrado de un Cliente
+  /****************************************************************************/ 
   const handleDelete = async () => {
     setOpenModal(false);
 
     try {
 
-      const res = await axios({
-        withCredentials: true,
-        method: 'DELETE',
-        // url: `http://127.0.0.1:8000/api/v1/clients/${currentClient.id}`,
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${currentClient.id}`,
-        })
+      // const res = await axios({
+      //   withCredentials: true,
+      //   method: 'DELETE',
+      //   url: `http://127.0.0.1:8000/api/v1/clients/${currentClient.id}`,
+      //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/${currentClient.id}`,
+      //   })
+
+      const res = await axios.delete (`/api/v1/clients/${currentClient.id}`);
+
       
       if (res.status === 204) {
         console.log ('El cliente fue borrado con éxito!');
 
-        // Borro el cliente del Grid Y del State
+        // Borro el cliente del Grid Y del State        
+        setUpdateSuccess(true);
         setClientList(clientList.filter((item) => item._id !== currentClient.id));
+        setMensajeSnackBar(`El producto ${currentClient.businessName} fue borrado.`)
         setOpenSnackbar(true);
       } 
     }
     catch(err) {
       console.log(err);
+      setUpdateSuccess(false);
+      setMensajeSnackBar("Hubo un error al borrar el cliente. Revisa que estes en línea.");
+      setOpenSnackbar(true);
     }
   }
+  /****************************************************************************/
 
 
+  /*****************************    useEffect    ******************************/
+  // fetchClients carga la lista de Clientes
+  /****************************************************************************/
   useEffect (() => {
 
     if (avoidRerenderFetchClient.current) {
@@ -85,7 +119,7 @@ export default function ClientList() {
     if (isLoading)
       return;
 
-    const fetchPosts = async () => {
+    const fetchClients = async () => {
 
       // solo debe de cargar datos una vez, osea al cargar la pagina
       avoidRerenderFetchClient.current = true;
@@ -96,12 +130,15 @@ export default function ClientList() {
   
         console.log("cargar lista de clientes")
         // 1era OPCION PARA USAR AXIOS
-        const res = await axios ({
-          withCredentials: true,
-          method: 'GET',
-          // url: 'http://127.0.0.1:8000/api/v1/clients'
-          url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/clients'
-        });
+        // const res = await axios ({
+        //   withCredentials: true,
+        //   method: 'GET',
+        //   url: 'http://127.0.0.1:8000/api/v1/clients'
+        //   // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/clients'
+        // });
+
+        const res = await axios.get (`/api/v1/clients`);
+
   
         setIsLoading(false);
   
@@ -117,27 +154,24 @@ export default function ClientList() {
         setIsLoading(false);
       }
     }
-    fetchPosts();
+    fetchClients();
   }, [isLoading]);
 
 
+  /*************************    openDeleteDialog    ***************************/
+  // Abre la ventana que pregunta si quieres borrar el Cliente
+  /****************************************************************************/
   const openDeleteDialog = (id, businessName) => {
    
     setCurrentClient ({id, businessName});
-    ////////////////////////////////////////////////////////////////
-    // -Dialog
-    ////////////////////////////////////////////////////////////////
     setOpenModal(true);
 
   };
 
-  const handleEdit = (id, slug) => {
-    // setClient({id: id, slug: slug});
-  }
 
-  ////////////////////////////////////////////////////////////////
-  // -Snackbar
-  ////////////////////////////////////////////////////////////////
+  /************************     handleCloseSnackbar    **********************/
+  // Es el handle que se encarga cerrar el Snackbar
+  /**************************************************************************/  
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -146,41 +180,31 @@ export default function ClientList() {
     setOpenSnackbar(false);
   };
 
+  
+  /*****************************     action    ******************************/
+  // Se encarga agregar un icono de X al SnackBar
+  /**************************************************************************/  
   const action = (
     <>
-      {/* <Button color="secondary" size="small" onClick={handleCloseSnackbar}>
-        UNDO
-      </Button> */}
       <IconButton
         size="small"
         aria-label="close"
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        {/* <CloseIcon fontSize="small" /> */}
         <FaTimes />
       </IconButton>
     </>
   );
-  ////////////////////////////////////////////////////////////////
-  
 
 
+  /***************************     columns    *******************************/
+  // Formatea las columnas y tambien las celdas
+  // El llenado de informacion en la tabla se hace en
+  // <DataGrid className="dataGrid"
+  // rows={productList}
+  /**************************************************************************/
   const columns = [
-    // {
-    //   field: "pedido",
-    //   headerName: "",
-    //   width: 80,
-    //   renderCell: (params) => {
-    //     return (
-    //       <>
-    //         <Link to={"/new-order/" + params.row._id}>
-    //           <button className="clientListEdit" onClick={()=>handleEdit(params.row._id, params.row.slug)}>Pedido</button>
-    //         </Link>
-    //       </>
-    //     );
-    //   },
-    // },
     {
       field: "action",
       headerName: "Acción",
@@ -191,12 +215,9 @@ export default function ClientList() {
         return (
           <>
             <Link to={"/client/" + params.row._id}>
-              <button className="clientListEdit" onClick={()=>handleEdit(params.row._id, params.row.slug)}>Editar</button>
+              <button className="clientListEdit">Editar</button>
             </Link>
-            {/* <DeleteOutline
-              className="clientListDelete"
-              onClick={() => openDeleteDialog(params.row._id, params.row.businessName)}
-            /> */}
+ 
             <FaTrashAlt
               className="clientListDelete"
               onClick={() => openDeleteDialog(params.row._id, params.row.businessName)}
@@ -205,7 +226,13 @@ export default function ClientList() {
         );
       },
     },
-    { field: "sku", headerName: "SKU", width: 30, headerAlign: 'center', align: 'right',},
+    { 
+      field: "sku", 
+      headerName: "SKU", 
+      width: 30, 
+      headerAlign: 'center', 
+      align: 'right',
+    },
     {
       field: "businessName",
       headerName: "Negocio",
@@ -214,14 +241,25 @@ export default function ClientList() {
       renderCell: (params) => {
         return (
           <div className="clientListClient">
-            <img className="clientListImg" src={`/img/clients/${params.row.imageCover}`} alt="" />
+            {
+              params?.row?.imageCover &&
+              (<img className="clientListImg" 
+                  // src={`http://127.0.0.1:8000/img/clients/${params.row.imageCover}`} 
+                  src={`${BASE_URL}/img/clients/${params.row.imageCover}`} 
+                  alt="" 
+              />)
+            }
             {params.row.businessName}
           </div>
         );
       },
     },
-    { field: "ownerName", headerName: "Contacto", width: 160, headerAlign: 'center', },
-    // { field: "email", headerName: "Email", width: 200 },
+    { 
+      field: "ownerName", 
+      headerName: "Contacto", 
+      width: 160, 
+      headerAlign: 'center', 
+    },
     {
       field: "cellPhone",
       headerName: "Celular",
@@ -235,30 +273,30 @@ export default function ClientList() {
       width: 200,
       headerAlign: 'center',
     },
-    { field: "_id", headerName: "ID", width: 30, headerAlign: 'center', align: 'right', },
-    // {
-    //   field: "slug",
-    //   headerName: "slug",
-    //   width: 0,
-    // },
-
+    { 
+      field: "_id", 
+      headerName: "ID", 
+      width: 30, 
+      headerAlign: 'center', 
+      align: 'right', 
+    },
   ];
 
   return (
     <div className="clientList">
 
-      {/* 
-      ////////////////////////////////////////////////////////////////
-      // -Snackbar
-      //////////////////////////////////////////////////////////////// */
-      }
       <Snackbar
-        open={openSnackbar}
-        autoHideDuration={5000}
-        onClose={handleCloseSnackbar}
-        message={`${currentClient.businessName} fue borrado.`}
-        action={action}
-      />
+      open={openSnackbar}
+      autoHideDuration={5000}
+      onClose={handleCloseSnackbar}
+      >
+        <Alert 
+            severity= {updateSuccess ?  "success" : "error"} 
+            action={action}
+            sx={{ fontSize: '1.4rem', backgroundColor:'#333', color: 'white', }}
+        >{mensajeSnackBar}
+        </Alert>
+      </Snackbar>
 
       {
       /* ////////////////////////////////////////////////////////////////
@@ -266,13 +304,13 @@ export default function ClientList() {
       //////////////////////////////////////////////////////////////// 
       */}
       <BasicDialog
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          message= {`¿Estas seguro que deseas borrar a ${currentClient.businessName}?`}
-          onSubmit={handleDelete}
-          captionAceptar={"Borrar"}
-          captionCancelar={"Cancelar"}
-        />
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        message= {`¿Estas seguro que deseas borrar a ${currentClient.businessName}?`}
+        onSubmit={handleDelete}
+        captionAceptar={"Borrar"}
+        captionCancelar={"Cancelar"}
+      />
 
       <div className="clientTitleContainer">
         <h1 className="clientTitle">Catálogo de Clientes</h1>
@@ -282,8 +320,7 @@ export default function ClientList() {
       </div>
       {
         clientList?.length > 0 &&
-          <DataGrid
-            className="dataGrid"
+          <DataGrid className="dataGrid"
             rows={clientList}
             disableSelectionOnClick
             columns={columns}

@@ -17,22 +17,22 @@
 }
 
 .clientListEdit{
-  border: none;
-  border-radius: 1rem;
-  padding: .5rem 1rem;
-  background-color: #3bb077;
-  color: white;
-  cursor: pointer;
-  margin-right: 2rem;
+    border: none;
+    border-radius: 1rem;
+    padding: .5rem 1rem;
+    background-color: #3bb077;
+    color: white;
+    cursor: pointer;
+    margin-right: 2rem;
 
-  font-size: 1.4rem;
+    font-size: 1.4rem;
 }
 
 .clientListDelete{
-  color: red;
-  cursor: pointer;
-  /* font-size: 2.4rem !important; */
-  font-size: 1.9rem;
+    color: red;
+    cursor: pointer;
+    /* font-size: 2.4rem !important; */
+    font-size: 1.9rem;
 }
 
 .clientTitleContainer {

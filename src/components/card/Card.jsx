@@ -1,10 +1,23 @@
 import "./card.css"
+import { BASE_URL } from '../../utils/axios'
 
-export default function Card({ uniqueKey, product, esMayorista, addProductToBasket }) {
+export default function Card(
+  { 
+    uniqueKey, 
+    product, 
+    esMayorista, 
+    addProductToBasket 
+  }) {
   
   return (
     <div key={uniqueKey} className="card">
-      <img src={`/img/products/${product.imageCover}`} className="card--image" alt={product.productName} />
+      <img 
+        // src={`/img/products/${product.imageCover}`} 
+        // src={`http://127.0.0.1:8000/img/products/${product.imageCover}`} 
+        src={`${BASE_URL}/img/products/${product.imageCover}`} 
+        className="card--image" 
+        alt={product.productName} />
+
       <div className="card--stats">
         <div className="card--stats__info">
           <p>SKU: {product.sku}</p>
@@ -15,7 +28,9 @@ export default function Card({ uniqueKey, product, esMayorista, addProductToBask
           </p>
         </div>
 
-        <button className="buttonAddProductToBasket" onClick={()=>addProductToBasket(product.id)}>Agregar al Carrito</button>
+        <button className="buttonAddProductToBasket" 
+                onClick={()=>addProductToBasket(product.id)}>Agregar al Carrito
+        </button>
       </div>
     </div>  
 

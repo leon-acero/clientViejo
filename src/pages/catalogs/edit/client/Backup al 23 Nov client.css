@@ -1,19 +1,15 @@
-.product {
+.client {
   flex: 4;
   padding: 2rem;
 }
 
-.productTitleContainer {
+.clientTitleContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.productTitle {
-  font-size: 2.8rem;
-}
-
-.productAddButton {
+.clientAddButton {
   width: 8rem;
   border: none;
   padding: .5rem;
@@ -24,163 +20,158 @@
   font-size: 1.6rem;
 }
 
-.productContainer {
+.clientContainer {
   display: flex;
   margin-top: 2rem;
 }
 
-.productShow {
+.clientShow {
   flex: 1;
   padding: 2rem;
   -webkit-box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
   box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
 }
 
-.productUpdate {
+.clientUpdate {
   flex: 2;
-  padding: 2rem 0rem;
+  padding: 2rem;
   -webkit-box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
   box-shadow: 0rem 0rem 1.5rem -1rem rgba(0, 0, 0, 0.75);
   margin-left: 2rem;
 }
 
-.productShowTop {
+.clientShowTop {
   display: flex;
   align-items: center;
 }
 
-.productShowImg {
+.clientShowImg {
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.productShowTopTitle {
+.clientShowTopTitle {
   display: flex;
   flex-direction: column;
   margin-left: 2rem;
 }
 
-.productShowProductname {
-  font-weight: 600;
+.clientShowClientname {
   font-size: 1.8rem;
+  font-weight: 600;
 }
 
-.productShowProductTitle {
-  font-weight: 300;
+.clientShowClientTitle {
   font-size: 1.4rem;
+  font-weight: 300;
 }
 
-.productShowBottom{
+.clientShowBottom{
     margin-top: 2rem;
 }
 
-.productShowTitle {
+.clientShowTitle {
   font-size: 1.4rem;
   font-weight: 700;
   color: rgb(175, 170, 170);
-  margin-bottom: 2rem;
-  display: block;
 }
 
-.productShowInfo{
+.clientShowInfo{
     display: flex;
     align-items: center;
-    margin-bottom: 1.6rem;
+    margin: 2rem 0rem;
     color: #444;
     font-size: 1.4rem;
     font-weight: 400;
-    padding-left: 1rem;
 }
 
-.productShowIcon{
+.clientShowIcon{
     font-size: 1.6rem !important;
 }
 
-.productShowInfoTitle{
+.clientShowInfoTitle{
     margin-left: 1rem;
 }
 
-.productUpdateTitle{
-  font-size: 2.4rem;
-  font-weight: 600;
-  padding-left: 1rem;
+.clientUpdateTitle{
+    font-size: 2.4rem;
+    font-weight: 600;
 }
 
-.productUpdateForm{
+.clientUpdateForm{
     display: flex;
     justify-content: space-between;
     margin-top: 2rem;
 }
 
-.productUpdateItem{
+.clientUpdateItem{
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.8rem;   
+    margin-top: 1rem;
 }
 
-.productUpdateItem>label{
-    margin-bottom: 0rem;
+.clientUpdateItem>label{
+    margin-bottom: .5rem;
     font-size: 1.4rem;
 }
 
-.productUpdateInput{
+.clientUpdateInput{
     border: none;
-    width: 20rem;
+    width: 25rem;
     height: 3rem;
     border-bottom: .1rem solid gray;
     padding: 1rem;
     font-size: 1.4rem;
 }
 
-.productUpdateLeft {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 2rem;
-  padding-right: 1rem;
+.clientUpdateRight{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.productUpdateRight{
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1.2rem;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.productUpdateUpload{
+.clientUpdateUpload{
     display: flex;
     align-items: center;
 }
 
-.productUpdateImg{
-    width: 35rem;
-    height: 35rem;
+.clientUpdateImg{
+    width: 30rem;
+    height: 30rem;
     border-radius: 1rem;
     object-fit: cover;
     margin-right: 2rem;
     margin-bottom: 1.5rem;
+
 }
 
-.productUpdateButton{
-  width: 24rem;
-  border-radius: .5rem;
-  border: none;
-  padding: 1.5rem;
+.clientUpdateIcon{
+    cursor: pointer;
+}
+
+.clientUpdateIcon__upload {
+  font-size: 3rem;
   cursor: pointer;
-  background-color: darkblue;
-  color: white;
-  font-weight: 600;
-  letter-spacing: .1rem;
-  font-size: 1.6rem;
 }
 
-.productUpdateButton:disabled,
-.productUpdateButton[disabled] {
+.clientUpdateButton{
+    border-radius: .5rem;
+    border: none;
+    padding: 1.5rem;
+    cursor: pointer;
+    background-color: darkblue;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.clientUpdateButton:disabled,
+.clientUpdateButton[disabled] {
   background-color: gray;
+}
+
+.clientTitle {
+  font-size: 2.8rem;
 }

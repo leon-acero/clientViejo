@@ -1,77 +1,114 @@
 import "./productList.css";
-import { DataGrid } from "@mui/x-data-grid";
-// import DeleteOutline from "@mui/icons-material/DeleteOutline";
-import {FaTrashAlt} from "react-icons/fa";
+import axios, { BASE_URL } from '../../../../utils/axios';
+// import axios from "axios";
 
-import { Link } from "react-router-dom";
+/*******************************    React     *******************************/
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+/****************************************************************************/
 
-import BasicDialog from '../../../../components/basicDialog/BasicDialog';
+/**************************    React Icons    *******************************/
+import {FaTrashAlt} from "react-icons/fa";
+/****************************************************************************/
 
-import {clsx} from "clsx";
-
-////////////////////////////////////////////////////////////////
-// -Snackbar
-////////////////////////////////////////////////////////////////
-// import Button from '@mui/material/Button';
+/**************************    Snackbar    **********************************/
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
 import {FaTimes} from "react-icons/fa";
+import { Alert } from '@mui/material';
+/****************************************************************************/
 
+import {clsx} from "clsx";
+import { DataGrid } from "@mui/x-data-grid";
 
-// HTTP
-import axios from "axios";
+/**************************    Components    ********************************/
+import BasicDialog from '../../../../components/basicDialog/BasicDialog';
 import SkeletonElement from '../../../../components/skeletons/SkeletonElement';
+/****************************************************************************/
+
+
 
 export default function ProductList() {
 
+  /**************************    useRef    **********************************/
+  // avoidRerenderFetchProduct evita que se mande llamar dos veces al
+  // producto y por lo mismo que se pinte dos veces
+  
   const avoidRerenderFetchProduct = useRef(false);
+  /***************************************************************************/
 
 
-  ////////////////////////////////////////////////////////////////
-  // -Snackbar
-  ////////////////////////////////////////////////////////////////
+  /**************************    useState    **********************************/
+  
+  // mensajeSnackBar es el mensaje que se mostrara en el SnackBar, puede ser 
+  // de exito o de error segun si se grabó la informacion en la BD
+
+  // updateSuccess es boolean que indica si tuvo exito o no el grabado en la BD
+  
+  // openSnackbar es boolean que manda abrir y cerrar el Snackbar
+
+  // openModal lo uso para mostrar la ventana para preguntar al usuario
+  // si quiere borrar un producto
+
+  // currentProduct tiene la informacion del producto actualmente seleccionado
+
+  // productList es la lista de Productos que cargue de la BD
+
+  // isLoading es un boolean para saber si esta cargando la informacion de la BD
+  // lo uso para dos cosas: que no vuelva a cargar la informacion de la BD ya que
+  // en React18 lo hace dos veces, y para mostrar los dulces bailando (Skeleton)
+  // si es necesario
+  const [updateSuccess, setUpdateSuccess] = useState (true);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  ////////////////////////////////////////////////////////////////
-  // -Dialog
-  ////////////////////////////////////////////////////////////////
+  const [mensajeSnackBar, setMensajeSnackBar] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [currentProduct, setCurrentProduct] = useState ({id: "", productName: ""});
   const [productList, setProductList] = useState([])
-
   const [isLoading, setIsLoading] = useState(false);
+  /****************************************************************************/
 
 
+  /**************************    handleDelete    ******************************/
+  // aqui manejo el borrado de un Producto
+  /****************************************************************************/ 
   const handleDelete = async () => {
     setOpenModal(false);
 
- 
     try {
       
-      const res = await axios({
-        withCredentials: true,
-        method: 'DELETE',
-        // url: `http://127.0.0.1:8000/api/v1/products/${currentProduct.id}`,
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${currentProduct.id}`,
-        })
+      // const res = await axios({
+      //   withCredentials: true,
+      //   method: 'DELETE',
+      //   url: `http://127.0.0.1:8000/api/v1/products/${currentProduct.id}`,
+      //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/products/${currentProduct.id}`,
+      //   })
+
+      const res = await axios.delete (`/api/v1/products/${currentProduct.id}`);
 
       
       if (res.status === 204) {
         console.log ('El producto fue borrado con éxito!');
 
-        // Borro el cliente del Grid Y del State
+        // Borro el Producto del Grid Y del State
+        setUpdateSuccess(true);
         setProductList(productList.filter((item) => item._id !== currentProduct.id));
+        setMensajeSnackBar(`El producto ${currentProduct.productName} fue borrado.`)
         setOpenSnackbar(true);
       } 
     }
     catch(err) {
       console.log(err);
+      setUpdateSuccess(false);
+      setMensajeSnackBar("Hubo un error al borrar el producto. Revisa que estes en línea.");
+      setOpenSnackbar(true);
     }
   }
+  /****************************************************************************/
 
 
+  /*****************************    useEffect    ******************************/
+  // fetchProducts carga la lista de Productos
+  /****************************************************************************/
   useEffect (() => {
 
     if (avoidRerenderFetchProduct.current) {
@@ -82,21 +119,24 @@ export default function ProductList() {
       return;
 
 
-    const fetchPosts = async () => {
+    const fetchProducts = async () => {
 
       // solo debe de cargar datos una vez, osea al cargar la pagina
       avoidRerenderFetchProduct.current = true;
 
       try {
         setIsLoading(true);      
-        console.log("carga de lista de productos")
+        // console.log("Carga de lista de productos")
         // 1era OPCION PARA USAR AXIOS
-        const res = await axios ({
-          withCredentials: true,
-          method: 'GET',
-          // url: 'http://127.0.0.1:8000/api/v1/products'
-          url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
-        });
+        // const res = await axios ({
+        //   withCredentials: true,
+        //   method: 'GET',
+        //   url: 'http://127.0.0.1:8000/api/v1/products'
+        //   // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/products'
+        // });
+
+        const res = await axios.get (`/api/v1/products`);
+
 
         setIsLoading(false);
 
@@ -114,23 +154,24 @@ export default function ProductList() {
       }
 
     }
-    fetchPosts();
+    fetchProducts();
   }, [isLoading]);
 
 
+  /*************************    openDeleteDialog    ***************************/
+  // Abre la ventana que pregunta si quieres borrar el Producto
+  /****************************************************************************/
   const openDeleteDialog = (id, productName) => {
    
     setCurrentProduct ({id, productName});
-    ////////////////////////////////////////////////////////////////
-    // -Dialog
-    ////////////////////////////////////////////////////////////////
     setOpenModal(true);
 
   };
 
-  ////////////////////////////////////////////////////////////////
-  // -Snackbar
-  ////////////////////////////////////////////////////////////////
+  
+  /************************     handleCloseSnackbar    **********************/
+  // Es el handle que se encarga cerrar el Snackbar
+  /**************************************************************************/  
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -139,24 +180,26 @@ export default function ProductList() {
     setOpenSnackbar(false);
   };
 
+
+  /*****************************     action    ******************************/
+  // Se encarga agregar un icono de X al SnackBar
+  /**************************************************************************/  
   const action = (
     <>
-      {/* <Button color="secondary" size="small" onClick={handleCloseSnackbar}>
-        UNDO
-      </Button> */}
       <IconButton
         size="small"
         aria-label="close"
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        {/* <CloseIcon fontSize="small" /> */}
         <FaTimes />
       </IconButton>
     </>
   );
-  ////////////////////////////////////////////////////////////////
 
+  /***************************     valueFormatter    ************************/
+  // Formatea la celda en Moneda, osea con signo de $
+  /**************************************************************************/
   const valueFormatter = (value) => {
     if (value === '')
       return '';
@@ -168,6 +211,12 @@ export default function ProductList() {
     }).format(value);
   }
 
+  /***************************     columns    *******************************/
+  // Formatea las columnas y tambien las celdas
+  // El llenado de informacion en la tabla se hace en
+  // <DataGrid className="dataGrid"
+  // rows={productList}
+  /**************************************************************************/
   const columns = [
     {
       field: "action",
@@ -181,10 +230,7 @@ export default function ProductList() {
             <Link to={"/product/" + params.row._id}>
               <button className="productListEdit">Editar</button>
             </Link>
-            {/* <DeleteOutline
-              className="productListDelete"
-              onClick={() => openDeleteDialog(params.row._id, params.row.productName)}
-            /> */}
+
             <FaTrashAlt
               className="productListDelete"
               onClick={() => openDeleteDialog(params.row._id, params.row.productName)}
@@ -193,7 +239,13 @@ export default function ProductList() {
         );
       },
     },
-    { field: "sku", headerName: "SKU", width: 30, headerAlign: 'center', align: 'right',},
+    { 
+      field: "sku", 
+      headerName: "SKU", 
+      width: 30, 
+      headerAlign: 'center', 
+      align: 'right',
+    },
     {
       field: "productName",
       headerName: "Producto",
@@ -202,18 +254,31 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img className="productListImg" src={`/img/products/${params.row.imageCover}`} alt="" />{params.row.productName}
+            {
+              params?.row?.imageCover &&
+              // (<img className="productListImg" 
+              //     src={`http://127.0.0.1:8000/img/products/${params.row.imageCover}`} 
+              //     alt="" 
+              // />)
+              (<img className="productListImg" 
+                  src={`${BASE_URL}/img/products/${params.row.imageCover}`} 
+                  alt="" 
+              />)
+            }
+            {params.row.productName}
           </div>
         );
       },
     },
-    { field: "inventarioActual", 
+    { 
+      field: "inventarioActual", 
       headerName: 'Inv. Actual', 
       width: 100,
       headerAlign: 'center', 
       align: 'right',
       cellClassName: (params) => clsx (
-        { inventarioActualNegativo: params.row.inventarioActual < params.row.inventarioMinimo,
+        { 
+          inventarioActualNegativo: params.row.inventarioActual < params.row.inventarioMinimo,
         })
       ,
       // valueGetter: (params) => params.row.inventarioActual - params.row.inventarioMinimo
@@ -249,25 +314,29 @@ export default function ProductList() {
       valueFormatter: ({value}) => valueFormatter(value),
       align: 'right',
     },    
-    { field: "_id", headerName: "ID", width: 0, headerAlign: 'center', },
-
+    { 
+      field: "_id", 
+      headerName: "ID", 
+      width: 0, 
+      headerAlign: 'center', 
+    },
   ];
 
   return (
     <div className="productList">
-
-      {/* 
-      ////////////////////////////////////////////////////////////////
-      // -Snackbar
-      //////////////////////////////////////////////////////////////// */
-      }
+ 
       <Snackbar
         open={openSnackbar}
         autoHideDuration={5000}
         onClose={handleCloseSnackbar}
-        message={`${currentProduct.productName} fue borrado.`}
-        action={action}
-      />
+      >
+        <Alert 
+            severity= {updateSuccess ?  "success" : "error"} 
+            action={action}
+            sx={{ fontSize: '1.4rem', backgroundColor:'#333', color: 'white', }}
+        >{mensajeSnackBar}
+        </Alert>
+      </Snackbar>
 
       {
       /* ////////////////////////////////////////////////////////////////
@@ -289,7 +358,8 @@ export default function ProductList() {
           <button className="productAddButton">Crear</button>
         </Link>
       </div>
-      { productList?.length > 0 &&
+      { 
+        productList?.length > 0 &&
         <DataGrid className="dataGrid"
           rows={productList}
           disableSelectionOnClick

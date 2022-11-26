@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
 import "./reportWholeBusinessSalesByYear.css"
-import axios from "axios"
+import React, { useEffect, useRef, useState } from 'react'
+import axios from '../../../utils/axios';
+// import axios from "axios"
 import Chart from '../../../components/chart/Chart';
+import { NumericFormat } from 'react-number-format';
 
 
 export default function ReportWholeBusinessSalesByYear() {
@@ -50,12 +52,14 @@ export default function ReportWholeBusinessSalesByYear() {
 
       // console.log("axios carga de ventas del negocio");
 
-      const res = await axios ({
-        withCredentials: true,
-        method: 'GET',
-        // url: `http://127.0.0.1:8000/api/v1/sales/whole-business-sales-by-year`
-        url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/whole-business-sales-by-year`
-      });
+      // const res = await axios ({
+      //   withCredentials: true,
+      //   method: 'GET',
+      //   url: `http://127.0.0.1:8000/api/v1/sales/whole-business-sales-by-year`
+      //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/whole-business-sales-by-year`
+      // });
+
+      const res = await axios.get (`/api/v1/sales/whole-business-sales-by-year`);
 
       // console.log(res)
       // console.log(res.data.data);
@@ -89,7 +93,22 @@ export default function ReportWholeBusinessSalesByYear() {
 
   const out = (
     <div className='reporte'>
-      <Chart data={chartData} title={`Venta $${granTotal}`} grid dataKey="Total"/>
+      {/* <Chart data={chartData} title={`Venta $${granTotal}`} grid dataKey="Total"/> */}
+      <Chart data={chartData} 
+      // title={`Venta $${granTotal}`} 
+      title={
+          <NumericFormat 
+            value={granTotal} 
+            decimalScale={2} 
+            thousandSeparator="," 
+            prefix={'$'} 
+            decimalSeparator="." 
+            displayType="text" 
+            renderText={(value) => <span>Venta {value}</span>}
+          />
+      } 
+      grid 
+      dataKey="Total"/>
     </div>
   )
 

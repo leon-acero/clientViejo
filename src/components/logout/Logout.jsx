@@ -1,5 +1,6 @@
 import { useEffect, useRef, useContext } from 'react'
-import axios from "axios";
+// import axios from "axios";
+import axios from "../../utils/axios";
 
 import { stateContext } from '../../context/StateProvider';
 import { useHistory } from 'react-router-dom';
@@ -37,12 +38,16 @@ export default function Logout() {
       console.log("useEffect")
       try {
         // console.log("logout 1")
-        const res = await axios ({
-          withCredentials: true,
-          method: 'GET',
-          // url: `http://127.0.0.1:8000/api/v1/users/logout`
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/users/logout`
-        });
+        // const res = await axios ({
+        //   withCredentials: true,
+        //   method: 'GET',
+        //   // url: `http://127.0.0.1:8000/api/v1/users/logout`
+        //   url: `https://eljuanjo-dulces.herokuapp.com/api/v1/users/logout`
+        // });
+
+        const res = await axios.get ('/api/v1/users/logout');
+
+
         console.log("Usuario desloggeado")
         // console.log("res", res);
         if (res.data.status === 'success') {

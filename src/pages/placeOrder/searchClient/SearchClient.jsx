@@ -1,5 +1,5 @@
 import "./searchClient.css"
-import axios from "axios";
+// import axios from "axios";
 
 import { useState, useRef, useEffect } from 'react'
 import Table from '../../../components/table/Table';
@@ -15,6 +15,7 @@ import { Alert } from '@mui/material';
 
 import { domAnimation, LazyMotion, m } from 'framer-motion';
 import SkeletonElement from '../../../components/skeletons/SkeletonElement';
+import axios from '../../../utils/axios';
 
 
 const containerVariants = {
@@ -67,16 +68,19 @@ export default function SearchClient() {
   
         setData(null);
         
-        const res = await axios ({
-          withCredentials: true,
-          method: 'GET',
-          // url: `http://127.0.0.1:8000/api/v1/clients?q=${query}`
-          // url: `http://127.0.0.1:8000/api/v1/clients?${regExOptions}`
+        // const res = await axios ({
+        //   withCredentials: true,
+        //   method: 'GET',
+        //   // url: `http://127.0.0.1:8000/api/v1/clients?q=${query}`
+        //   // url: `http://127.0.0.1:8000/api/v1/clients?${regExOptions}`
 
-          // url: `http://127.0.0.1:8000/api/v1/clients/search-client/${query}`
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/search-client/${query}`
+        //   url: `http://127.0.0.1:8000/api/v1/clients/search-client/${query}`
+        //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/clients/search-client/${query}`
   
-        });
+        // });
+
+        const res = await axios.get (`/api/v1/clients/search-client/${query}`);
+        
         // console.log(res.data.data.data);
 
         setIsSearching(false);

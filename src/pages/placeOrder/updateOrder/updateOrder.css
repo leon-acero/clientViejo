@@ -60,7 +60,7 @@
 
 .estatusPedidoPlaceOrder {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: center;
   gap: 2.4rem;
 }
@@ -352,13 +352,11 @@
   .deleteOrderButton {
     width: 16rem;
     padding: 1rem 1rem;
-    font-size: 1.1rem;
   }
 
   .placeOrderButton {
     width: 16rem;
     padding: 1rem 1rem;
-    font-size: 1.1rem;
   }
 
   .container-estatusPedido__select{

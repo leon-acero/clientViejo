@@ -24,7 +24,8 @@ const Table = ({ data }) => {
                             clientId: client.id,
                             businessName: client.businessName, 
                             cellPhone: client.cellPhone, 
-                            esMayorista: client.esMayorista
+                            esMayorista: client.esMayorista,
+                            businessImageCover: client.imageCover
                     }
                   }}>Abrir
               </Link>

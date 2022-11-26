@@ -2,58 +2,89 @@
   flex: 4;
 }
 
-.newClientForm {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .newClientTitle {
   font-size: 2rem;
+}
+
+.newClientForm {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  
+  /* flex-wrap: wrap; */
 }
 
 .newClientItem {
   width: 40rem;
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
   margin-right: 2rem;
+  margin-bottom: 2rem;
 }
 
 .newClientItem > label {
-  margin-bottom: 1rem;
+  color: rgb(151, 150, 150);
   font-size: 1.4rem;
   font-weight: 600;
-  color: rgb(151, 150, 150);
+  margin-bottom: .25rem;
 }
 
 .newClientItem > input {
+  width: 40rem;
   height: 2.8rem;
+  padding: 1rem 1rem;
   border: .1rem solid gray;
   border-radius: .5rem;
   font-size: 1.4rem;
-  padding: 1rem 1rem;
-}
-
-
-.newClientSelect{
-    height: 4rem;
-    border-radius: .5rem;
 }
 
 .newClientButton{
-    width: 20rem;
-    border: none;
-    background-color: darkblue;
-    color: white;
-    padding: .7rem 1rem;
-    font-weight: 600;
-    border-radius: 1rem;
-    margin-top: 3rem;
-    cursor: pointer;
-    font-size: 1.6rem;
+  width: 20rem;
+  margin-top: 3rem;
+  padding: .7rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: darkblue;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1.6rem;
 }
 
 .newClientButton:disabled,
 .newClientButton[disabled] {
   background-color: gray;
+}
+
+.newClientLeft {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 3rem;
+  padding-right: 2rem;
+}
+
+.newClientRight{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 3rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clientUpdateUpload{
+  display: flex;
+  align-items: center;
+}
+
+.clientUpdateImg{
+  width: 30rem;
+  height: 30rem;
+  border-radius: 1rem;
+  object-fit: cover;
+  margin-right: 2rem;
+  margin-bottom: 1.5rem;
 }

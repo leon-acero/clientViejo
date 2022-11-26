@@ -9,6 +9,10 @@
   justify-content: space-between;
 }
 
+.clientTitle {
+  font-size: 2.8rem;
+}
+
 .clientAddButton {
   width: 8rem;
   border: none;
@@ -76,15 +80,18 @@
   font-size: 1.4rem;
   font-weight: 700;
   color: rgb(175, 170, 170);
+  margin-bottom: 2rem;
+  display: block;
 }
 
 .clientShowInfo{
     display: flex;
     align-items: center;
-    margin: 2rem 0rem;
+    margin-bottom: 1.6rem;
     color: #444;
     font-size: 1.4rem;
     font-weight: 400;
+    padding-left: 1rem;
 }
 
 .clientShowIcon{
@@ -96,8 +103,9 @@
 }
 
 .clientUpdateTitle{
-    font-size: 2.4rem;
-    font-weight: 600;
+  font-size: 2.4rem;
+  font-weight: 600;
+  padding-left: 1rem;
 }
 
 .clientUpdateForm{
@@ -109,7 +117,7 @@
 .clientUpdateItem{
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
+    margin-bottom: 1.8rem;   
 }
 
 .clientUpdateItem>label{
@@ -126,10 +134,23 @@
     font-size: 1.4rem;
 }
 
+.clientUpdateLeft {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 1rem;
+}
+
 .clientUpdateRight{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1.2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .clientUpdateUpload{
@@ -144,26 +165,25 @@
     object-fit: cover;
     margin-right: 2rem;
     margin-bottom: 1.5rem;
-
-}
-
-.clientUpdateIcon{
-    cursor: pointer;
 }
 
 .clientUpdateIcon__upload {
   font-size: 3rem;
+  cursor: pointer;
 }
 
 .clientUpdateButton{
-    border-radius: .5rem;
-    border: none;
-    padding: 1.5rem;
-    cursor: pointer;
-    background-color: darkblue;
-    color: white;
-    font-size: 1.6rem;
-    font-weight: 600;
+  border-radius: .5rem;
+  border: none;
+  padding: 1.5rem;
+  cursor: pointer;
+  background-color: darkblue;
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 600;
+  width: 24rem;
+  color: white;
+  letter-spacing: .1rem;
 }
 
 .clientUpdateButton:disabled,

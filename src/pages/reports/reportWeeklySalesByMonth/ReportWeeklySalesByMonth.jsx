@@ -1,11 +1,13 @@
 import "./reportWeeklySalesByMonth.css"
+import axios from '../../../utils/axios';
 
 import React, { useEffect, useRef, useState } from 'react'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import axios from "axios" 
+// import axios from "axios" 
 import Chart from '../../../components/chart/Chart';
 import { format } from 'date-fns'
+import { NumericFormat } from 'react-number-format';
 
 
 export default function ReportWeeklySalesByMonth() {
@@ -63,15 +65,18 @@ export default function ReportWeeklySalesByMonth() {
 
         // console.log("axios carga de ventas del negocio");
 
-        const res = await axios ({
-          withCredentials: true,
-          method: 'GET',
-          // url: `http://127.0.0.1:8000/api/v1/sales/weekly-sales/${year}/${month}`
-          // url: `http://127.0.0.1:8000/api/v1/sales/weekly-sales/2022/9`
+        // const res = await axios ({
+        //   withCredentials: true,
+        //   method: 'GET',
+        //   // url: `http://127.0.0.1:8000/api/v1/sales/weekly-sales/${year}/${month}`
+        //   // url: `http://127.0.0.1:8000/api/v1/sales/weekly-sales/2022/9`
 
-          // url: `http://127.0.0.1:8000/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
-          url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
-        });
+        //   url: `http://127.0.0.1:8000/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
+        //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
+        // });
+
+        const res = await axios.get (`/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`);
+
 
         // console.log(res)
         // console.log(res.data.data.ventasPorSemana);
@@ -106,7 +111,22 @@ export default function ReportWeeklySalesByMonth() {
         onChange={(update) => handleChangeDatePicker(update)}
         dateFormat="yyyy-MMM-dd" 
       />
-      <Chart data={chartData} title={`Venta Acumulada $${totalAcumulado}`} grid dataKey="SubTotal"/>
+      {/* <Chart data={chartData} title={`Venta Acumulada $${totalAcumulado}`} grid dataKey="SubTotal"/> */}
+      <Chart 
+          data={chartData} 
+          title={
+              <NumericFormat 
+                    value={totalAcumulado} 
+                    decimalScale={2} 
+                    thousandSeparator="," 
+                    prefix={'$'} 
+                    decimalSeparator="." 
+                    displayType="text" 
+                    renderText={(value) => <span>Venta Acumulada {value}</span>}
+                />} 
+          grid 
+          dataKey="SubTotal"
+      />
     </div>
   )
 }

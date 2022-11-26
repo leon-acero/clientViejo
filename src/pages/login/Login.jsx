@@ -1,5 +1,7 @@
 import "./login.css"
-import axios from "axios";
+// import axios from "axios";
+import axios from "../../utils/axios";
+
 
 import { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
@@ -80,19 +82,27 @@ export default function Login() {
       // console.log("email", data.email)
       // console.log("password", data.password)
 
-      const  res = await axios({
-        withCredentials: true,
-        method: 'POST',
-        // Este url es para Development
-        // url: 'http://127.0.0.1:8000/api/v1/users/login',
-        url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/users/login',
-        // Este url es para Production
-        // url: '/api/v1/users/login',
-        data: {
-          email : data.email,
-          password : data.password
-        }	
-      });
+      // const  res = await axios({
+      //   withCredentials: true,
+      //   method: 'POST',
+      //   // Este url es para Development
+      //   url: 'http://127.0.0.1:8000/api/v1/users/login',
+      //   // url: 'https://eljuanjo-dulces.herokuapp.com/api/v1/users/login',
+      //   // Este url es para Production
+      //   // url: '/api/v1/users/login',
+      //   data: {
+      //     email : data.email,
+      //     password : data.password
+      //   }	
+      // });
+
+      const res = await axios.post ('/api/v1/users/login', 
+          {    
+            email : data.email,
+            password : data.password
+          }	 
+      );
+
 
       // console.log("res", res);
       // console.log("res", res.data.data);
