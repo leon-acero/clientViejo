@@ -21,7 +21,6 @@
   border-radius: 1rem;
   padding: .5rem 1rem;
   /* background-color: #3bb077; */
-  /* background-color: #3bb077; */
   /* color: white; */
   cursor: pointer;
   margin-right: 2rem;
@@ -74,16 +73,12 @@
   border-color:  #838d12;
   /* color: white; */
   font-size: 1.4rem;
-
-
-
 }
 
 .dataGrid {
   font-size: 1.4rem !important;
   margin: 1rem 1rem;
 }
-
 
 .MuiTablePagination-selectLabel,
 .MuiTablePagination-root,
@@ -97,3 +92,4 @@
     background-color: #CC444B;
     color: white;
 }
+

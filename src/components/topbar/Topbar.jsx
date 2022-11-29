@@ -7,6 +7,7 @@ import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import {FaHandshake, FaSignOutAlt } from "react-icons/fa";
 
 import { domAnimation, LazyMotion, m } from 'framer-motion';
+import { BASE_URL } from '../../utils/axios';
 
 
 const logoVariants = {
@@ -63,7 +64,7 @@ export default function Topbar() {
                 animate="visible"
               >
                 <img 
-                    src={`/img/users/${currentUser.photo}`} 
+                    src={`${BASE_URL}/img/users/${currentUser.photo}`} 
                     alt="{currentUser.name}" 
                     className="topAvatar"  
                     // onClick={(e)=>setOpen(true)}

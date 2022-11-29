@@ -24,7 +24,7 @@
   /* border: 1px solid; */
   /* border-color: #c0c86c #c4cf4a #838d12; */
   color: #111;
-  font-size: 1.4rem;
+  /* font-size: 1.4rem; */
 
   background: #ffd60a; 
   border: 1px solid;
@@ -71,14 +71,14 @@
 }
 
 .productShowProductname {
-  font-weight: 600;
   font-size: 1.8rem;
+  font-weight: 600;
   color: #343a40;
 }
 
 .productShowProductTitle {
-  font-weight: 300;
   font-size: 1.4rem;
+  font-weight: 300;
 }
 
 .productShowBottom{
@@ -205,3 +205,4 @@
 .productUpdateButton[disabled] {
   background-color: gray;
 }
+

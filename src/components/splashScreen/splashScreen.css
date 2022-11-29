@@ -25,6 +25,7 @@
   background-size: cover; */
   /* background: linear-gradient(#2b1055, #7597de); */
   background:  url("/public/img/website/stars.png"), linear-gradient(#2b1055, #7597de);
+  
   background-repeat: no-repeat; 
   background-size: cover;
 }
