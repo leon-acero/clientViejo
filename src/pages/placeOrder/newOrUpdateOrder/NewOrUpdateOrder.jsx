@@ -90,9 +90,7 @@ export default function NewOrUpdateOrder() {
       >
         {/* <h2><span>PASO 2: </span>CREA UN NUEVO PEDIDO O SELECCIONA UNO POR ENTREGAR</h2> */}
         <div className="businessInfo">
-          <Link to={"/client/" + clientId}>
-            <p className="businessInfo__businessName">{businessName}</p>
-          </Link>
+          <p className="businessInfo__businessName">{businessName}</p>
           <p className="businessInfo__cellPhone">{cellPhone}</p>
           <p className="businessInfo__esMayorista">{esMayorista ? "Mayorista" : "Minorista"}</p>
         </div>
