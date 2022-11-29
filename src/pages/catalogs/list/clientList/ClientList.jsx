@@ -321,11 +321,16 @@ export default function ClientList() {
       {
         clientList?.length > 0 &&
           <DataGrid className="dataGrid"
+            initialState={{
+              pagination: {
+                pageSize: 8,
+              },
+            }}
             rows={clientList}
             disableSelectionOnClick
             columns={columns}
-            rowsPerPageOptions={[8, 16]}
-            pageSize={8}
+            rowsPerPageOptions={[8, 16, 24]}
+            // pageSize={8}
             // checkboxSelection
           />
       }

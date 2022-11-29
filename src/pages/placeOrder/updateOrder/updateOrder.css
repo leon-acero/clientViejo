@@ -150,9 +150,11 @@
   border: none;
   padding: 1rem 1.5rem;
   cursor: pointer;
-  background-color: rgb(244, 64, 64);
+  /* background-color: rgb(244, 64, 64); */
   /* background: linear-gradient(to right, #f00000, #dc281e); */
-
+  background-color: #cc444b;
+  border: 1px solid;
+  border-color: #f6898f #afa1a1 #f8787e;
   color: white;
   font-size: 1.4rem;
   /* font-weight: 600; */

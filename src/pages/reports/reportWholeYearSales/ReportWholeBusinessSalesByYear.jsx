@@ -1,9 +1,11 @@
 import "./reportWholeBusinessSalesByYear.css"
-import React, { useEffect, useRef, useState } from 'react'
 import axios from '../../../utils/axios';
+
+import React, { useEffect, useRef, useState } from 'react'
 // import axios from "axios"
 import Chart from '../../../components/chart/Chart';
 import { NumericFormat } from 'react-number-format';
+import SkeletonElement from '../../../components/skeletons/SkeletonElement';
 
 
 export default function ReportWholeBusinessSalesByYear() {
@@ -31,6 +33,7 @@ export default function ReportWholeBusinessSalesByYear() {
 
   const [chartData, setChartData] = useState ([]);
   const [granTotal, setGranTotal] = useState (0);
+  const [isLoading, setIsLoading] = useState (false);
   /////////////////////////////////////////////////////////////////////////////
 
 
@@ -50,38 +53,22 @@ export default function ReportWholeBusinessSalesByYear() {
 
       avoidRerenderFetchVentasDelNegocio.current = true;
 
-      // console.log("axios carga de ventas del negocio");
+      try {
+        // console.log("axios carga de ventas del negocio");
+        setIsLoading (true);
+        const res = await axios.get (`/api/v1/sales/whole-business-sales-by-year`);
+  
+        setIsLoading (false);
+        // console.log("carga ventas del negocio", res.data.data.ventasPorMes)
+        setGranTotal(res.data.totalEmpresa)
+        setChartData(res.data.data.ventaTotalPorAnio);
+        // console.log("request finished de carga ventas del negocio")
 
-      // const res = await axios ({
-      //   withCredentials: true,
-      //   method: 'GET',
-      //   url: `http://127.0.0.1:8000/api/v1/sales/whole-business-sales-by-year`
-      //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales/whole-business-sales-by-year`
-      // });
-
-      const res = await axios.get (`/api/v1/sales/whole-business-sales-by-year`);
-
-      // console.log(res)
-      // console.log(res.data.data);
-      // let totalEmpresa = 0;
-
-      // const graph = res.data.data.ventaTotalPorAnio.map(current=> {
-                  
-      //   totalEmpresa += current.Total;
-
-      //   return {
-      //     name: current.Fecha.anio,
-      //     Total: current.Total
-      //   }
-      // })
-
-      // console.log("graph",graph)
-      // console.log("Total",totalEmpresa)
-
-      // console.log("carga ventas del negocio", res.data.data.ventasPorMes)
-      setGranTotal(res.data.totalEmpresa)
-      setChartData(res.data.data.ventaTotalPorAnio);
-      // console.log("request finished de carga ventas del negocio")
+      }
+      catch (err) {
+        console.log(err);
+        setIsLoading (false);
+      }
       
     }
     fetchVentasDelNegocio();
@@ -92,23 +79,31 @@ export default function ReportWholeBusinessSalesByYear() {
   // console.log("ReportWholeBusinessSalesByYear render")
 
   const out = (
-    <div className='reporte'>
-      {/* <Chart data={chartData} title={`Venta $${granTotal}`} grid dataKey="Total"/> */}
-      <Chart data={chartData} 
-      // title={`Venta $${granTotal}`} 
-      title={
-          <NumericFormat 
-            value={granTotal} 
-            decimalScale={2} 
-            thousandSeparator="," 
-            prefix={'$'} 
-            decimalSeparator="." 
-            displayType="text" 
-            renderText={(value) => <span>Venta {value}</span>}
-          />
-      } 
-      grid 
-      dataKey="Total"/>
+    <div className='reportWholeBusinessSalesByYear'>  
+      {
+        isLoading && <SkeletonElement type="rectangular" width="auto" height="auto" />
+      }
+      {
+        !isLoading && chartData &&
+          (
+            <Chart data={chartData} 
+              title={
+                <NumericFormat 
+                  value={granTotal} 
+                  decimalScale={2} 
+                  thousandSeparator="," 
+                  prefix={'$'} 
+                  decimalSeparator="." 
+                  displayType="text" 
+                  renderText={(value) => <span>Venta {value}</span>}
+                />
+              } 
+              grid 
+              dataKey="Total"
+              className="graph"
+            />
+          )
+      }
     </div>
   )
 

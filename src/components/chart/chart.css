@@ -10,3 +10,19 @@
 .chartTitle {
   margin-bottom: 2rem;
 }
+
+.tooltip {
+  border-radius: 0.25rem;
+  background: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+.tooltip .label {
+  color: #000;
+}
+
+.tooltip .payload {
+  color: #5550bd;
+  
+}

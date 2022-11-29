@@ -11,17 +11,25 @@
 
 .productTitle {
   font-size: 2.8rem;
+  color: #343a40;
 }
 
 .productAddButton {
   width: 8rem;
   border: none;
   padding: .5rem;
-  background-color: teal;
   border-radius: .5rem;
   cursor: pointer;
-  color: white;
-  font-size: 1.6rem;
+  /* background: #ecf39e; */
+  /* border: 1px solid; */
+  /* border-color: #c0c86c #c4cf4a #838d12; */
+  color: #111;
+  font-size: 1.4rem;
+
+  background: #ffd60a; 
+  border: 1px solid;
+  border-color:  #838d12;
+  font-size: 1.4rem;
 }
 
 .productContainer {
@@ -65,6 +73,7 @@
 .productShowProductname {
   font-weight: 600;
   font-size: 1.8rem;
+  color: #343a40;
 }
 
 .productShowProductTitle {
@@ -106,6 +115,7 @@
   font-size: 2.4rem;
   font-weight: 600;
   padding-left: 1rem;
+  color: #343a40;
 }
 
 .productUpdateForm{
@@ -168,17 +178,28 @@
 }
 
 .productUpdateButton{
-  width: 24rem;
+  /* width: 24rem; */
+  width: 18rem;
   border-radius: .5rem;
   border: none;
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
+  padding: .7rem 1rem;
   cursor: pointer;
-  background-color: darkblue;
+  /* background-color: darkblue; */
   color: white;
-  font-weight: 600;
+  /* font-weight: 600; */
   letter-spacing: .1rem;
-  font-size: 1.6rem;
+  /* font-size: 1.6rem; */
+
+  background: #0164ce;
+  border: 1px solid; 
+  /* border-color: #225184 #639bd6 #023368; */
+  border-color: hsla(211, 96%, 21%, 0.933) ;
+  /* color: #111; */
+  font-size: 1.4rem;
+  font-weight: 400;
 }
+
 
 .productUpdateButton:disabled,
 .productUpdateButton[disabled] {

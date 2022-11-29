@@ -80,8 +80,12 @@ function App() {
           <div className="container">
             <Switch>
 
-              {/* HomePage */}
               <Route exact path="/">
+                <SplashScreen />
+              </Route>
+
+              {/* HomePage */}
+              <Route exact path="/dashboard">
                 <Home />
               </Route>
 
@@ -118,8 +122,13 @@ function App() {
             <Sidebar />
 
               <Switch>
-                {/* HomePage */}
+
                 <Route exact path="/">
+                  <SplashScreen />
+                </Route>
+                
+                {/* HomePage */}
+                <Route exact path="/dashboard">
                   <Home />
                 </Route>
 

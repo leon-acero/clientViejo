@@ -123,7 +123,6 @@ export default function SearchClient() {
         color="inherit"
         onClick={handleCloseSnackbar}
       >
-        {/* <CloseIcon fontSize="small" /> */}
         <FaTimes />
       </IconButton>
     </>
@@ -169,8 +168,16 @@ export default function SearchClient() {
           </button>
         </form>
         
-        {data && <Table data={data} />}
-        {isSearching && <SkeletonElement type="rectangular" width="100%" height="5.6rem" />}
+        {
+          data && <Table data={data} />
+        }
+
+        {
+          isSearching && <SkeletonElement 
+                            type="rectangular" 
+                            width="100%" height="5.6rem" 
+                          />
+        }
         {/* <p>{data.id} {data.businessName} {data.cellPhone}</p> */}
 
         {/* <div className="container__ClientsFound">

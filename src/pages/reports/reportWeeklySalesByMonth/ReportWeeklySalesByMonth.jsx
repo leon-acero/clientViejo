@@ -1,13 +1,15 @@
 import "./reportWeeklySalesByMonth.css"
+import "react-datepicker/dist/react-datepicker.css"
 import axios from '../../../utils/axios';
+
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 import React, { useEffect, useRef, useState } from 'react'
 import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
-// import axios from "axios" 
 import Chart from '../../../components/chart/Chart';
 import { format } from 'date-fns'
 import { NumericFormat } from 'react-number-format';
+import SkeletonElement from '../../../components/skeletons/SkeletonElement';
 
 
 export default function ReportWeeklySalesByMonth() {
@@ -31,10 +33,11 @@ export default function ReportWeeklySalesByMonth() {
   // startDate es la fecha de comienzo de busqueda
   // endDate es la fecha de término de búsqueda
 
-  const [chartData, setChartData] = useState ([]);
+  const [chartData, setChartData] = useState (null);
   const [totalAcumulado, setTotalAcumulado] = useState (0);
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
+  const [isLoading, setIsLoading] = useState (false);
   /************************     useState    *********************************/ 
 
 
@@ -59,33 +62,32 @@ export default function ReportWeeklySalesByMonth() {
       // y es solo hasta que cargo los años con fetchYearsSales que
       // puede year tener un valor válido
       // Deberia haber una mejor manera de validar esto
-      if (startDate !== null && endDate !== null) {
+      try {
+        if (startDate !== null && endDate !== null) {
+  
+          avoidRerenderFetchVentasDelNegocio.current = true;
+  
+          // console.log("axios carga de ventas del negocio");
+  
+          setChartData(null);
 
-        avoidRerenderFetchVentasDelNegocio.current = true;
+          setIsLoading (true);
+          const res = await axios.get (`/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`);
+  
+          setIsLoading (false);
+          // console.log(res)
+          // console.log(res.data.data.ventasPorSemana);
+  
+          // console.log("carga ventas del negocio", res.data.data.ventasPorMes)
+          setTotalAcumulado(res.data.totalAcumulado)
+          setChartData(res.data.data.ventasPorSemana);
+          // console.log("request finished de carga ventas del negocio")
+  
+        }
 
-        // console.log("axios carga de ventas del negocio");
-
-        // const res = await axios ({
-        //   withCredentials: true,
-        //   method: 'GET',
-        //   // url: `http://127.0.0.1:8000/api/v1/sales/weekly-sales/${year}/${month}`
-        //   // url: `http://127.0.0.1:8000/api/v1/sales/weekly-sales/2022/9`
-
-        //   url: `http://127.0.0.1:8000/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
-        //   // url: `https://eljuanjo-dulces.herokuapp.com/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`
-        // });
-
-        const res = await axios.get (`/api/v1/sales//weekly-range-sales/${format(startDate, "yyyy-MM-dd")}/${format(endDate, "yyyy-MM-dd")}`);
-
-
-        // console.log(res)
-        // console.log(res.data.data.ventasPorSemana);
-
-        // console.log("carga ventas del negocio", res.data.data.ventasPorMes)
-        setTotalAcumulado(res.data.totalAcumulado)
-        setChartData(res.data.data.ventasPorSemana);
-        // console.log("request finished de carga ventas del negocio")
-
+      }
+      catch (err) {
+        setIsLoading (false);
       }
     }
     fetchVentasDelNegocio();
@@ -98,35 +100,49 @@ export default function ReportWeeklySalesByMonth() {
     avoidRerenderFetchVentasDelNegocio.current = false;
   }
 
-  // console.log("ReportWeeklySalesByMonth render")
-
 
   return (
-    <div className='reporte'>
-    
-      <DatePicker className="datePicker"
-        selectsRange={true}
-        startDate={startDate}
-        endDate={endDate}
-        onChange={(update) => handleChangeDatePicker(update)}
-        dateFormat="yyyy-MMM-dd" 
-      />
-      {/* <Chart data={chartData} title={`Venta Acumulada $${totalAcumulado}`} grid dataKey="SubTotal"/> */}
-      <Chart 
-          data={chartData} 
-          title={
-              <NumericFormat 
-                    value={totalAcumulado} 
-                    decimalScale={2} 
-                    thousandSeparator="," 
-                    prefix={'$'} 
-                    decimalSeparator="." 
-                    displayType="text" 
-                    renderText={(value) => <span>Venta Acumulada {value}</span>}
-                />} 
-          grid 
-          dataKey="SubTotal"
-      />
+    <div className="reportWeeklySalesByMonth">
+      <div className="reportWeeklySalesByMonth__container">
+        <div className='reportWeeklySalesByMonth__selectorDeFecha'>
+          <p 
+            className="reportWeeklySalesByMonth__title">Selecciona un Rango de Fechas:
+          </p>
+          <DatePicker 
+            className="datePicker"
+            selectsRange={true}
+            startDate={startDate}
+            endDate={endDate}
+            onChange={(update) => handleChangeDatePicker(update)}
+            dateFormat="yyyy-MMM-dd" 
+          />
+          <FaRegCalendarAlt className="calendario" />
+        </div>
+        {
+          isLoading && <SkeletonElement type="rectangular" width="auto" height="auto" />
+        }
+        {
+          chartData && (
+            <Chart 
+                className="reportWeeklySalesByMonth__chart"
+                data={chartData} 
+                title={
+                    <NumericFormat 
+                          value={totalAcumulado} 
+                          decimalScale={2} 
+                          thousandSeparator="," 
+                          prefix={'$'} 
+                          decimalSeparator="." 
+                          displayType="text" 
+                          renderText={(value) => <span>Venta Acumulada {value}</span>}
+                    />} 
+                grid 
+                dataKey="SubTotal"
+            />
+          )
+        }
+        
+      </div>
     </div>
   )
 }

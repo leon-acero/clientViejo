@@ -474,7 +474,7 @@ export default function Product() {
                   alt=""
                 />                
                 <label htmlFor="photo">
-                  <FaCloudUploadAlt style={{"fontSize": "3rem", "cursor": "pointer"}} />
+                  <FaCloudUploadAlt style={{"fontSize": "3rem", "cursor": "pointer", "color": "#343a40"}} />
                 </label>
                 <input  type="file" 
                         accept="image/*" 

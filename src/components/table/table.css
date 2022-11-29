@@ -13,7 +13,8 @@ table {
 }
 
 table tr th {
-  background-color: #009879;
+  /* background-color: #009879; */
+  background-color: #0150a5;
   color: #fff;
   text-align: left;
   padding: 0 .5rem;
@@ -37,15 +38,22 @@ td:nth-child(1) {
 }
 
 .abrirCliente__link{
-  border: none;
+  /* border: none; */
   border-radius: 1rem;
   padding: .5rem 1rem;
-  background-color: #3bb077;
-  color: white;
+  /* background-color: #3bb077; */
+  /* color: white; */
   cursor: pointer;
   margin-right: 2rem;
   text-decoration: none;
   font-size: 1.4rem;
+
+
+  /* background: #edf2fb; */
+  background: #e6f0fa;
+  border: 1px solid;
+  border-color: #989eaa #99b4e5 #4d6185;
+  color: #111;
 }
 
 

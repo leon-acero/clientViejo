@@ -116,7 +116,7 @@ export default function Login() {
 
           // console.log(res.data.data.user);
           setCurrentUser(res.data.data.user)          
-          history.replace("/");
+          history.replace("/dashboard");
       } 
     }
     catch(err) {

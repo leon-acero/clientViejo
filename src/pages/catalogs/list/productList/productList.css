@@ -20,16 +20,23 @@
   border: none;
   border-radius: 1rem;
   padding: .5rem 1rem;
-  background-color: #3bb077;
-  color: white;
+  /* background-color: #3bb077; */
+  /* background-color: #3bb077; */
+  /* color: white; */
   cursor: pointer;
   margin-right: 2rem;
 
   font-size: 1.4rem;
+
+  background: #edf2fb;
+  border: 1px solid;
+  border-color: #989eaa #99b4e5 #4d6185;
+  color: #111;
 }
 
 .productListDelete{
-  color: red;
+  color: #CC444B;
+  /* color: red; */
   cursor: pointer;
   /* font-size: 2.4rem !important; */
   font-size: 1.9rem;
@@ -45,17 +52,31 @@
   
 .productTitle {
   font-size: 2.8rem;
+  color: #343a40;
 }
   
 .productAddButton {
   width: 8rem;
   border: none;
   padding: .5rem;
-  background-color: teal;
-  border-radius: .5rem;
+  border-radius: 1rem;
   cursor: pointer;
-  color: white;
-  font-size: 1.6rem;
+  color: black;
+  /* font-size: 1.6rem; */
+
+  /* background: #ecf39e;
+  border: 1px solid;
+  border-color: #c0c86c #c4cf4a #838d12;
+  color: #111; */
+  background: #ffd60a; 
+  border: 1px solid;
+  /* border-color: #c0c86c #c4cf4a #838d12; */
+  border-color:  #838d12;
+  /* color: white; */
+  font-size: 1.4rem;
+
+
+
 }
 
 .dataGrid {
@@ -73,6 +94,6 @@
 }
 
 .inventarioActualNegativo {
-    background-color: red;
+    background-color: #CC444B;
     color: white;
 }

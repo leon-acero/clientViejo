@@ -78,10 +78,13 @@
   border: none;
   padding: 1rem 1.5rem;
   /* background-color: rgba(159, 9, 9, 0.844); */
-  background: linear-gradient(to right, #7a0000ff, #dc281e);
+  /* background: linear-gradient(to right, #7a0000ff, #dc281e); */
+  background-color: #CC444B;
+  border: 1px solid;
+  border-color: hsla(358, 99%, 30%, 0.375);
   border-radius: 10rem;
   cursor: pointer;
-  color: white;
+  color: #FFFCF2;
 }
 
 .botonRemoveProductFromBasket__icon {

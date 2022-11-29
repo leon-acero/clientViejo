@@ -164,7 +164,7 @@ export default function ReportMonthlySalesByYear() {
 
 
   const out = (
-    <div className='reporte'>
+    <div className="reportMonthlySalesByYear">
      
       {
         anios && (

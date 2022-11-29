@@ -173,7 +173,8 @@
 
 .btn:focus {
   outline: none;
-  background-color: #2e864b;
+  /* background-color: #2e864b; */
+  background-color: #e1bc02;
 }
 
 .btn--white {
@@ -185,11 +186,16 @@
 }
 
 .btn--green {
-  background-color: #55c57a;
-  color: #fff;
+  /* background-color: #55c57a;
+  color: #fff; */
+
+  background: #ffd60a; 
+  border: 1px solid;
+  border-color:  #838d12;
 }
 .btn--green::after {
-  background-color: #55c57a;
+  /* background-color: #55c57a; */
+  background: #ffd60a;
 }
 
 /* 680px */

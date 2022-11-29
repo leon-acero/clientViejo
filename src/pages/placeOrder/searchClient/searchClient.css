@@ -34,7 +34,7 @@ h2 {
   width: 20rem;
   height: 4rem;
   border: none;
-  background: linear-gradient(to left, #0575e6, #021b79);
+  /* background: linear-gradient(to left, #0575e6, #021b79); */
 
   color: white;
   padding: .7rem 1rem;
@@ -45,11 +45,17 @@ h2 {
 
   overflow: hidden;
   position: relative;
+
+  /* font-size: 1.4rem; */
+
+  background: #0164ce;
+  border: 1px solid; 
+  border-color: #225184 #639bd6 #023368;
+  font-weight: 400;
 }
 
 .btnSearchClient:after {
   content: "";
-  /* background: #90EE90; */
   background: #05fb05;
   display: block;
   position: absolute;

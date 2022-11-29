@@ -3,7 +3,8 @@
 }
 
 .addProductTitle {
-  font-size: 2rem;
+  font-size: 2.8rem;
+  color: #343a40;
 }
 
 .addProductForm {
@@ -39,9 +40,11 @@
 }
 
 .addProductButton {
-  width: 20rem;
+  /* width: 20rem; */
+  width: 18rem;
   margin-top: 3rem;
   padding: .7rem 1rem;
+  /* padding: 1.5rem; */
   border: none;
   border-radius: 1rem;
   background-color: darkblue;
@@ -49,6 +52,16 @@
   font-weight: 600;
   cursor: pointer;
   font-size: 1.6rem;
+
+  background: #0164ce;
+  border: 1px solid; 
+  /* border-color: #225184 #639bd6 #023368; */
+  border-color: hsla(211, 96%, 21%, 0.933) ;
+
+  /* color: #111; */
+  font-size: 1.4rem;
+  font-weight: 400;
+
 }
 
 .addProductButton:disabled,

@@ -100,6 +100,17 @@ h2 {
 
   overflow: hidden;
   position: relative;
+
+  /* background: #ecf39e;
+  border: 1px solid;
+  border-color: #c0c86c #c4cf4a #838d12;
+  color: #111; */
+  /* font-size: 1.4rem; */
+
+  background-color: #0150a5;
+  border: 1px solid;
+  border-color: #8bbdf2 #0377f3 #616c78;
+  color: #fff;
 }
 
 .linkActualizarPedido__button {
@@ -107,6 +118,7 @@ h2 {
   border-radius: 10rem;
   padding: 1rem 1rem;
   background-color: teal;
+  
   color: white;
   cursor: pointer;
   margin-bottom: 1.2rem;
@@ -114,52 +126,20 @@ h2 {
 
   overflow: hidden;
   position: relative;
+
+  /* background-color: #a5aa6f;
+  border: 1px solid;
+  border-color: #d4d7b7 #d4e04f #6a7120;
+  color: #111; */
+
+  background: #e6f0fa;
+  border: 1px solid;
+  border-color: #989eaa #99b4e5 #4d6185;
+  color: #111;
+  
 }
 
 
-.loginButton {
-  /* background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(#f12711),
-    to(#f5af19)
-    ); */
-    /* background: linear-gradient(to right, #f12711, #f5af19); */
-    /* background: linear-gradient(to right, #8e2de2, #4a00e0); */
-    /* background: linear-gradient(to right, #0575e6, #021b79); */
-    /* background: linear-gradient(to right, #000428, #004e92); */
-
-  background: linear-gradient(to right, #6190e8, #a7bfe8);
-  cursor: pointer;
-  border: none;
-  padding: 1rem;
-
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 10rem;
-  display: inline-block;
-  text-decoration: none;
-
-  overflow: hidden;
-
-  position: relative;
-  /*background-color: #04AA6D;
-  border: none;
-  font-size: 28px;
-  color: #FFFFFF;
-  padding: 20px;
-  width: 200px;
-  text-align: center;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  text-decoration: none;
-  overflow: hidden; */
-
-}
 
 .linkActualizarPedido__button:after,
 .linkNuevoPedido__button:after {

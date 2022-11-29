@@ -148,23 +148,26 @@ export default function NewOrUpdateOrder() {
                 {ultimosCincoPedidos
                 ?              
                   ultimosCincoPedidos.map((current, index) =>  
-
                     
-                      <Link key={index} className="linkNuevoPedido" to={{
-                        pathname: `/update-order/client/${clientId}`,
-                        state: {
-                                clientId: clientId,
-                                businessName: businessName, 
-                                cellPhone: cellPhone, 
-                                esMayorista: esMayorista,
-                                businessImageCover: businessImageCover,
-                                fecha: current._id.Fecha,
-                                usarComponenteComo: "actualizarPedido"
-                        }
-                      }}>
-                        <button className='linkActualizarPedido__button'>{
-                          // current._id.Fecha
-                          (new Date (current._id.Fecha)).toString()
+                      <Link 
+                              key={index} 
+                              className="linkNuevoPedido" 
+                              to={{
+                                pathname: `/update-order/client/${clientId}`,
+                                state: {
+                                  clientId: clientId,
+                                  businessName: businessName, 
+                                  cellPhone: cellPhone, 
+                                  esMayorista: esMayorista,
+                                  businessImageCover: businessImageCover,
+                                  fecha: current._id.Fecha,
+                                  usarComponenteComo: "actualizarPedido"
+                                }
+                              }}
+                      >
+                        <button className='linkActualizarPedido__button'>
+                          {
+                            (new Date (current._id.Fecha)).toString().split(" ", 5).join(" ")
                           }
                         </button> 
                       </Link>
