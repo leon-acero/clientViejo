@@ -106,18 +106,18 @@ export default function NewClient() {
 
       const res = await axios.post ('/api/v1/clients/', formData );
 
-
       setIsSaving(false);
 
       if (res.data.status === 'success') {
         // alert ('Logged in succesfully!');
         // console.log(res.data.data.data);
-        // console.log ('El cliente fue creado con éxito!');
+        console.log ('El cliente fue creado con éxito!');
         setUpdateSuccess(true);
         setMensajeSnackBar("El Cliente fue creado")
         setOpenSnackbar(true);
 
         setItemData(INITIAL_STATE);
+        setFileBlob(null);
         inputRef.current.focus();
       } 
     }
@@ -148,19 +148,22 @@ export default function NewClient() {
       // console.log("mensajeSnackBar", mensajeSnackBar);
       
       // Error de MongoDB dato duplicado
-      if (err.response?.data?.error?.code === 11000 || 
+      /*if (err.response?.data?.error?.code === 11000 || 
           err.response.data.message.includes('E11000')) {
             mensajeSnackBar = 'El Sku ya existe, elije otro Sku.';
       
             setMensajeSnackBar(mensajeSnackBar);
       }
-      else if (err.response.data.message){
+      else */
+      if (err.response.data.message){
         setMensajeSnackBar(err.response.data.message)
       }
       else if (err.code === "ERR_NETWORK")
         setMensajeSnackBar ("Error al conectarse a la Red. Si estas usando Wi-Fi checa tu conexión. Si estas usando datos checa si tienes saldo. O bien checa si estas en un lugar con mala recepción de red y vuelve a intentar.");
-      else
-        setMensajeSnackBar(`Error: ${err}`)      
+      else {
+        // setMensajeSnackBar(`Error: ${err}`)      
+        setMensajeSnackBar (mensajeSnackBar);
+      }
 
 
       setOpenSnackbar(true);      
@@ -253,6 +256,7 @@ export default function NewClient() {
           <div className="newClientItem">
             <label>SKU *</label>
             <input 
+                className="inputGeneralDataType"
                 ref={inputRef}
                 type="text" 
                 placeholder="12345" 
@@ -262,26 +266,32 @@ export default function NewClient() {
                 required
                 onInvalid={e=> e.target.setCustomValidity('Escribe el SKU')} 
                 onInput={e=> e.target.setCustomValidity('')}   
+                autocomplete="off"
+                minLength="1"
+                maxLength="25"
             />
           </div>
           <div className="newClientItem">
             <label>Negocio *</label>
             <input 
+                className="inputGeneralDataType"
                 type="text" 
                 placeholder="Mi Tiendita" 
                 onChange={handleChange}
                 name="businessName"
                 value={itemData.businessName || ''}  
                 required
-                onInvalid={e=> e.target.setCustomValidity('Escribe el Nombre del Negocio')} 
+                onInvalid={e=> e.target.setCustomValidity('El Nombre del Negocio debe tener entre 5 y 80 caracteres')} 
                 onInput={e=> e.target.setCustomValidity('')}   
                 minLength="5"
                 maxLength="80"
+                autocomplete="off"
             />
           </div>
           <div className="newClientItem">
             <label>Contacto *</label>
             <input 
+                className="inputGeneralDataType"
                 type="text" 
                 placeholder="Carlos Treviño" 
                 onChange={handleChange}
@@ -292,11 +302,13 @@ export default function NewClient() {
                 onInput={e=> e.target.setCustomValidity('')} 
                 minLength="5"
                 maxLength="80"
+                autocomplete="off"
             />
           </div>
           <div className="newClientItem">
             <label>Dirección</label>
             <input 
+                className="inputGeneralDataType"
                 type="text" 
                 placeholder="Av. Juárez 2222 Col. Centro, Monterrey, N.L." 
                 onChange={handleChange}
@@ -304,12 +316,14 @@ export default function NewClient() {
                 value={itemData.businessAddress || ''}  
                 onInvalid={e=> e.target.setCustomValidity('La Dirección debe tener menos de 100 caracteres')} 
                 onInput={e=> e.target.setCustomValidity('')} 
-                maxLength="100"                 
+                maxLength="100"
+                autocomplete="off"         
             />
           </div>
           <div className="newClientItem">
             <label>Celular</label>
             <input 
+                className="inputGeneralDataType"
                 type="text" 
                 placeholder="81 80 118990" 
                 onChange={handleChange}
@@ -317,12 +331,14 @@ export default function NewClient() {
                 value={itemData.cellPhone || ''}  
                 onInvalid={e=> e.target.setCustomValidity('El Número de Celular debe ser menor a 20 caracteres')} 
                 onInput={e=> e.target.setCustomValidity('')} 
-                maxLength="20"    
+                maxLength="20"
+                autocomplete="off"
             />
           </div>
           <div className="newClientItem">
-            <label>Teléfono</label>
+            <label>Teléfono Fijo</label>
             <input 
+                className="inputGeneralDataType"
                 type="text" 
                 placeholder="81 12 345678" 
                 onChange={handleChange}
@@ -330,24 +346,27 @@ export default function NewClient() {
                 value={itemData.fixedPhone || ''}   
                 onInvalid={e=> e.target.setCustomValidity('El Número de Teléfono debe ser menor a 20 caracteres')} 
                 onInput={e=> e.target.setCustomValidity('')} 
-                maxLength="20"             
+                maxLength="20"
+                autocomplete="off"       
             />
           </div>
           <div className="newClientItem">
             <label>Email</label>
             <input 
-                className="inputClientItem"
+                className="inputGeneralDataType"
                 type="email" 
                 placeholder="carlos.trevino@gmail.com" 
                 onChange={handleChange}
                 name="email"
-                value={itemData.email || ''}                
+                value={itemData.email || ''}   
+                autocomplete="off"             
             />
           </div>
 
-          <div className="newClientItem">
+          <div className="newClientItemCheckbox">
               <label htmlFor="esMayorista">¿Es Mayorista?</label>
               <input 
+                  className="inputCheckboxDataType"
                   type="checkbox" 
                   id="esMayorista" 
                   checked={itemData.esMayorista}
@@ -371,7 +390,9 @@ export default function NewClient() {
             <label htmlFor="photo">
               <FaCloudUploadAlt style={{"fontSize": "3rem", "cursor": "pointer"}} />
             </label>
-            <input  type="file" 
+            <input  
+                    className="inputGeneralDataType"
+                    type="file" 
                     accept="image/*" 
                     id="photo" 
                     name="photo" 

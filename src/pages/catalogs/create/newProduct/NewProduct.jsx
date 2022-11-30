@@ -130,6 +130,7 @@ export default function NewProduct() {
         setOpenSnackbar(true);
 
         setItemData(INITIAL_STATE);
+        setFileBlob(null);
         inputRef.current.focus();
       } 
     }
@@ -160,13 +161,14 @@ export default function NewProduct() {
       // console.log("mensajeSnackBar", mensajeSnackBar);
       
       // Error de MongoDB dato duplicado
-      if (err.response?.data?.error?.code === 11000 || 
+      /*if (err.response?.data?.error?.code === 11000 || 
           err.response.data.message.includes('E11000')) {
             mensajeSnackBar = 'El Sku ya existe, elije otro Sku.';
       
             setMensajeSnackBar(mensajeSnackBar);
       }
-      else if (err.response.data.message){
+      else */
+      if (err.response.data.message){
         setMensajeSnackBar(err.response.data.message)
       }
       else if (err.code === "ERR_NETWORK")
@@ -276,6 +278,7 @@ export default function NewProduct() {
                 onInput={e=> e.target.setCustomValidity('')} 
                 minLength="1"
                 maxLength="5"
+                autocomplete="off"
             />
           </div>        
           <div className="addProductItem">
@@ -291,6 +294,7 @@ export default function NewProduct() {
                 onInput={e=> e.target.setCustomValidity('')} 
                 minLength="5"
                 maxLength="40"
+                autocomplete="off"
             />
           </div>
           <div className="addProductItem">
@@ -307,7 +311,8 @@ export default function NewProduct() {
                 value={itemData.inventarioActual || ''}  
                 required
                 onInvalid={e=> e.target.setCustomValidity('Escribe el Inventario Actual')} 
-                onInput={e=> e.target.setCustomValidity('')} 
+                onInput={e=> e.target.setCustomValidity('')}
+                autocomplete="off" 
             />
           </div>
           <div className="addProductItem">
@@ -324,7 +329,8 @@ export default function NewProduct() {
                 value={itemData.inventarioMinimo || ''}  
                 required         
                 onInvalid={e=> e.target.setCustomValidity('Escribe el Inventario Mínimo')} 
-                onInput={e=> e.target.setCustomValidity('')}      
+                onInput={e=> e.target.setCustomValidity('')}
+                autocomplete="off"      
             />
           </div>       
           <div className="addProductItem">
@@ -341,7 +347,8 @@ export default function NewProduct() {
                 value={itemData.priceMenudeo || ''}   
                 required 
                 onInvalid={e=> e.target.setCustomValidity('Escribe el Precio al Menudeo')} 
-                onInput={e=> e.target.setCustomValidity('')} 
+                onInput={e=> e.target.setCustomValidity('')}
+                autocomplete="off" 
             />
           </div>
           <div className="addProductItem">
@@ -355,7 +362,8 @@ export default function NewProduct() {
                 placeholder="123" 
                 onChange={handleChange}
                 name="priceMayoreo"
-                value={itemData.priceMayoreo || ''}                            
+                value={itemData.priceMayoreo || ''}
+                autocomplete="off"                            
             />
           </div>      
           <div className="addProductItem">
@@ -372,7 +380,8 @@ export default function NewProduct() {
                 value={itemData.costo || ''}     
                 required 
                 onInvalid={e=> e.target.setCustomValidity('Escribe el Costo del Producto')} 
-                onInput={e=> e.target.setCustomValidity('')} 
+                onInput={e=> e.target.setCustomValidity('')}
+                autocomplete="off" 
             />
           </div>  
         </div>

@@ -150,7 +150,46 @@ export default function Product() {
     catch(err) {
       setIsSaving(false);
       setUpdateSuccess(false);
-      setMensajeSnackBar("Hubo un error al grabar el producto. Revisa que estes en línea.");
+      // setMensajeSnackBar("Hubo un error al grabar el producto. Revisa que estes en línea.");
+
+      let mensajeSnackBar = "";
+
+      if (err.name) 
+        mensajeSnackBar += `Name: ${err.name}. `
+
+      if (err.code)
+        mensajeSnackBar += `Code: ${err.code}. `;
+
+      if (err.statusCode) 
+        mensajeSnackBar += `Status Code: ${err.statusCode}. `;
+
+      if (err.status) 
+        mensajeSnackBar += `Status: ${err.status}. `;
+
+      if (err.message) 
+        mensajeSnackBar += `Mensaje: ${err.message}. `;
+
+      // console.log("mensajeSnackBar", mensajeSnackBar);
+      
+      // Error de MongoDB dato duplicado
+      /*if (err.response?.data?.error?.code === 11000 || 
+          err.response.data.message.includes('E11000')) {
+            mensajeSnackBar = 'El Sku ya existe, elije otro Sku.';
+      
+            setMensajeSnackBar(mensajeSnackBar);
+      }
+      else */
+      if (err.response.data.message){
+        setMensajeSnackBar(err.response.data.message)
+      }
+      else if (err.code === "ERR_NETWORK")
+        setMensajeSnackBar ("Error al conectarse a la Red. Si estas usando Wi-Fi checa tu conexión. Si estas usando datos checa si tienes saldo. O bien checa si estas en un lugar con mala recepción de red y vuelve a intentar.");
+      else {
+        // setMensajeSnackBar(`Error: ${err}`)      
+        setMensajeSnackBar (mensajeSnackBar);
+      }
+
+
       setOpenSnackbar(true);
       console.log(err);
     }
@@ -351,6 +390,7 @@ export default function Product() {
                   onInput={e=> e.target.setCustomValidity('')} 
                   minLength="1"
                   maxLength="5"
+                  autocomplete="off"
                 />
               </div>              
               <div className="productUpdateItem">
@@ -367,6 +407,7 @@ export default function Product() {
                   onInput={e=> e.target.setCustomValidity('')} 
                   minLength="5"
                   maxLength="40"
+                  autocomplete="off"
                 />
               </div>
               <div className="productUpdateItem">
@@ -385,7 +426,8 @@ export default function Product() {
                   value={productData.inventarioActual || ''}
                   required
                   onInvalid={e=> e.target.setCustomValidity('Escribe el Inventario Actual')} 
-                  onInput={e=> e.target.setCustomValidity('')} 
+                  onInput={e=> e.target.setCustomValidity('')}
+                  autocomplete="off" 
                 />
               </div>
               <div className="productUpdateItem">
@@ -404,7 +446,8 @@ export default function Product() {
                   value={productData.inventarioMinimo || ''}  
                   required         
                   onInvalid={e=> e.target.setCustomValidity('Escribe el Inventario Mínimo')} 
-                  onInput={e=> e.target.setCustomValidity('')}                 
+                  onInput={e=> e.target.setCustomValidity('')}
+                  autocomplete="off"                 
                 />
               </div>
               <div className="productUpdateItem">
@@ -423,7 +466,8 @@ export default function Product() {
                   value={productData.priceMenudeo || ''}
                   required 
                   onInvalid={e=> e.target.setCustomValidity('Escribe el Precio al Menudeo')} 
-                  onInput={e=> e.target.setCustomValidity('')}                
+                  onInput={e=> e.target.setCustomValidity('')}
+                  autocomplete="off"                
                 />
               </div>
               <div className="productUpdateItem">
@@ -439,7 +483,8 @@ export default function Product() {
                   onChange={handleChange}
                   onKeyPress={(e)=>handleNumbers(e)}
                   name="priceMayoreo"
-                  value={productData.priceMayoreo || ''}                  
+                  value={productData.priceMayoreo || ''}
+                  autocomplete="off"                  
                 />
               </div>              
               <div className="productUpdateItem">
@@ -458,7 +503,8 @@ export default function Product() {
                   value={productData.costo || ''}
                   required 
                   onInvalid={e=> e.target.setCustomValidity('Escribe el Costo del Producto')} 
-                  onInput={e=> e.target.setCustomValidity('')}                 
+                  onInput={e=> e.target.setCustomValidity('')}
+                  autocomplete="off"                 
                 />
               </div>
             </div>

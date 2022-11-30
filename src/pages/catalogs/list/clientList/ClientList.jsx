@@ -24,12 +24,15 @@ import { DataGrid } from "@mui/x-data-grid";
 /**************************    Components    ********************************/
 import BasicDialog from '../../../../components/basicDialog/BasicDialog';
 import SkeletonElement from '../../../../components/skeletons/SkeletonElement';
+// import { useNavigatorOnLine } from '../../../../hooks/useNavigatorOnLine';
 /****************************************************************************/
 
 
 
 export default function ClientList() {
 
+  // const isOnline = useNavigatorOnLine();
+  
   /**************************    useRef    **********************************/
   // avoidRerenderFetchClient evita que se mande llamar dos veces al
   // cliente y por lo mismo que se pinte dos veces
@@ -337,6 +340,10 @@ export default function ClientList() {
       {
         isLoading && <SkeletonElement type="rectangular" />
       }
+      {/* <div>
+        <h1>Estas {isOnline ? 'online' : 'offline'}.</h1>;
+      </div> */}
+
     </div>
   );
 }

@@ -130,18 +130,35 @@
     margin-bottom: 1.8rem;   
 }
 
+.clientUpdateItemCheckbox {
+  width: 7rem;
+  display: flex;
+  flex-direction: column;
+  /* margin-right: 2rem;
+  margin-bottom: 2rem; */
+}
+
 .clientUpdateItem>label{
     margin-bottom: 0rem;
     font-size: 1.4rem;
 }
 
-.clientUpdateInput{
+.clientUpdateInput {
     border: none;
     width: 25rem;
     height: 3rem;
     border-bottom: .1rem solid gray;
     padding: 1rem;
     font-size: 1.4rem;
+}
+
+.inputCheckboxDataType {
+  width: 2rem;
+  height: 2.8rem;
+  padding: 1rem 1rem;
+  border: .1rem solid gray;
+  border-radius: .5rem;
+  font-size: 1.4rem;
 }
 
 .clientUpdateLeft {
@@ -240,6 +257,10 @@
     flex-direction: column;
   }
 
+  .clientUpdateInput {
+    width: 28rem;
+  }
+
   .clientUpdateUpload {
     flex-direction: column;
     margin-bottom: 3rem;
@@ -264,4 +285,8 @@
   /* .clientUpdateIcon__upload {
     margin-right: 1rem;
   } */
+
+  .clientUpdateItemCheckbox {
+    width: 3rem;
+  }
 }
