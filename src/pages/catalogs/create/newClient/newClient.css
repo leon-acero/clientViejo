@@ -86,16 +86,55 @@
   align-items: center;
 }
 
-.clientUpdateUpload{
+.newClientUpload{
   display: flex;
   align-items: center;
 }
 
-.clientUpdateImg{
+.newClientImg{
   width: 30rem;
   height: 30rem;
   border-radius: 1rem;
   object-fit: cover;
   margin-right: 2rem;
   margin-bottom: 1.5rem;
+}
+
+/* 480px */
+@media (max-width:30em) {
+
+  .newClient {
+    overflow-x: hidden;
+  }
+  
+  .newClientForm { 
+    flex-direction: column;
+  }
+
+  .newClientTitle {
+    margin-left: 1rem;
+  }
+
+  .newClientItem > input {
+    width: 30rem;
+  }
+
+  /* .newClientImg{
+    width: 30rem;
+    height: 30rem;
+  } */
+
+  .newClientUpload {
+    flex-direction: column;
+    margin-bottom: 3rem;
+    justify-content: center;
+    margin-right: 0rem;
+  }
+
+  .newClientRight{
+    /* padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem; */
+    padding-right: 0rem;
+  }
 }

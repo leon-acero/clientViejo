@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { stateContext } from '../../context/StateProvider';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
-import {FaHandshake, FaSignOutAlt } from "react-icons/fa";
+import {FaHandshake, FaSignOutAlt, FaStore } from "react-icons/fa";
 
 import { domAnimation, LazyMotion, m } from 'framer-motion';
 import { BASE_URL } from '../../utils/axios';
@@ -121,7 +121,15 @@ export default function Topbar() {
                 <Avatar /> My account
               </MenuItem> */}
               <MenuItem className="menuItem tipografia" >
-                <Link className='liga__flex crearPedidoButton' to="/search-client">
+                <Link className='liga__flex menuGeneralButton' to="/new-client">
+                  <ListItemIcon>
+                    <FaStore className="iconos__general" />
+                  </ListItemIcon>
+                  Crear Cliente</Link>
+              </MenuItem>
+
+              <MenuItem className="menuItem tipografia" >
+                <Link className='liga__flex menuGeneralButton' to="/search-client">
                   <ListItemIcon>
                     <FaHandshake className="iconos__placeOrder" />
                   </ListItemIcon>
@@ -129,9 +137,9 @@ export default function Topbar() {
               </MenuItem>
 
               <MenuItem className="menuItem" >
-                <Link className='liga__flex logoutButton' to="/logout">
+                <Link className='liga__flex menuGeneralButton' to="/logout">
                   <ListItemIcon>
-                    <FaSignOutAlt className="iconos__signOut" />
+                    <FaSignOutAlt className="iconos__general" />
                   </ListItemIcon>
                   Cerrar Sesión</Link>
               </MenuItem>

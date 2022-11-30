@@ -2,13 +2,14 @@ import "./newOrUpdateOrder.css"
 import axios from '../../../utils/axios';
 
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 
 // import axios from "axios";
 // import { Skeleton } from '@mui/material';
 
 import { domAnimation, LazyMotion, m } from 'framer-motion';
 import SkeletonElement from '../../../components/skeletons/SkeletonElement';
+import { FaArrowLeft } from 'react-icons/fa';
 
 
 const containerVariants = {
@@ -28,6 +29,8 @@ const containerVariants = {
 
 export default function NewOrUpdateOrder() {
 
+  const history = useHistory();
+  
   // const [ultimosCincoPedidos, setUltimosCincoPedidos] = useState([]);
   const [ultimosCincoPedidos, setUltimosCincoPedidos] = useState(null);
   /**************************    useRef    **********************************/
@@ -80,6 +83,11 @@ export default function NewOrUpdateOrder() {
     fetchUltimosCincoPedidosPorEntregar ();
   }, [clientId])
 
+  const handleGoBackOnePage = () => {
+
+    // history.go(-1);
+    history.goBack();
+  }
 
   return (
     <LazyMotion features={domAnimation} >
@@ -88,9 +96,17 @@ export default function NewOrUpdateOrder() {
         initial="hidden"
         animate="visible"
       >
+        <div className="regresarAPaginaAnterior">
+          <FaArrowLeft onClick={handleGoBackOnePage} className="arrowLeftGoBack" />
+        </div>
         {/* <h2><span>PASO 2: </span>CREA UN NUEVO PEDIDO O SELECCIONA UNO POR ENTREGAR</h2> */}
         <div className="businessInfo">
-          <p className="businessInfo__businessName">{businessName}</p>
+          <div className="editarCliente">
+            <p className="businessInfo__businessName">{businessName}</p>
+            <Link to={"/client/" + clientId}>
+              <button className="clientListEdit">Editar</button>
+            </Link>
+          </div>
           <p className="businessInfo__cellPhone">{cellPhone}</p>
           <p className="businessInfo__esMayorista">{esMayorista ? "Mayorista" : "Minorista"}</p>
         </div>

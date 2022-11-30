@@ -359,9 +359,9 @@ export default function NewClient() {
         </div>
 
         <div className="newClientRight">
-          <div className="clientUpdateUpload">
+          <div className="newClientUpload">
             <img
-              className="clientUpdateImg"
+              className="newClientImg"
               src= {
                       // fileBlob ? fileBlob : `http://127.0.0.1:8000/img/clients/${itemData.imageCover}`
                       fileBlob ? fileBlob : `${BASE_URL}/img/clients/${itemData.imageCover}`

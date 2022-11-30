@@ -212,8 +212,56 @@
 
 /* 480px */
 @media (max-width:30em) {
-  .client{ 
+  /* .client{ 
     transform: rotate(90deg);
+  } */
+
+  .client {
+    overflow-x: hidden;
   }
 
+  .clientShow {
+    display: none;
+  }
+
+  .clientUpdate {
+    margin-left: 0rem;
+    /* margin-right: 5rem; */
+    width: 10rem;
+    /* background-color: red; */
+  }
+
+  /* .clientTitleContainer { 
+    margin-left: 1.4rem;
+    margin-right: 1rem;
+  } */
+
+  .clientUpdateForm{ 
+    flex-direction: column;
+  }
+
+  .clientUpdateUpload {
+    flex-direction: column;
+    margin-bottom: 3rem;
+    justify-content: center;
+    margin-right: 0rem;
+  }
+
+  .clientUpdateImg{
+    width: 26rem;
+    padding-right: 0;
+    margin-right: 0;
+    /* height: 26rem; */
+  }
+
+  .clientUpdateRight{
+    /* padding-top: 1rem;
+    padding-bottom: 1rem;*/
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+
+  /* .clientUpdateIcon__upload {
+    margin-right: 1rem;
+  } */
 }
