@@ -113,6 +113,9 @@ export default function NewProduct() {
       //   data: formData
       // })
 
+      console.log("formData", formData);
+
+
       const res = await axios.post ('/api/v1/products/', formData );
 
 
@@ -137,7 +140,7 @@ export default function NewProduct() {
       setUpdateSuccess(false);
       // setMensajeSnackBar("Hubo un error al grabar el producto. Revisa que estes en línea.");
 
-      let mensajeSnackBar = ""
+      let mensajeSnackBar = "";
 
       if (err.name) 
         mensajeSnackBar += `Name: ${err.name}. `
