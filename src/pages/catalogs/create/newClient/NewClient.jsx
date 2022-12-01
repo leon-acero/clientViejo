@@ -155,6 +155,8 @@ export default function NewClient() {
             setMensajeSnackBar(mensajeSnackBar);
       }
       else */
+      console.log("err.response.data.message", err.response.data.message);
+      
       if (err.response.data.message){
         setMensajeSnackBar(err.response.data.message)
       }
@@ -364,7 +366,7 @@ export default function NewClient() {
           </div>
 
           <div className="newClientItemCheckbox">
-              <label htmlFor="esMayorista">¿Es Mayorista?</label>
+              <label htmlFor="esMayorista" className="labelCheckbox">¿Es Mayorista?</label>
               <input 
                   className="inputCheckboxDataType"
                   type="checkbox" 

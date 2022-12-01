@@ -131,69 +131,46 @@ export default function NewOrUpdateOrder() {
 
           {/* <p className='pedidosPorEntregar__title'>Pedidos Por Entregar por Fecha</p> */}
           
-            <div>
-              <p className="pedidosPorEntregar__title">Pedidos Por Entregar por Fecha</p>
+            {
+              ultimosCincoPedidos?.length > 0 && (
+                <div className="pedidosPorEntregar__container">
+                  <p className="pedidosPorEntregar__title">Pedidos Por Entregar por Fecha</p>
 
-              <div className="ultimosCincoPedidos_group">
-                {/* {ultimosCincoPedidos?.length > 0
-                ?              
-                  ultimosCincoPedidos.map((current, index) =>  
-
-                    
-                      <Link key={index} className="linkNuevoPedido" to={{
-                        pathname: `/update-order/client/${clientId}`,
-                        state: {
-                                clientId: clientId,
-                                businessName: businessName, 
-                                cellPhone: cellPhone, 
-                                esMayorista: esMayorista,
-                                fecha: current._id.Fecha,
-                                usarComponenteComo: "actualizarPedido"
-                        }
-                      }}>
-                        <button className='linkActualizarPedido__button'>{
-                          // current._id.Fecha
-                          (new Date (current._id.Fecha)).toString()
-                          }
-                        </button> 
-                      </Link>
-                    
-                  ) 
-                : <Skeleton animation="wave" variant="rounded" width={300} height={30}  />
-                } */}
-                {ultimosCincoPedidos
-                ?              
-                  ultimosCincoPedidos.map((current, index) =>  
-                    
-                      <Link 
-                              key={index} 
-                              className="linkNuevoPedido" 
-                              to={{
-                                pathname: `/update-order/client/${clientId}`,
-                                state: {
-                                  clientId: clientId,
-                                  businessName: businessName, 
-                                  cellPhone: cellPhone, 
-                                  esMayorista: esMayorista,
-                                  businessImageCover: businessImageCover,
-                                  fecha: current._id.Fecha,
-                                  usarComponenteComo: "actualizarPedido"
-                                }
-                              }}
-                      >
-                        <button className='linkActualizarPedido__button'>
-                          {
-                            (new Date (current._id.Fecha)).toString().split(" ", 5).join(" ")
-                          }
-                        </button> 
-                      </Link>
-                    
-                  ) 
-                : <SkeletonElement type="rectangular" width="20rem" height="auto" />
-                }
-              </div>              
-
-            </div>
+                  <div className="ultimosCincoPedidos_group">
+                    {ultimosCincoPedidos
+                    ?              
+                      ultimosCincoPedidos.map((current, index) =>  
+                        
+                          <Link 
+                                  key={index} 
+                                  className="linkNuevoPedido" 
+                                  to={{
+                                    pathname: `/update-order/client/${clientId}`,
+                                    state: {
+                                      clientId: clientId,
+                                      businessName: businessName, 
+                                      cellPhone: cellPhone, 
+                                      esMayorista: esMayorista,
+                                      businessImageCover: businessImageCover,
+                                      fecha: current._id.Fecha,
+                                      usarComponenteComo: "actualizarPedido"
+                                    }
+                                  }}
+                          >
+                            <button className='linkActualizarPedido__button'>
+                              {
+                                (new Date (current._id.Fecha)).toString().split(" ", 5).join(" ")
+                              }
+                            </button> 
+                          </Link>
+                        
+                      ) 
+                    : <SkeletonElement type="rectangular" width="20rem" height="auto" />
+                    }
+                  </div>              
+                </div>                
+              )
+            }
           
         </div>
       </m.div>

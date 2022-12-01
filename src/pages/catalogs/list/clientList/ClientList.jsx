@@ -51,9 +51,9 @@ export default function ClientList() {
   // openSnackbar es boolean que manda abrir y cerrar el Snackbar
 
   // openModal lo uso para mostrar la ventana para preguntar al usuario
-  // si quiere borrar un producto
+  // si quiere borrar un cliente
 
-  // currentProduct tiene la informacion del producto actualmente seleccionado
+  // currentProduct tiene la informacion del cliente actualmente seleccionado
 
   // productList es la lista de Productos que cargue de la BD
 
@@ -96,7 +96,7 @@ export default function ClientList() {
         // Borro el cliente del Grid Y del State        
         setUpdateSuccess(true);
         setClientList(clientList.filter((item) => item._id !== currentClient.id));
-        setMensajeSnackBar(`El producto ${currentClient.businessName} fue borrado.`)
+        setMensajeSnackBar(`El cliente ${currentClient.businessName} fue borrado.`)
         setOpenSnackbar(true);
       } 
     }

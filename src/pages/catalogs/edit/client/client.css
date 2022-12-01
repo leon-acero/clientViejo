@@ -152,6 +152,13 @@
     font-size: 1.4rem;
 }
 
+.labelCheckbox {
+  color: rgb(151, 150, 150);
+  font-size: 1.4rem;
+  font-weight: 600;
+  width: 12rem;
+}
+
 .inputCheckboxDataType {
   width: 2rem;
   height: 2.8rem;
@@ -288,5 +295,9 @@
 
   .clientUpdateItemCheckbox {
     width: 3rem;
+  }
+
+  .labelCheckbox {
+    width: 2rem;
   }
 }

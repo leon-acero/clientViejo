@@ -302,7 +302,7 @@
 /* 580px */
 @media (max-width:36.25em) {
   .container-estatusPedido__select {
-    width: 12rem;
+    width: 16rem;
   }
 
   .searchInput {
@@ -317,7 +317,7 @@
   }
 
   .container-estatusPedido__select {
-    width: 10rem;
+    width: 14rem;
   }
 
   .placeOrderButton {
@@ -364,5 +364,9 @@
   .container-estatusPedido__select{
     font-size: 1.2rem;
     font-weight: 400;
+  }
+
+  .descuento__label {
+    font-size: 1.6rem;
   }
 }

@@ -9,6 +9,8 @@ import {FaHandshake, FaSignOutAlt, FaStore } from "react-icons/fa";
 import { domAnimation, LazyMotion, m } from 'framer-motion';
 import { BASE_URL } from '../../utils/axios';
 
+import { useNavigatorOnLine } from '../../hooks/useNavigatorOnLine'
+
 
 const logoVariants = {
   hidden: { y: -250 },
@@ -27,6 +29,8 @@ const loginVariants = {
 }
 
 export default function Topbar() {
+
+  const isOnline = useNavigatorOnLine();
   
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
@@ -70,6 +74,8 @@ export default function Topbar() {
                     // onClick={(e)=>setOpen(true)}
                     onClick={handleClick}
                 />
+                <span className={isOnline ? 'online-offline online' : 'online-offline offline'}></span>
+
               </m.div>)
             }
             { !currentUser && (

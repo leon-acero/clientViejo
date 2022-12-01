@@ -173,15 +173,12 @@
   transition: 0s
 }
 
-/* <Link to={"/client/" + params.row._id}>
-              <button className="clientListEdit" onClick={()=>handleEdit(params.row._id, params.row.slug)}>Editar</button>
-            </Link> */
-
 .authStyle {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  position: relative;
 }
 
 .menuItem {
@@ -218,6 +215,24 @@
 
 .tipografia {
   font-size: 1.8rem;
+}
+
+.online-offline {
+  height: 1.2rem;
+  width: 1.2rem;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -.2rem;
+  right: 0;
+  border: .2rem solid white;
+}
+
+.online {
+  background-color: limegreen;
+}
+
+.offline {
+  background-color: red;
 }
 
 /* 680px */

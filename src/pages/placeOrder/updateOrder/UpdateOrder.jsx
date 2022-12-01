@@ -1110,7 +1110,7 @@ export default function UpdateOrder() {
                   {/* <option value="porEntregar">Por entregar</option>
                   <option value="entregado">Entregado</option> */}
                   {/* 1 es Por Entregar y 2 es Entregado */}
-                  <option value="0">Seleciona el Estatus</option>
+                  <option value="0">Selecciona el Estatus</option>
                   <option value="1">Por entregar</option>
                   <option value="2">Entregado</option>
               </select>          
